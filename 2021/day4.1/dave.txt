@@ -1,0 +1,81 @@
+p: 7   v: 7
+p: 4   v: 4
+p: 9   v: 9
+p: 5   v: 5
+p: 1   v: 1
+p: 1   v: 11
+p: 1   v: 1
+p: 7   v: 17
+p: 2   v: 2
+p: 3   v: 23
+p: 2   v: 2
+p: 0   v: 0
+p: 1   v: 1
+p: 4   v: 14
+p: 2   v: 2
+p: 1   v: 21
+p: 2   v: 2
+p: 4   v: 24
+p: 1   v: 1
+p: 0   v: 10
+p: 1   v: 1
+p: 6   v: 16
+p: 1   v: 1
+p: 3   v: 13
+p: 6   v: 6
+p: 1   v: 1
+p: 5   v: 15
+p: 2   v: 2
+p: 5   v: 25
+p: 1   v: 1
+p: 2   v: 12
+p: 2   v: 2
+p: 2   v: 22
+p: 1   v: 1
+p: 8   v: 18
+p: 2   v: 2
+p: 0   v: 20
+p: 8   v: 8
+p: 1   v: 1
+p: 9   v: 19
+p: 3   v: 3
+p: 2   v: 2
+p: 6   v: 26
+p: 1   v: 1
+Number is: 7
+Number is: 4
+Number is: 9
+Number is: 5
+Number is: 11
+Number is: 17
+Number is: 23
+Number is: 2
+Number is: 0
+Number is: 14
+Number is: 21
+Number is: 24
+Number is: 10
+Number is: 16
+Number is: 13
+Number is: 6
+Number is: 15
+Number is: 25
+Number is: 12
+Number is: 22
+Number is: 18
+Number is: 20
+Number is: 8
+Number is: 19
+Number is: 3
+Number is: 26
+22  13* 17  11*  0  
+ 8*  2* 23   4* 24  
+21   9* 14  16   7* 
+ 6* 10*  3* 18   5* 
+ 1* 12* 20  15  19  
+
+BINGO!!!!!!!
+
+Sum marked: 91
+Sum unmarked: 209
+Product: 19019

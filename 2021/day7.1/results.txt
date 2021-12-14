@@ -1,0 +1,2886 @@
+Adding crab at pos: 1101
+Adding crab at pos: 1
+Adding crab at pos: 29
+Adding crab at pos: 67
+Adding crab at pos: 1102
+Adding crab at pos: 0
+Adding crab at pos: 1
+Adding crab at pos: 65
+Adding crab at pos: 1008
+Adding crab at pos: 65
+Adding crab at pos: 35
+Adding crab at pos: 66
+Adding crab at pos: 1005
+Adding crab at pos: 66
+Adding crab at pos: 28
+Adding crab at pos: 1
+Adding crab at pos: 67
+Adding crab at pos: 65
+Adding crab at pos: 20
+Adding crab at pos: 4
+Adding crab at pos: 0
+Adding crab at pos: 1001
+Adding crab at pos: 65
+Adding crab at pos: 1
+Adding crab at pos: 65
+Adding crab at pos: 1106
+Adding crab at pos: 0
+Adding crab at pos: 8
+Adding crab at pos: 99
+Adding crab at pos: 35
+Adding crab at pos: 67
+Adding crab at pos: 101
+Adding crab at pos: 99
+Adding crab at pos: 105
+Adding crab at pos: 32
+Adding crab at pos: 110
+Adding crab at pos: 39
+Adding crab at pos: 101
+Adding crab at pos: 115
+Adding crab at pos: 116
+Adding crab at pos: 32
+Adding crab at pos: 112
+Adding crab at pos: 97
+Adding crab at pos: 115
+Adding crab at pos: 32
+Adding crab at pos: 117
+Adding crab at pos: 110
+Adding crab at pos: 101
+Adding crab at pos: 32
+Adding crab at pos: 105
+Adding crab at pos: 110
+Adding crab at pos: 116
+Adding crab at pos: 99
+Adding crab at pos: 111
+Adding crab at pos: 100
+Adding crab at pos: 101
+Adding crab at pos: 32
+Adding crab at pos: 112
+Adding crab at pos: 114
+Adding crab at pos: 111
+Adding crab at pos: 103
+Adding crab at pos: 114
+Adding crab at pos: 97
+Adding crab at pos: 109
+Adding crab at pos: 10
+Adding crab at pos: 1133
+Adding crab at pos: 1029
+Adding crab at pos: 1446
+Adding crab at pos: 1005
+Adding crab at pos: 596
+Adding crab at pos: 277
+Adding crab at pos: 439
+Adding crab at pos: 544
+Adding crab at pos: 201
+Adding crab at pos: 317
+Adding crab at pos: 237
+Adding crab at pos: 33
+Adding crab at pos: 252
+Adding crab at pos: 774
+Adding crab at pos: 482
+Adding crab at pos: 291
+Adding crab at pos: 57
+Adding crab at pos: 1434
+Adding crab at pos: 153
+Adding crab at pos: 134
+Adding crab at pos: 385
+Adding crab at pos: 993
+Adding crab at pos: 677
+Adding crab at pos: 1189
+Adding crab at pos: 99
+Adding crab at pos: 1082
+Adding crab at pos: 351
+Adding crab at pos: 80
+Adding crab at pos: 1563
+Adding crab at pos: 195
+Adding crab at pos: 581
+Adding crab at pos: 693
+Adding crab at pos: 5
+Adding crab at pos: 633
+Adding crab at pos: 184
+Adding crab at pos: 552
+Adding crab at pos: 11
+Adding crab at pos: 606
+Adding crab at pos: 462
+Adding crab at pos: 48
+Adding crab at pos: 134
+Adding crab at pos: 1451
+Adding crab at pos: 850
+Adding crab at pos: 221
+Adding crab at pos: 336
+Adding crab at pos: 661
+Adding crab at pos: 276
+Adding crab at pos: 156
+Adding crab at pos: 932
+Adding crab at pos: 23
+Adding crab at pos: 98
+Adding crab at pos: 76
+Adding crab at pos: 327
+Adding crab at pos: 212
+Adding crab at pos: 489
+Adding crab at pos: 230
+Adding crab at pos: 819
+Adding crab at pos: 998
+Adding crab at pos: 1037
+Adding crab at pos: 1561
+Adding crab at pos: 206
+Adding crab at pos: 159
+Adding crab at pos: 757
+Adding crab at pos: 207
+Adding crab at pos: 1203
+Adding crab at pos: 224
+Adding crab at pos: 1459
+Adding crab at pos: 294
+Adding crab at pos: 39
+Adding crab at pos: 1108
+Adding crab at pos: 96
+Adding crab at pos: 89
+Adding crab at pos: 1664
+Adding crab at pos: 353
+Adding crab at pos: 41
+Adding crab at pos: 83
+Adding crab at pos: 942
+Adding crab at pos: 771
+Adding crab at pos: 362
+Adding crab at pos: 193
+Adding crab at pos: 900
+Adding crab at pos: 676
+Adding crab at pos: 851
+Adding crab at pos: 277
+Adding crab at pos: 558
+Adding crab at pos: 368
+Adding crab at pos: 1054
+Adding crab at pos: 316
+Adding crab at pos: 143
+Adding crab at pos: 464
+Adding crab at pos: 85
+Adding crab at pos: 896
+Adding crab at pos: 558
+Adding crab at pos: 52
+Adding crab at pos: 669
+Adding crab at pos: 163
+Adding crab at pos: 696
+Adding crab at pos: 140
+Adding crab at pos: 340
+Adding crab at pos: 542
+Adding crab at pos: 817
+Adding crab at pos: 783
+Adding crab at pos: 1436
+Adding crab at pos: 786
+Adding crab at pos: 81
+Adding crab at pos: 21
+Adding crab at pos: 669
+Adding crab at pos: 184
+Adding crab at pos: 430
+Adding crab at pos: 312
+Adding crab at pos: 1500
+Adding crab at pos: 797
+Adding crab at pos: 698
+Adding crab at pos: 611
+Adding crab at pos: 314
+Adding crab at pos: 145
+Adding crab at pos: 125
+Adding crab at pos: 391
+Adding crab at pos: 785
+Adding crab at pos: 867
+Adding crab at pos: 488
+Adding crab at pos: 144
+Adding crab at pos: 9
+Adding crab at pos: 967
+Adding crab at pos: 560
+Adding crab at pos: 245
+Adding crab at pos: 116
+Adding crab at pos: 96
+Adding crab at pos: 1769
+Adding crab at pos: 314
+Adding crab at pos: 533
+Adding crab at pos: 25
+Adding crab at pos: 0
+Adding crab at pos: 1375
+Adding crab at pos: 1307
+Adding crab at pos: 1273
+Adding crab at pos: 1178
+Adding crab at pos: 332
+Adding crab at pos: 59
+Adding crab at pos: 26
+Adding crab at pos: 234
+Adding crab at pos: 487
+Adding crab at pos: 480
+Adding crab at pos: 615
+Adding crab at pos: 313
+Adding crab at pos: 629
+Adding crab at pos: 28
+Adding crab at pos: 707
+Adding crab at pos: 96
+Adding crab at pos: 637
+Adding crab at pos: 30
+Adding crab at pos: 350
+Adding crab at pos: 1286
+Adding crab at pos: 900
+Adding crab at pos: 777
+Adding crab at pos: 115
+Adding crab at pos: 56
+Adding crab at pos: 79
+Adding crab at pos: 809
+Adding crab at pos: 1101
+Adding crab at pos: 13
+Adding crab at pos: 150
+Adding crab at pos: 741
+Adding crab at pos: 940
+Adding crab at pos: 20
+Adding crab at pos: 403
+Adding crab at pos: 384
+Adding crab at pos: 479
+Adding crab at pos: 622
+Adding crab at pos: 108
+Adding crab at pos: 325
+Adding crab at pos: 276
+Adding crab at pos: 609
+Adding crab at pos: 654
+Adding crab at pos: 535
+Adding crab at pos: 539
+Adding crab at pos: 62
+Adding crab at pos: 187
+Adding crab at pos: 414
+Adding crab at pos: 535
+Adding crab at pos: 140
+Adding crab at pos: 222
+Adding crab at pos: 845
+Adding crab at pos: 357
+Adding crab at pos: 55
+Adding crab at pos: 17
+Adding crab at pos: 8
+Adding crab at pos: 1430
+Adding crab at pos: 853
+Adding crab at pos: 759
+Adding crab at pos: 331
+Adding crab at pos: 673
+Adding crab at pos: 202
+Adding crab at pos: 482
+Adding crab at pos: 1280
+Adding crab at pos: 714
+Adding crab at pos: 911
+Adding crab at pos: 409
+Adding crab at pos: 429
+Adding crab at pos: 604
+Adding crab at pos: 278
+Adding crab at pos: 478
+Adding crab at pos: 301
+Adding crab at pos: 408
+Adding crab at pos: 590
+Adding crab at pos: 329
+Adding crab at pos: 1482
+Adding crab at pos: 110
+Adding crab at pos: 423
+Adding crab at pos: 488
+Adding crab at pos: 7
+Adding crab at pos: 628
+Adding crab at pos: 66
+Adding crab at pos: 196
+Adding crab at pos: 399
+Adding crab at pos: 86
+Adding crab at pos: 241
+Adding crab at pos: 1058
+Adding crab at pos: 501
+Adding crab at pos: 1284
+Adding crab at pos: 594
+Adding crab at pos: 710
+Adding crab at pos: 799
+Adding crab at pos: 34
+Adding crab at pos: 60
+Adding crab at pos: 668
+Adding crab at pos: 457
+Adding crab at pos: 0
+Adding crab at pos: 1209
+Adding crab at pos: 20
+Adding crab at pos: 50
+Adding crab at pos: 1134
+Adding crab at pos: 288
+Adding crab at pos: 415
+Adding crab at pos: 399
+Adding crab at pos: 86
+Adding crab at pos: 540
+Adding crab at pos: 1356
+Adding crab at pos: 285
+Adding crab at pos: 1541
+Adding crab at pos: 172
+Adding crab at pos: 3
+Adding crab at pos: 634
+Adding crab at pos: 1387
+Adding crab at pos: 146
+Adding crab at pos: 669
+Adding crab at pos: 195
+Adding crab at pos: 403
+Adding crab at pos: 601
+Adding crab at pos: 758
+Adding crab at pos: 160
+Adding crab at pos: 970
+Adding crab at pos: 760
+Adding crab at pos: 43
+Adding crab at pos: 213
+Adding crab at pos: 68
+Adding crab at pos: 805
+Adding crab at pos: 50
+Adding crab at pos: 350
+Adding crab at pos: 292
+Adding crab at pos: 78
+Adding crab at pos: 252
+Adding crab at pos: 54
+Adding crab at pos: 1021
+Adding crab at pos: 882
+Adding crab at pos: 241
+Adding crab at pos: 808
+Adding crab at pos: 601
+Adding crab at pos: 892
+Adding crab at pos: 878
+Adding crab at pos: 1401
+Adding crab at pos: 48
+Adding crab at pos: 191
+Adding crab at pos: 74
+Adding crab at pos: 1429
+Adding crab at pos: 94
+Adding crab at pos: 520
+Adding crab at pos: 505
+Adding crab at pos: 679
+Adding crab at pos: 1133
+Adding crab at pos: 120
+Adding crab at pos: 485
+Adding crab at pos: 183
+Adding crab at pos: 362
+Adding crab at pos: 684
+Adding crab at pos: 520
+Adding crab at pos: 1366
+Adding crab at pos: 301
+Adding crab at pos: 123
+Adding crab at pos: 290
+Adding crab at pos: 1248
+Adding crab at pos: 140
+Adding crab at pos: 44
+Adding crab at pos: 230
+Adding crab at pos: 572
+Adding crab at pos: 57
+Adding crab at pos: 1101
+Adding crab at pos: 217
+Adding crab at pos: 906
+Adding crab at pos: 1012
+Adding crab at pos: 668
+Adding crab at pos: 85
+Adding crab at pos: 230
+Adding crab at pos: 32
+Adding crab at pos: 100
+Adding crab at pos: 472
+Adding crab at pos: 275
+Adding crab at pos: 78
+Adding crab at pos: 91
+Adding crab at pos: 19
+Adding crab at pos: 61
+Adding crab at pos: 732
+Adding crab at pos: 518
+Adding crab at pos: 189
+Adding crab at pos: 85
+Adding crab at pos: 1531
+Adding crab at pos: 1255
+Adding crab at pos: 134
+Adding crab at pos: 489
+Adding crab at pos: 637
+Adding crab at pos: 792
+Adding crab at pos: 42
+Adding crab at pos: 36
+Adding crab at pos: 392
+Adding crab at pos: 603
+Adding crab at pos: 976
+Adding crab at pos: 651
+Adding crab at pos: 127
+Adding crab at pos: 486
+Adding crab at pos: 340
+Adding crab at pos: 534
+Adding crab at pos: 185
+Adding crab at pos: 890
+Adding crab at pos: 346
+Adding crab at pos: 906
+Adding crab at pos: 1295
+Adding crab at pos: 319
+Adding crab at pos: 321
+Adding crab at pos: 597
+Adding crab at pos: 252
+Adding crab at pos: 183
+Adding crab at pos: 554
+Adding crab at pos: 124
+Adding crab at pos: 44
+Adding crab at pos: 426
+Adding crab at pos: 131
+Adding crab at pos: 408
+Adding crab at pos: 582
+Adding crab at pos: 429
+Adding crab at pos: 645
+Adding crab at pos: 1227
+Adding crab at pos: 574
+Adding crab at pos: 14
+Adding crab at pos: 1828
+Adding crab at pos: 359
+Adding crab at pos: 184
+Adding crab at pos: 1830
+Adding crab at pos: 10
+Adding crab at pos: 288
+Adding crab at pos: 194
+Adding crab at pos: 949
+Adding crab at pos: 1578
+Adding crab at pos: 492
+Adding crab at pos: 502
+Adding crab at pos: 149
+Adding crab at pos: 609
+Adding crab at pos: 77
+Adding crab at pos: 92
+Adding crab at pos: 320
+Adding crab at pos: 233
+Adding crab at pos: 1026
+Adding crab at pos: 123
+Adding crab at pos: 26
+Adding crab at pos: 188
+Adding crab at pos: 1123
+Adding crab at pos: 4
+Adding crab at pos: 665
+Adding crab at pos: 1793
+Adding crab at pos: 331
+Adding crab at pos: 858
+Adding crab at pos: 481
+Adding crab at pos: 197
+Adding crab at pos: 424
+Adding crab at pos: 133
+Adding crab at pos: 933
+Adding crab at pos: 338
+Adding crab at pos: 7
+Adding crab at pos: 163
+Adding crab at pos: 1269
+Adding crab at pos: 665
+Adding crab at pos: 19
+Adding crab at pos: 1
+Adding crab at pos: 538
+Adding crab at pos: 126
+Adding crab at pos: 895
+Adding crab at pos: 1751
+Adding crab at pos: 345
+Adding crab at pos: 895
+Adding crab at pos: 203
+Adding crab at pos: 175
+Adding crab at pos: 66
+Adding crab at pos: 305
+Adding crab at pos: 1479
+Adding crab at pos: 239
+Adding crab at pos: 718
+Adding crab at pos: 386
+Adding crab at pos: 8
+Adding crab at pos: 1148
+Adding crab at pos: 203
+Adding crab at pos: 636
+Adding crab at pos: 1211
+Adding crab at pos: 635
+Adding crab at pos: 149
+Adding crab at pos: 489
+Adding crab at pos: 1156
+Adding crab at pos: 1828
+Adding crab at pos: 61
+Adding crab at pos: 328
+Adding crab at pos: 331
+Adding crab at pos: 287
+Adding crab at pos: 262
+Adding crab at pos: 8
+Adding crab at pos: 3
+Adding crab at pos: 522
+Adding crab at pos: 1427
+Adding crab at pos: 931
+Adding crab at pos: 1103
+Adding crab at pos: 199
+Adding crab at pos: 329
+Adding crab at pos: 930
+Adding crab at pos: 779
+Adding crab at pos: 124
+Adding crab at pos: 446
+Adding crab at pos: 391
+Adding crab at pos: 903
+Adding crab at pos: 696
+Adding crab at pos: 1764
+Adding crab at pos: 16
+Adding crab at pos: 595
+Adding crab at pos: 522
+Adding crab at pos: 143
+Adding crab at pos: 296
+Adding crab at pos: 19
+Adding crab at pos: 872
+Adding crab at pos: 29
+Adding crab at pos: 546
+Adding crab at pos: 566
+Adding crab at pos: 256
+Adding crab at pos: 63
+Adding crab at pos: 1195
+Adding crab at pos: 862
+Adding crab at pos: 516
+Adding crab at pos: 267
+Adding crab at pos: 452
+Adding crab at pos: 1287
+Adding crab at pos: 11
+Adding crab at pos: 547
+Adding crab at pos: 760
+Adding crab at pos: 77
+Adding crab at pos: 117
+Adding crab at pos: 988
+Adding crab at pos: 185
+Adding crab at pos: 293
+Adding crab at pos: 421
+Adding crab at pos: 118
+Adding crab at pos: 767
+Adding crab at pos: 70
+Adding crab at pos: 169
+Adding crab at pos: 456
+Adding crab at pos: 600
+Adding crab at pos: 755
+Adding crab at pos: 740
+Adding crab at pos: 1799
+Adding crab at pos: 97
+Adding crab at pos: 507
+Adding crab at pos: 1165
+Adding crab at pos: 265
+Adding crab at pos: 1126
+Adding crab at pos: 376
+Adding crab at pos: 1250
+Adding crab at pos: 408
+Adding crab at pos: 22
+Adding crab at pos: 674
+Adding crab at pos: 774
+Adding crab at pos: 361
+Adding crab at pos: 54
+Adding crab at pos: 558
+Adding crab at pos: 1021
+Adding crab at pos: 529
+Adding crab at pos: 29
+Adding crab at pos: 871
+Adding crab at pos: 527
+Adding crab at pos: 474
+Adding crab at pos: 218
+Adding crab at pos: 47
+Adding crab at pos: 309
+Adding crab at pos: 61
+Adding crab at pos: 188
+Adding crab at pos: 1365
+Adding crab at pos: 725
+Adding crab at pos: 267
+Adding crab at pos: 235
+Adding crab at pos: 359
+Adding crab at pos: 1004
+Adding crab at pos: 1771
+Adding crab at pos: 765
+Adding crab at pos: 8
+Adding crab at pos: 17
+Adding crab at pos: 103
+Adding crab at pos: 89
+Adding crab at pos: 967
+Adding crab at pos: 65
+Adding crab at pos: 302
+Adding crab at pos: 759
+Adding crab at pos: 1688
+Adding crab at pos: 882
+Adding crab at pos: 709
+Adding crab at pos: 1469
+Adding crab at pos: 123
+Adding crab at pos: 548
+Adding crab at pos: 834
+Adding crab at pos: 355
+Adding crab at pos: 646
+Adding crab at pos: 404
+Adding crab at pos: 76
+Adding crab at pos: 257
+Adding crab at pos: 101
+Adding crab at pos: 627
+Adding crab at pos: 2
+Adding crab at pos: 66
+Adding crab at pos: 1328
+Adding crab at pos: 137
+Adding crab at pos: 42
+Adding crab at pos: 23
+Adding crab at pos: 127
+Adding crab at pos: 110
+Adding crab at pos: 632
+Adding crab at pos: 683
+Adding crab at pos: 1163
+Adding crab at pos: 843
+Adding crab at pos: 1119
+Adding crab at pos: 16
+Adding crab at pos: 497
+Adding crab at pos: 1756
+Adding crab at pos: 347
+Adding crab at pos: 958
+Adding crab at pos: 981
+Adding crab at pos: 57
+Adding crab at pos: 185
+Adding crab at pos: 204
+Adding crab at pos: 1403
+Adding crab at pos: 530
+Adding crab at pos: 536
+Adding crab at pos: 104
+Adding crab at pos: 68
+Adding crab at pos: 1152
+Adding crab at pos: 95
+Adding crab at pos: 320
+Adding crab at pos: 959
+Adding crab at pos: 144
+Adding crab at pos: 281
+Adding crab at pos: 350
+Adding crab at pos: 622
+Adding crab at pos: 717
+Adding crab at pos: 112
+Adding crab at pos: 631
+Adding crab at pos: 150
+Adding crab at pos: 19
+Adding crab at pos: 938
+Adding crab at pos: 296
+Adding crab at pos: 1272
+Adding crab at pos: 825
+Adding crab at pos: 37
+Adding crab at pos: 192
+Adding crab at pos: 350
+Adding crab at pos: 847
+Adding crab at pos: 306
+Adding crab at pos: 824
+Adding crab at pos: 1042
+Adding crab at pos: 320
+Adding crab at pos: 480
+Adding crab at pos: 857
+Adding crab at pos: 589
+Adding crab at pos: 137
+Adding crab at pos: 687
+Adding crab at pos: 93
+Adding crab at pos: 21
+Adding crab at pos: 1601
+Adding crab at pos: 547
+Adding crab at pos: 550
+Adding crab at pos: 491
+Adding crab at pos: 161
+Adding crab at pos: 49
+Adding crab at pos: 124
+Adding crab at pos: 292
+Adding crab at pos: 396
+Adding crab at pos: 34
+Adding crab at pos: 24
+Adding crab at pos: 95
+Adding crab at pos: 932
+Adding crab at pos: 56
+Adding crab at pos: 968
+Adding crab at pos: 197
+Adding crab at pos: 109
+Adding crab at pos: 1300
+Adding crab at pos: 1326
+Adding crab at pos: 605
+Adding crab at pos: 357
+Adding crab at pos: 412
+Adding crab at pos: 14
+Adding crab at pos: 179
+Adding crab at pos: 450
+Adding crab at pos: 991
+Adding crab at pos: 173
+Adding crab at pos: 120
+Adding crab at pos: 1402
+Adding crab at pos: 478
+Adding crab at pos: 77
+Adding crab at pos: 933
+Adding crab at pos: 88
+Adding crab at pos: 96
+Adding crab at pos: 49
+Adding crab at pos: 95
+Adding crab at pos: 596
+Adding crab at pos: 1885
+Adding crab at pos: 841
+Adding crab at pos: 441
+Adding crab at pos: 659
+Adding crab at pos: 309
+Adding crab at pos: 418
+Adding crab at pos: 87
+Adding crab at pos: 134
+Adding crab at pos: 34
+Adding crab at pos: 815
+Adding crab at pos: 759
+Adding crab at pos: 631
+Adding crab at pos: 209
+Adding crab at pos: 728
+Adding crab at pos: 7
+Adding crab at pos: 232
+Adding crab at pos: 1304
+Adding crab at pos: 698
+Adding crab at pos: 140
+Adding crab at pos: 304
+Adding crab at pos: 1448
+Adding crab at pos: 101
+Adding crab at pos: 1
+Adding crab at pos: 239
+Adding crab at pos: 1321
+Adding crab at pos: 362
+Adding crab at pos: 1367
+Adding crab at pos: 1411
+Adding crab at pos: 279
+Adding crab at pos: 111
+Adding crab at pos: 633
+Adding crab at pos: 1347
+Adding crab at pos: 110
+Adding crab at pos: 18
+Adding crab at pos: 710
+Adding crab at pos: 443
+Adding crab at pos: 1676
+Adding crab at pos: 64
+Adding crab at pos: 531
+Adding crab at pos: 386
+Adding crab at pos: 64
+Adding crab at pos: 518
+Adding crab at pos: 619
+Adding crab at pos: 893
+Adding crab at pos: 140
+Adding crab at pos: 301
+Adding crab at pos: 426
+Adding crab at pos: 1451
+Adding crab at pos: 261
+Adding crab at pos: 1083
+Adding crab at pos: 115
+Adding crab at pos: 61
+Adding crab at pos: 943
+Adding crab at pos: 60
+Adding crab at pos: 891
+Adding crab at pos: 217
+Adding crab at pos: 475
+Adding crab at pos: 48
+Adding crab at pos: 436
+Adding crab at pos: 586
+Adding crab at pos: 31
+Adding crab at pos: 287
+Adding crab at pos: 196
+Adding crab at pos: 430
+Adding crab at pos: 357
+Adding crab at pos: 78
+Adding crab at pos: 161
+Adding crab at pos: 1533
+Adding crab at pos: 745
+Adding crab at pos: 198
+Adding crab at pos: 715
+Adding crab at pos: 8
+Adding crab at pos: 307
+Adding crab at pos: 225
+Adding crab at pos: 604
+Adding crab at pos: 263
+Adding crab at pos: 992
+Adding crab at pos: 371
+Adding crab at pos: 749
+Adding crab at pos: 700
+Adding crab at pos: 1573
+Adding crab at pos: 573
+Adding crab at pos: 546
+Adding crab at pos: 480
+Adding crab at pos: 425
+Adding crab at pos: 47
+Adding crab at pos: 88
+Adding crab at pos: 66
+Adding crab at pos: 799
+Adding crab at pos: 388
+Adding crab at pos: 60
+Adding crab at pos: 736
+Adding crab at pos: 111
+Adding crab at pos: 81
+Adding crab at pos: 856
+Adding crab at pos: 29
+Adding crab at pos: 695
+Adding crab at pos: 141
+Adding crab at pos: 4
+Adding crab at pos: 271
+Adding crab at pos: 143
+Adding crab at pos: 939
+Adding crab at pos: 423
+Adding crab at pos: 3
+Adding crab at pos: 1260
+Adding crab at pos: 265
+Adding crab at pos: 24
+Adding crab at pos: 903
+Adding crab at pos: 292
+Adding crab at pos: 23
+Adding crab at pos: 80
+Adding crab at pos: 196
+Adding crab at pos: 1245
+Adding crab at pos: 399
+Adding crab at pos: 123
+Adding crab at pos: 3
+Adding crab at pos: 532
+Adding crab at pos: 283
+Adding crab at pos: 366
+Adding crab at pos: 1175
+Adding crab at pos: 187
+Adding crab at pos: 15
+Adding crab at pos: 450
+Adding crab at pos: 487
+Adding crab at pos: 117
+Adding crab at pos: 1041
+Adding crab at pos: 669
+Adding crab at pos: 59
+Adding crab at pos: 579
+Adding crab at pos: 159
+Adding crab at pos: 461
+Adding crab at pos: 598
+Adding crab at pos: 915
+Adding crab at pos: 666
+Adding crab at pos: 1231
+Adding crab at pos: 999
+Adding crab at pos: 253
+Adding crab at pos: 185
+Adding crab at pos: 1016
+Adding crab at pos: 135
+Adding crab at pos: 1317
+Adding crab at pos: 253
+Adding crab at pos: 111
+Adding crab at pos: 1261
+Adding crab at pos: 833
+Adding crab at pos: 26
+Adding crab at pos: 851
+Adding crab at pos: 120
+Adding crab at pos: 11
+Adding crab at pos: 63
+Adding crab at pos: 718
+Adding crab at pos: 682
+Adding crab at pos: 233
+Adding crab at pos: 76
+Adding crab at pos: 0
+Adding crab at pos: 50
+Adding crab at pos: 1678
+Adding crab at pos: 777
+Adding crab at pos: 286
+Adding crab at pos: 279
+Adding crab at pos: 90
+Adding crab at pos: 47
+Adding crab at pos: 158
+Adding crab at pos: 71
+Adding crab at pos: 35
+Adding crab at pos: 475
+Adding crab at pos: 245
+Adding crab at pos: 550
+Adding crab at pos: 4
+Adding crab at pos: 942
+Adding crab at pos: 1816
+Adding crab at pos: 1646
+Adding crab at pos: 102
+Adding crab at pos: 175
+Adding crab at pos: 343
+Adding crab at pos: 12
+Adding crab at pos: 446
+Adding crab at pos: 12
+Adding crab at pos: 623
+Adding crab at pos: 44
+Adding crab at pos: 157
+Adding crab at pos: 10
+Adding crab at pos: 555
+Adding crab at pos: 1173
+Adding crab at pos: 651
+Adding crab at pos: 361
+Adding crab at pos: 745
+Adding crab at pos: 1870
+Adding crab at pos: 97
+Adding crab at pos: 237
+Adding crab at pos: 1628
+Adding crab at pos: 90
+Adding crab at pos: 233
+Adding crab at pos: 126
+Adding crab at pos: 1596
+Adding crab at pos: 1146
+Adding crab at pos: 746
+Adding crab at pos: 383
+Adding crab at pos: 209
+Adding crab at pos: 55
+Adding crab at pos: 209
+Adding crab at pos: 318
+Adding crab at pos: 904
+Adding crab at pos: 144
+Adding crab at pos: 90
+Adding crab at pos: 21
+Adding crab at pos: 86
+Adding crab at pos: 4
+Adding crab at pos: 970
+Adding crab at pos: 262
+Adding crab at pos: 8
+Adding crab at pos: 210
+Adding crab at pos: 249
+Adding crab at pos: 871
+Adding crab at pos: 1216
+Adding crab at pos: 1003
+Adding crab at pos: 172
+Adding crab at pos: 405
+Adding crab at pos: 821
+Adding crab at pos: 225
+Adding crab at pos: 2
+Adding crab at pos: 143
+Adding crab at pos: 915
+Adding crab at pos: 129
+Adding crab at pos: 598
+Adding crab at pos: 397
+Adding crab at pos: 583
+Adding crab at pos: 1400
+Adding crab at pos: 315
+Adding crab at pos: 113
+Adding crab at pos: 33
+Adding crab at pos: 75
+Adding crab at pos: 426
+Adding crab at pos: 2
+Adding crab at pos: 611
+Adding crab at pos: 293
+Adding crab at pos: 196
+Adding crab at pos: 419
+Adding crab at pos: 125
+Adding crab at pos: 176
+Adding crab at pos: 496
+Adding crab at pos: 4
+Adding crab at pos: 607
+Adding crab at pos: 1425
+Adding crab at pos: 27
+Adding crab at pos: 48
+Adding crab at pos: 172
+Adding crab at pos: 972
+Adding crab at pos: 626
+Adding crab at pos: 227
+Adding crab at pos: 184
+Adding crab at pos: 1257
+Adding crab at pos: 514
+Adding crab at pos: 209
+Adding crab at pos: 524
+Adding crab at pos: 22
+Adding crab at pos: 58
+Adding crab at pos: 927
+Adding crab at pos: 4
+Adding crab at pos: 931
+Adding crab at pos: 3
+Adding crab at pos: 6
+Adding crab at pos: 104
+Adding crab at pos: 716
+Adding crab at pos: 961
+Adding crab at pos: 17
+Adding crab at pos: 4
+Adding crab at pos: 154
+Adding crab at pos: 249
+Adding crab at pos: 558
+Adding crab at pos: 203
+Adding crab at pos: 180
+Adding crab at pos: 180
+Adding crab at pos: 1194
+Adding crab at pos: 935
+Adding crab at pos: 263
+Adding crab at pos: 535
+Adding crab at pos: 380
+Adding crab at pos: 1439
+Adding crab at pos: 274
+Adding crab at pos: 1566
+Adding crab at pos: 873
+Adding crab at pos: 1763
+Adding crab at pos: 2
+Adding crab at pos: 89
+Adding crab at pos: 636
+Adding crab at pos: 407
+Adding crab at pos: 667
+Adding crab at pos: 438
+Adding crab at pos: 966
+Adding crab at pos: 757
+Adding crab at pos: 245
+Adding crab at pos: 730
+Adding crab at pos: 328
+Adding crab at pos: 915
+Adding crab at pos: 167
+Adding crab at pos: 245
+Adding crab at pos: 126
+Adding crab at pos: 52
+Adding crab at pos: 652
+Adding crab at pos: 938
+Adding crab at pos: 1183
+Adding crab at pos: 320
+Adding crab at pos: 1298
+Adding crab at pos: 10
+Adding crab at pos: 844
+Adding crab at pos: 36
+Adding crab at pos: 263
+Adding crab at pos: 382
+Adding crab at pos: 37
+Adding crab at pos: 142
+Position 1:  Fuel: 474575
+Position 2:  Fuel: 473599
+Position 3:  Fuel: 472631
+Position 4:  Fuel: 471673
+Position 5:  Fuel: 470731
+Position 6:  Fuel: 469791
+Position 7:  Fuel: 468853
+Position 8:  Fuel: 467921
+Position 9:  Fuel: 467003
+Position 10:  Fuel: 466087
+Position 11:  Fuel: 465179
+Position 12:  Fuel: 464277
+Position 13:  Fuel: 463379
+Position 14:  Fuel: 462483
+Position 15:  Fuel: 461591
+Position 16:  Fuel: 460701
+Position 17:  Fuel: 459815
+Position 18:  Fuel: 458935
+Position 19:  Fuel: 458057
+Position 20:  Fuel: 457187
+Position 21:  Fuel: 456323
+Position 22:  Fuel: 455465
+Position 23:  Fuel: 454611
+Position 24:  Fuel: 453763
+Position 25:  Fuel: 452919
+Position 26:  Fuel: 452077
+Position 27:  Fuel: 451241
+Position 28:  Fuel: 450407
+Position 29:  Fuel: 449577
+Position 30:  Fuel: 448755
+Position 31:  Fuel: 447935
+Position 32:  Fuel: 447117
+Position 33:  Fuel: 446311
+Position 34:  Fuel: 445509
+Position 35:  Fuel: 444713
+Position 36:  Fuel: 443923
+Position 37:  Fuel: 443137
+Position 38:  Fuel: 442355
+Position 39:  Fuel: 441573
+Position 40:  Fuel: 440795
+Position 41:  Fuel: 440017
+Position 42:  Fuel: 439241
+Position 43:  Fuel: 438469
+Position 44:  Fuel: 437699
+Position 45:  Fuel: 436935
+Position 46:  Fuel: 436171
+Position 47:  Fuel: 435407
+Position 48:  Fuel: 434649
+Position 49:  Fuel: 433899
+Position 50:  Fuel: 433153
+Position 51:  Fuel: 432413
+Position 52:  Fuel: 431673
+Position 53:  Fuel: 430937
+Position 54:  Fuel: 430201
+Position 55:  Fuel: 429469
+Position 56:  Fuel: 428741
+Position 57:  Fuel: 428017
+Position 58:  Fuel: 427299
+Position 59:  Fuel: 426583
+Position 60:  Fuel: 425871
+Position 61:  Fuel: 425165
+Position 62:  Fuel: 424467
+Position 63:  Fuel: 423771
+Position 64:  Fuel: 423079
+Position 65:  Fuel: 422391
+Position 66:  Fuel: 421715
+Position 67:  Fuel: 421051
+Position 68:  Fuel: 420393
+Position 69:  Fuel: 419739
+Position 70:  Fuel: 419085
+Position 71:  Fuel: 418433
+Position 72:  Fuel: 417783
+Position 73:  Fuel: 417133
+Position 74:  Fuel: 416483
+Position 75:  Fuel: 415835
+Position 76:  Fuel: 415189
+Position 77:  Fuel: 414549
+Position 78:  Fuel: 413915
+Position 79:  Fuel: 413287
+Position 80:  Fuel: 412661
+Position 81:  Fuel: 412039
+Position 82:  Fuel: 411421
+Position 83:  Fuel: 410803
+Position 84:  Fuel: 410187
+Position 85:  Fuel: 409571
+Position 86:  Fuel: 408961
+Position 87:  Fuel: 408357
+Position 88:  Fuel: 407755
+Position 89:  Fuel: 407157
+Position 90:  Fuel: 406565
+Position 91:  Fuel: 405979
+Position 92:  Fuel: 405395
+Position 93:  Fuel: 404813
+Position 94:  Fuel: 404233
+Position 95:  Fuel: 403655
+Position 96:  Fuel: 403083
+Position 97:  Fuel: 402519
+Position 98:  Fuel: 401963
+Position 99:  Fuel: 401409
+Position 100:  Fuel: 400863
+Position 101:  Fuel: 400321
+Position 102:  Fuel: 399791
+Position 103:  Fuel: 399263
+Position 104:  Fuel: 398739
+Position 105:  Fuel: 398219
+Position 106:  Fuel: 397703
+Position 107:  Fuel: 397187
+Position 108:  Fuel: 396671
+Position 109:  Fuel: 396157
+Position 110:  Fuel: 395647
+Position 111:  Fuel: 395149
+Position 112:  Fuel: 394661
+Position 113:  Fuel: 394179
+Position 114:  Fuel: 393699
+Position 115:  Fuel: 393223
+Position 116:  Fuel: 392755
+Position 117:  Fuel: 392293
+Position 118:  Fuel: 391837
+Position 119:  Fuel: 391383
+Position 120:  Fuel: 390929
+Position 121:  Fuel: 390481
+Position 122:  Fuel: 390033
+Position 123:  Fuel: 389585
+Position 124:  Fuel: 389145
+Position 125:  Fuel: 388711
+Position 126:  Fuel: 388281
+Position 127:  Fuel: 387857
+Position 128:  Fuel: 387437
+Position 129:  Fuel: 387017
+Position 130:  Fuel: 386599
+Position 131:  Fuel: 386181
+Position 132:  Fuel: 385765
+Position 133:  Fuel: 385349
+Position 134:  Fuel: 384935
+Position 135:  Fuel: 384529
+Position 136:  Fuel: 384125
+Position 137:  Fuel: 383721
+Position 138:  Fuel: 383321
+Position 139:  Fuel: 382921
+Position 140:  Fuel: 382521
+Position 141:  Fuel: 382131
+Position 142:  Fuel: 381743
+Position 143:  Fuel: 381357
+Position 144:  Fuel: 380979
+Position 145:  Fuel: 380607
+Position 146:  Fuel: 380237
+Position 147:  Fuel: 379869
+Position 148:  Fuel: 379501
+Position 149:  Fuel: 379133
+Position 150:  Fuel: 378769
+Position 151:  Fuel: 378409
+Position 152:  Fuel: 378049
+Position 153:  Fuel: 377689
+Position 154:  Fuel: 377331
+Position 155:  Fuel: 376975
+Position 156:  Fuel: 376619
+Position 157:  Fuel: 376265
+Position 158:  Fuel: 375913
+Position 159:  Fuel: 375563
+Position 160:  Fuel: 375217
+Position 161:  Fuel: 374873
+Position 162:  Fuel: 374533
+Position 163:  Fuel: 374193
+Position 164:  Fuel: 373857
+Position 165:  Fuel: 373521
+Position 166:  Fuel: 373185
+Position 167:  Fuel: 372849
+Position 168:  Fuel: 372515
+Position 169:  Fuel: 372181
+Position 170:  Fuel: 371849
+Position 171:  Fuel: 371517
+Position 172:  Fuel: 371185
+Position 173:  Fuel: 370859
+Position 174:  Fuel: 370535
+Position 175:  Fuel: 370211
+Position 176:  Fuel: 369891
+Position 177:  Fuel: 369573
+Position 178:  Fuel: 369255
+Position 179:  Fuel: 368937
+Position 180:  Fuel: 368621
+Position 181:  Fuel: 368309
+Position 182:  Fuel: 367997
+Position 183:  Fuel: 367685
+Position 184:  Fuel: 367377
+Position 185:  Fuel: 367077
+Position 186:  Fuel: 366785
+Position 187:  Fuel: 366493
+Position 188:  Fuel: 366205
+Position 189:  Fuel: 365921
+Position 190:  Fuel: 365639
+Position 191:  Fuel: 365357
+Position 192:  Fuel: 365077
+Position 193:  Fuel: 364799
+Position 194:  Fuel: 364523
+Position 195:  Fuel: 364249
+Position 196:  Fuel: 363979
+Position 197:  Fuel: 363717
+Position 198:  Fuel: 363459
+Position 199:  Fuel: 363203
+Position 200:  Fuel: 362949
+Position 201:  Fuel: 362695
+Position 202:  Fuel: 362443
+Position 203:  Fuel: 362193
+Position 204:  Fuel: 361949
+Position 205:  Fuel: 361707
+Position 206:  Fuel: 361465
+Position 207:  Fuel: 361225
+Position 208:  Fuel: 360987
+Position 209:  Fuel: 360749
+Position 210:  Fuel: 360519
+Position 211:  Fuel: 360291
+Position 212:  Fuel: 360063
+Position 213:  Fuel: 359837
+Position 214:  Fuel: 359613
+Position 215:  Fuel: 359389
+Position 216:  Fuel: 359165
+Position 217:  Fuel: 358941
+Position 218:  Fuel: 358721
+Position 219:  Fuel: 358503
+Position 220:  Fuel: 358285
+Position 221:  Fuel: 358067
+Position 222:  Fuel: 357851
+Position 223:  Fuel: 357637
+Position 224:  Fuel: 357423
+Position 225:  Fuel: 357211
+Position 226:  Fuel: 357003
+Position 227:  Fuel: 356795
+Position 228:  Fuel: 356589
+Position 229:  Fuel: 356383
+Position 230:  Fuel: 356177
+Position 231:  Fuel: 355977
+Position 232:  Fuel: 355777
+Position 233:  Fuel: 355579
+Position 234:  Fuel: 355387
+Position 235:  Fuel: 355197
+Position 236:  Fuel: 355009
+Position 237:  Fuel: 354821
+Position 238:  Fuel: 354637
+Position 239:  Fuel: 354453
+Position 240:  Fuel: 354273
+Position 241:  Fuel: 354093
+Position 242:  Fuel: 353917
+Position 243:  Fuel: 353741
+Position 244:  Fuel: 353565
+Position 245:  Fuel: 353389
+Position 246:  Fuel: 353221
+Position 247:  Fuel: 353053
+Position 248:  Fuel: 352885
+Position 249:  Fuel: 352717
+Position 250:  Fuel: 352553
+Position 251:  Fuel: 352389
+Position 252:  Fuel: 352225
+Position 253:  Fuel: 352067
+Position 254:  Fuel: 351913
+Position 255:  Fuel: 351759
+Position 256:  Fuel: 351605
+Position 257:  Fuel: 351453
+Position 258:  Fuel: 351303
+Position 259:  Fuel: 351153
+Position 260:  Fuel: 351003
+Position 261:  Fuel: 350853
+Position 262:  Fuel: 350705
+Position 263:  Fuel: 350561
+Position 264:  Fuel: 350423
+Position 265:  Fuel: 350285
+Position 266:  Fuel: 350151
+Position 267:  Fuel: 350017
+Position 268:  Fuel: 349887
+Position 269:  Fuel: 349757
+Position 270:  Fuel: 349627
+Position 271:  Fuel: 349497
+Position 272:  Fuel: 349369
+Position 273:  Fuel: 349241
+Position 274:  Fuel: 349113
+Position 275:  Fuel: 348987
+Position 276:  Fuel: 348863
+Position 277:  Fuel: 348743
+Position 278:  Fuel: 348627
+Position 279:  Fuel: 348513
+Position 280:  Fuel: 348403
+Position 281:  Fuel: 348293
+Position 282:  Fuel: 348185
+Position 283:  Fuel: 348077
+Position 284:  Fuel: 347971
+Position 285:  Fuel: 347865
+Position 286:  Fuel: 347761
+Position 287:  Fuel: 347659
+Position 288:  Fuel: 347561
+Position 289:  Fuel: 347467
+Position 290:  Fuel: 347373
+Position 291:  Fuel: 347281
+Position 292:  Fuel: 347191
+Position 293:  Fuel: 347107
+Position 294:  Fuel: 347027
+Position 295:  Fuel: 346949
+Position 296:  Fuel: 346871
+Position 297:  Fuel: 346797
+Position 298:  Fuel: 346723
+Position 299:  Fuel: 346649
+Position 300:  Fuel: 346575
+Position 301:  Fuel: 346501
+Position 302:  Fuel: 346433
+Position 303:  Fuel: 346367
+Position 304:  Fuel: 346301
+Position 305:  Fuel: 346237
+Position 306:  Fuel: 346175
+Position 307:  Fuel: 346115
+Position 308:  Fuel: 346057
+Position 309:  Fuel: 345999
+Position 310:  Fuel: 345945
+Position 311:  Fuel: 345891
+Position 312:  Fuel: 345837
+Position 313:  Fuel: 345785
+Position 314:  Fuel: 345735
+Position 315:  Fuel: 345689
+Position 316:  Fuel: 345645
+Position 317:  Fuel: 345603
+Position 318:  Fuel: 345563
+Position 319:  Fuel: 345525
+Position 320:  Fuel: 345489
+Position 321:  Fuel: 345461
+Position 322:  Fuel: 345435
+Position 323:  Fuel: 345409
+Position 324:  Fuel: 345383
+Position 325:  Fuel: 345357
+Position 326:  Fuel: 345333
+Position 327:  Fuel: 345309
+Position 328:  Fuel: 345287
+Position 329:  Fuel: 345269
+Position 330:  Fuel: 345255
+Position 331:  Fuel: 345241
+Position 332:  Fuel: 345233
+Position 333:  Fuel: 345227
+Position 334:  Fuel: 345221
+Position 335:  Fuel: 345215
+Position 336:  Fuel: 345209
+Position 337:  Fuel: 345205
+Position 338:  Fuel: 345201
+Position 339:  Fuel: 345199
+Position 340:  Fuel: 345197
+Position 341:  Fuel: 345199
+Position 342:  Fuel: 345201
+Position 343:  Fuel: 345203
+Position 344:  Fuel: 345207
+Position 345:  Fuel: 345211
+Position 346:  Fuel: 345217
+Position 347:  Fuel: 345225
+Position 348:  Fuel: 345235
+Position 349:  Fuel: 345245
+Position 350:  Fuel: 345255
+Position 351:  Fuel: 345273
+Position 352:  Fuel: 345293
+Position 353:  Fuel: 345313
+Position 354:  Fuel: 345335
+Position 355:  Fuel: 345357
+Position 356:  Fuel: 345381
+Position 357:  Fuel: 345405
+Position 358:  Fuel: 345435
+Position 359:  Fuel: 345465
+Position 360:  Fuel: 345499
+Position 361:  Fuel: 345533
+Position 362:  Fuel: 345571
+Position 363:  Fuel: 345615
+Position 364:  Fuel: 345659
+Position 365:  Fuel: 345703
+Position 366:  Fuel: 345747
+Position 367:  Fuel: 345793
+Position 368:  Fuel: 345839
+Position 369:  Fuel: 345887
+Position 370:  Fuel: 345935
+Position 371:  Fuel: 345983
+Position 372:  Fuel: 346033
+Position 373:  Fuel: 346083
+Position 374:  Fuel: 346133
+Position 375:  Fuel: 346183
+Position 376:  Fuel: 346233
+Position 377:  Fuel: 346285
+Position 378:  Fuel: 346337
+Position 379:  Fuel: 346389
+Position 380:  Fuel: 346441
+Position 381:  Fuel: 346495
+Position 382:  Fuel: 346549
+Position 383:  Fuel: 346605
+Position 384:  Fuel: 346663
+Position 385:  Fuel: 346723
+Position 386:  Fuel: 346785
+Position 387:  Fuel: 346851
+Position 388:  Fuel: 346917
+Position 389:  Fuel: 346985
+Position 390:  Fuel: 347053
+Position 391:  Fuel: 347121
+Position 392:  Fuel: 347193
+Position 393:  Fuel: 347267
+Position 394:  Fuel: 347341
+Position 395:  Fuel: 347415
+Position 396:  Fuel: 347489
+Position 397:  Fuel: 347565
+Position 398:  Fuel: 347643
+Position 399:  Fuel: 347721
+Position 400:  Fuel: 347805
+Position 401:  Fuel: 347889
+Position 402:  Fuel: 347973
+Position 403:  Fuel: 348057
+Position 404:  Fuel: 348145
+Position 405:  Fuel: 348235
+Position 406:  Fuel: 348327
+Position 407:  Fuel: 348419
+Position 408:  Fuel: 348513
+Position 409:  Fuel: 348613
+Position 410:  Fuel: 348715
+Position 411:  Fuel: 348817
+Position 412:  Fuel: 348919
+Position 413:  Fuel: 349023
+Position 414:  Fuel: 349127
+Position 415:  Fuel: 349233
+Position 416:  Fuel: 349341
+Position 417:  Fuel: 349449
+Position 418:  Fuel: 349557
+Position 419:  Fuel: 349667
+Position 420:  Fuel: 349779
+Position 421:  Fuel: 349891
+Position 422:  Fuel: 350005
+Position 423:  Fuel: 350119
+Position 424:  Fuel: 350237
+Position 425:  Fuel: 350357
+Position 426:  Fuel: 350479
+Position 427:  Fuel: 350607
+Position 428:  Fuel: 350735
+Position 429:  Fuel: 350863
+Position 430:  Fuel: 350995
+Position 431:  Fuel: 351131
+Position 432:  Fuel: 351267
+Position 433:  Fuel: 351403
+Position 434:  Fuel: 351539
+Position 435:  Fuel: 351675
+Position 436:  Fuel: 351811
+Position 437:  Fuel: 351949
+Position 438:  Fuel: 352087
+Position 439:  Fuel: 352227
+Position 440:  Fuel: 352369
+Position 441:  Fuel: 352511
+Position 442:  Fuel: 352655
+Position 443:  Fuel: 352799
+Position 444:  Fuel: 352945
+Position 445:  Fuel: 353091
+Position 446:  Fuel: 353237
+Position 447:  Fuel: 353387
+Position 448:  Fuel: 353537
+Position 449:  Fuel: 353687
+Position 450:  Fuel: 353837
+Position 451:  Fuel: 353991
+Position 452:  Fuel: 354145
+Position 453:  Fuel: 354301
+Position 454:  Fuel: 354457
+Position 455:  Fuel: 354613
+Position 456:  Fuel: 354769
+Position 457:  Fuel: 354927
+Position 458:  Fuel: 355087
+Position 459:  Fuel: 355247
+Position 460:  Fuel: 355407
+Position 461:  Fuel: 355567
+Position 462:  Fuel: 355729
+Position 463:  Fuel: 355893
+Position 464:  Fuel: 356057
+Position 465:  Fuel: 356223
+Position 466:  Fuel: 356389
+Position 467:  Fuel: 356555
+Position 468:  Fuel: 356721
+Position 469:  Fuel: 356887
+Position 470:  Fuel: 357053
+Position 471:  Fuel: 357219
+Position 472:  Fuel: 357385
+Position 473:  Fuel: 357553
+Position 474:  Fuel: 357721
+Position 475:  Fuel: 357891
+Position 476:  Fuel: 358065
+Position 477:  Fuel: 358239
+Position 478:  Fuel: 358413
+Position 479:  Fuel: 358591
+Position 480:  Fuel: 358771
+Position 481:  Fuel: 358957
+Position 482:  Fuel: 359145
+Position 483:  Fuel: 359337
+Position 484:  Fuel: 359529
+Position 485:  Fuel: 359721
+Position 486:  Fuel: 359915
+Position 487:  Fuel: 360111
+Position 488:  Fuel: 360311
+Position 489:  Fuel: 360515
+Position 490:  Fuel: 360725
+Position 491:  Fuel: 360935
+Position 492:  Fuel: 361147
+Position 493:  Fuel: 361361
+Position 494:  Fuel: 361575
+Position 495:  Fuel: 361789
+Position 496:  Fuel: 362003
+Position 497:  Fuel: 362219
+Position 498:  Fuel: 362437
+Position 499:  Fuel: 362655
+Position 500:  Fuel: 362873
+Position 501:  Fuel: 363091
+Position 502:  Fuel: 363311
+Position 503:  Fuel: 363533
+Position 504:  Fuel: 363755
+Position 505:  Fuel: 363977
+Position 506:  Fuel: 364201
+Position 507:  Fuel: 364425
+Position 508:  Fuel: 364651
+Position 509:  Fuel: 364877
+Position 510:  Fuel: 365103
+Position 511:  Fuel: 365329
+Position 512:  Fuel: 365555
+Position 513:  Fuel: 365781
+Position 514:  Fuel: 366007
+Position 515:  Fuel: 366235
+Position 516:  Fuel: 366463
+Position 517:  Fuel: 366693
+Position 518:  Fuel: 366923
+Position 519:  Fuel: 367157
+Position 520:  Fuel: 367391
+Position 521:  Fuel: 367629
+Position 522:  Fuel: 367867
+Position 523:  Fuel: 368109
+Position 524:  Fuel: 368351
+Position 525:  Fuel: 368595
+Position 526:  Fuel: 368839
+Position 527:  Fuel: 369083
+Position 528:  Fuel: 369329
+Position 529:  Fuel: 369575
+Position 530:  Fuel: 369823
+Position 531:  Fuel: 370073
+Position 532:  Fuel: 370325
+Position 533:  Fuel: 370579
+Position 534:  Fuel: 370835
+Position 535:  Fuel: 371093
+Position 536:  Fuel: 371357
+Position 537:  Fuel: 371623
+Position 538:  Fuel: 371889
+Position 539:  Fuel: 372157
+Position 540:  Fuel: 372427
+Position 541:  Fuel: 372699
+Position 542:  Fuel: 372971
+Position 543:  Fuel: 373245
+Position 544:  Fuel: 373519
+Position 545:  Fuel: 373795
+Position 546:  Fuel: 374071
+Position 547:  Fuel: 374351
+Position 548:  Fuel: 374635
+Position 549:  Fuel: 374921
+Position 550:  Fuel: 375207
+Position 551:  Fuel: 375497
+Position 552:  Fuel: 375787
+Position 553:  Fuel: 376079
+Position 554:  Fuel: 376371
+Position 555:  Fuel: 376665
+Position 556:  Fuel: 376961
+Position 557:  Fuel: 377257
+Position 558:  Fuel: 377553
+Position 559:  Fuel: 377857
+Position 560:  Fuel: 378161
+Position 561:  Fuel: 378467
+Position 562:  Fuel: 378773
+Position 563:  Fuel: 379079
+Position 564:  Fuel: 379385
+Position 565:  Fuel: 379691
+Position 566:  Fuel: 379997
+Position 567:  Fuel: 380305
+Position 568:  Fuel: 380613
+Position 569:  Fuel: 380921
+Position 570:  Fuel: 381229
+Position 571:  Fuel: 381537
+Position 572:  Fuel: 381845
+Position 573:  Fuel: 382155
+Position 574:  Fuel: 382467
+Position 575:  Fuel: 382781
+Position 576:  Fuel: 383095
+Position 577:  Fuel: 383409
+Position 578:  Fuel: 383723
+Position 579:  Fuel: 384037
+Position 580:  Fuel: 384353
+Position 581:  Fuel: 384669
+Position 582:  Fuel: 384987
+Position 583:  Fuel: 385307
+Position 584:  Fuel: 385629
+Position 585:  Fuel: 385951
+Position 586:  Fuel: 386273
+Position 587:  Fuel: 386597
+Position 588:  Fuel: 386921
+Position 589:  Fuel: 387245
+Position 590:  Fuel: 387571
+Position 591:  Fuel: 387899
+Position 592:  Fuel: 388227
+Position 593:  Fuel: 388555
+Position 594:  Fuel: 388883
+Position 595:  Fuel: 389213
+Position 596:  Fuel: 389545
+Position 597:  Fuel: 389881
+Position 598:  Fuel: 390219
+Position 599:  Fuel: 390561
+Position 600:  Fuel: 390903
+Position 601:  Fuel: 391247
+Position 602:  Fuel: 391595
+Position 603:  Fuel: 391943
+Position 604:  Fuel: 392293
+Position 605:  Fuel: 392647
+Position 606:  Fuel: 393003
+Position 607:  Fuel: 393361
+Position 608:  Fuel: 393721
+Position 609:  Fuel: 394081
+Position 610:  Fuel: 394445
+Position 611:  Fuel: 394809
+Position 612:  Fuel: 395177
+Position 613:  Fuel: 395545
+Position 614:  Fuel: 395913
+Position 615:  Fuel: 396281
+Position 616:  Fuel: 396651
+Position 617:  Fuel: 397021
+Position 618:  Fuel: 397391
+Position 619:  Fuel: 397761
+Position 620:  Fuel: 398133
+Position 621:  Fuel: 398505
+Position 622:  Fuel: 398877
+Position 623:  Fuel: 399253
+Position 624:  Fuel: 399631
+Position 625:  Fuel: 400009
+Position 626:  Fuel: 400387
+Position 627:  Fuel: 400767
+Position 628:  Fuel: 401149
+Position 629:  Fuel: 401533
+Position 630:  Fuel: 401919
+Position 631:  Fuel: 402305
+Position 632:  Fuel: 402695
+Position 633:  Fuel: 403087
+Position 634:  Fuel: 403483
+Position 635:  Fuel: 403881
+Position 636:  Fuel: 404281
+Position 637:  Fuel: 404685
+Position 638:  Fuel: 405093
+Position 639:  Fuel: 405501
+Position 640:  Fuel: 405909
+Position 641:  Fuel: 406317
+Position 642:  Fuel: 406725
+Position 643:  Fuel: 407133
+Position 644:  Fuel: 407541
+Position 645:  Fuel: 407949
+Position 646:  Fuel: 408359
+Position 647:  Fuel: 408771
+Position 648:  Fuel: 409183
+Position 649:  Fuel: 409595
+Position 650:  Fuel: 410007
+Position 651:  Fuel: 410419
+Position 652:  Fuel: 410835
+Position 653:  Fuel: 411253
+Position 654:  Fuel: 411671
+Position 655:  Fuel: 412091
+Position 656:  Fuel: 412511
+Position 657:  Fuel: 412931
+Position 658:  Fuel: 413351
+Position 659:  Fuel: 413771
+Position 660:  Fuel: 414193
+Position 661:  Fuel: 414615
+Position 662:  Fuel: 415039
+Position 663:  Fuel: 415463
+Position 664:  Fuel: 415887
+Position 665:  Fuel: 416311
+Position 666:  Fuel: 416739
+Position 667:  Fuel: 417169
+Position 668:  Fuel: 417601
+Position 669:  Fuel: 418037
+Position 670:  Fuel: 418481
+Position 671:  Fuel: 418925
+Position 672:  Fuel: 419369
+Position 673:  Fuel: 419813
+Position 674:  Fuel: 420259
+Position 675:  Fuel: 420707
+Position 676:  Fuel: 421155
+Position 677:  Fuel: 421605
+Position 678:  Fuel: 422057
+Position 679:  Fuel: 422509
+Position 680:  Fuel: 422963
+Position 681:  Fuel: 423417
+Position 682:  Fuel: 423871
+Position 683:  Fuel: 424327
+Position 684:  Fuel: 424785
+Position 685:  Fuel: 425245
+Position 686:  Fuel: 425705
+Position 687:  Fuel: 426165
+Position 688:  Fuel: 426627
+Position 689:  Fuel: 427089
+Position 690:  Fuel: 427551
+Position 691:  Fuel: 428013
+Position 692:  Fuel: 428475
+Position 693:  Fuel: 428937
+Position 694:  Fuel: 429401
+Position 695:  Fuel: 429865
+Position 696:  Fuel: 430331
+Position 697:  Fuel: 430801
+Position 698:  Fuel: 431271
+Position 699:  Fuel: 431745
+Position 700:  Fuel: 432219
+Position 701:  Fuel: 432695
+Position 702:  Fuel: 433171
+Position 703:  Fuel: 433647
+Position 704:  Fuel: 434123
+Position 705:  Fuel: 434599
+Position 706:  Fuel: 435075
+Position 707:  Fuel: 435551
+Position 708:  Fuel: 436029
+Position 709:  Fuel: 436507
+Position 710:  Fuel: 436987
+Position 711:  Fuel: 437471
+Position 712:  Fuel: 437955
+Position 713:  Fuel: 438439
+Position 714:  Fuel: 438923
+Position 715:  Fuel: 439409
+Position 716:  Fuel: 439897
+Position 717:  Fuel: 440387
+Position 718:  Fuel: 440879
+Position 719:  Fuel: 441375
+Position 720:  Fuel: 441871
+Position 721:  Fuel: 442367
+Position 722:  Fuel: 442863
+Position 723:  Fuel: 443359
+Position 724:  Fuel: 443855
+Position 725:  Fuel: 444351
+Position 726:  Fuel: 444849
+Position 727:  Fuel: 445347
+Position 728:  Fuel: 445845
+Position 729:  Fuel: 446345
+Position 730:  Fuel: 446845
+Position 731:  Fuel: 447347
+Position 732:  Fuel: 447849
+Position 733:  Fuel: 448353
+Position 734:  Fuel: 448857
+Position 735:  Fuel: 449361
+Position 736:  Fuel: 449865
+Position 737:  Fuel: 450371
+Position 738:  Fuel: 450877
+Position 739:  Fuel: 451383
+Position 740:  Fuel: 451889
+Position 741:  Fuel: 452397
+Position 742:  Fuel: 452907
+Position 743:  Fuel: 453417
+Position 744:  Fuel: 453927
+Position 745:  Fuel: 454437
+Position 746:  Fuel: 454951
+Position 747:  Fuel: 455467
+Position 748:  Fuel: 455983
+Position 749:  Fuel: 456499
+Position 750:  Fuel: 457017
+Position 751:  Fuel: 457535
+Position 752:  Fuel: 458053
+Position 753:  Fuel: 458571
+Position 754:  Fuel: 459089
+Position 755:  Fuel: 459607
+Position 756:  Fuel: 460127
+Position 757:  Fuel: 460647
+Position 758:  Fuel: 461171
+Position 759:  Fuel: 461697
+Position 760:  Fuel: 462229
+Position 761:  Fuel: 462765
+Position 762:  Fuel: 463301
+Position 763:  Fuel: 463837
+Position 764:  Fuel: 464373
+Position 765:  Fuel: 464909
+Position 766:  Fuel: 465447
+Position 767:  Fuel: 465985
+Position 768:  Fuel: 466525
+Position 769:  Fuel: 467065
+Position 770:  Fuel: 467605
+Position 771:  Fuel: 468145
+Position 772:  Fuel: 468687
+Position 773:  Fuel: 469229
+Position 774:  Fuel: 469771
+Position 775:  Fuel: 470317
+Position 776:  Fuel: 470863
+Position 777:  Fuel: 471409
+Position 778:  Fuel: 471959
+Position 779:  Fuel: 472509
+Position 780:  Fuel: 473061
+Position 781:  Fuel: 473613
+Position 782:  Fuel: 474165
+Position 783:  Fuel: 474717
+Position 784:  Fuel: 475271
+Position 785:  Fuel: 475825
+Position 786:  Fuel: 476381
+Position 787:  Fuel: 476939
+Position 788:  Fuel: 477497
+Position 789:  Fuel: 478055
+Position 790:  Fuel: 478613
+Position 791:  Fuel: 479171
+Position 792:  Fuel: 479729
+Position 793:  Fuel: 480289
+Position 794:  Fuel: 480849
+Position 795:  Fuel: 481409
+Position 796:  Fuel: 481969
+Position 797:  Fuel: 482529
+Position 798:  Fuel: 483091
+Position 799:  Fuel: 483653
+Position 800:  Fuel: 484219
+Position 801:  Fuel: 484785
+Position 802:  Fuel: 485351
+Position 803:  Fuel: 485917
+Position 804:  Fuel: 486483
+Position 805:  Fuel: 487049
+Position 806:  Fuel: 487617
+Position 807:  Fuel: 488185
+Position 808:  Fuel: 488753
+Position 809:  Fuel: 489323
+Position 810:  Fuel: 489895
+Position 811:  Fuel: 490467
+Position 812:  Fuel: 491039
+Position 813:  Fuel: 491611
+Position 814:  Fuel: 492183
+Position 815:  Fuel: 492755
+Position 816:  Fuel: 493329
+Position 817:  Fuel: 493903
+Position 818:  Fuel: 494479
+Position 819:  Fuel: 495055
+Position 820:  Fuel: 495633
+Position 821:  Fuel: 496211
+Position 822:  Fuel: 496791
+Position 823:  Fuel: 497371
+Position 824:  Fuel: 497951
+Position 825:  Fuel: 498533
+Position 826:  Fuel: 499117
+Position 827:  Fuel: 499701
+Position 828:  Fuel: 500285
+Position 829:  Fuel: 500869
+Position 830:  Fuel: 501453
+Position 831:  Fuel: 502037
+Position 832:  Fuel: 502621
+Position 833:  Fuel: 503205
+Position 834:  Fuel: 503791
+Position 835:  Fuel: 504379
+Position 836:  Fuel: 504967
+Position 837:  Fuel: 505555
+Position 838:  Fuel: 506143
+Position 839:  Fuel: 506731
+Position 840:  Fuel: 507319
+Position 841:  Fuel: 507907
+Position 842:  Fuel: 508497
+Position 843:  Fuel: 509087
+Position 844:  Fuel: 509679
+Position 845:  Fuel: 510273
+Position 846:  Fuel: 510869
+Position 847:  Fuel: 511465
+Position 848:  Fuel: 512063
+Position 849:  Fuel: 512661
+Position 850:  Fuel: 513259
+Position 851:  Fuel: 513859
+Position 852:  Fuel: 514463
+Position 853:  Fuel: 515067
+Position 854:  Fuel: 515673
+Position 855:  Fuel: 516279
+Position 856:  Fuel: 516885
+Position 857:  Fuel: 517493
+Position 858:  Fuel: 518103
+Position 859:  Fuel: 518715
+Position 860:  Fuel: 519327
+Position 861:  Fuel: 519939
+Position 862:  Fuel: 520551
+Position 863:  Fuel: 521165
+Position 864:  Fuel: 521779
+Position 865:  Fuel: 522393
+Position 866:  Fuel: 523007
+Position 867:  Fuel: 523621
+Position 868:  Fuel: 524237
+Position 869:  Fuel: 524853
+Position 870:  Fuel: 525469
+Position 871:  Fuel: 526085
+Position 872:  Fuel: 526705
+Position 873:  Fuel: 527327
+Position 874:  Fuel: 527951
+Position 875:  Fuel: 528575
+Position 876:  Fuel: 529199
+Position 877:  Fuel: 529823
+Position 878:  Fuel: 530447
+Position 879:  Fuel: 531073
+Position 880:  Fuel: 531699
+Position 881:  Fuel: 532325
+Position 882:  Fuel: 532951
+Position 883:  Fuel: 533581
+Position 884:  Fuel: 534211
+Position 885:  Fuel: 534841
+Position 886:  Fuel: 535471
+Position 887:  Fuel: 536101
+Position 888:  Fuel: 536731
+Position 889:  Fuel: 537361
+Position 890:  Fuel: 537991
+Position 891:  Fuel: 538623
+Position 892:  Fuel: 539257
+Position 893:  Fuel: 539893
+Position 894:  Fuel: 540531
+Position 895:  Fuel: 541169
+Position 896:  Fuel: 541811
+Position 897:  Fuel: 542455
+Position 898:  Fuel: 543099
+Position 899:  Fuel: 543743
+Position 900:  Fuel: 544387
+Position 901:  Fuel: 545035
+Position 902:  Fuel: 545683
+Position 903:  Fuel: 546331
+Position 904:  Fuel: 546983
+Position 905:  Fuel: 547637
+Position 906:  Fuel: 548291
+Position 907:  Fuel: 548949
+Position 908:  Fuel: 549607
+Position 909:  Fuel: 550265
+Position 910:  Fuel: 550923
+Position 911:  Fuel: 551581
+Position 912:  Fuel: 552241
+Position 913:  Fuel: 552901
+Position 914:  Fuel: 553561
+Position 915:  Fuel: 554221
+Position 916:  Fuel: 554887
+Position 917:  Fuel: 555553
+Position 918:  Fuel: 556219
+Position 919:  Fuel: 556885
+Position 920:  Fuel: 557551
+Position 921:  Fuel: 558217
+Position 922:  Fuel: 558883
+Position 923:  Fuel: 559549
+Position 924:  Fuel: 560215
+Position 925:  Fuel: 560881
+Position 926:  Fuel: 561547
+Position 927:  Fuel: 562213
+Position 928:  Fuel: 562881
+Position 929:  Fuel: 563549
+Position 930:  Fuel: 564217
+Position 931:  Fuel: 564887
+Position 932:  Fuel: 565561
+Position 933:  Fuel: 566239
+Position 934:  Fuel: 566921
+Position 935:  Fuel: 567603
+Position 936:  Fuel: 568287
+Position 937:  Fuel: 568971
+Position 938:  Fuel: 569655
+Position 939:  Fuel: 570343
+Position 940:  Fuel: 571033
+Position 941:  Fuel: 571725
+Position 942:  Fuel: 572417
+Position 943:  Fuel: 573113
+Position 944:  Fuel: 573811
+Position 945:  Fuel: 574509
+Position 946:  Fuel: 575207
+Position 947:  Fuel: 575905
+Position 948:  Fuel: 576603
+Position 949:  Fuel: 577301
+Position 950:  Fuel: 578001
+Position 951:  Fuel: 578701
+Position 952:  Fuel: 579401
+Position 953:  Fuel: 580101
+Position 954:  Fuel: 580801
+Position 955:  Fuel: 581501
+Position 956:  Fuel: 582201
+Position 957:  Fuel: 582901
+Position 958:  Fuel: 583601
+Position 959:  Fuel: 584303
+Position 960:  Fuel: 585007
+Position 961:  Fuel: 585711
+Position 962:  Fuel: 586417
+Position 963:  Fuel: 587123
+Position 964:  Fuel: 587829
+Position 965:  Fuel: 588535
+Position 966:  Fuel: 589241
+Position 967:  Fuel: 589949
+Position 968:  Fuel: 590661
+Position 969:  Fuel: 591375
+Position 970:  Fuel: 592089
+Position 971:  Fuel: 592807
+Position 972:  Fuel: 593525
+Position 973:  Fuel: 594245
+Position 974:  Fuel: 594965
+Position 975:  Fuel: 595685
+Position 976:  Fuel: 596405
+Position 977:  Fuel: 597127
+Position 978:  Fuel: 597849
+Position 979:  Fuel: 598571
+Position 980:  Fuel: 599293
+Position 981:  Fuel: 600015
+Position 982:  Fuel: 600739
+Position 983:  Fuel: 601463
+Position 984:  Fuel: 602187
+Position 985:  Fuel: 602911
+Position 986:  Fuel: 603635
+Position 987:  Fuel: 604359
+Position 988:  Fuel: 605083
+Position 989:  Fuel: 605809
+Position 990:  Fuel: 606535
+Position 991:  Fuel: 607261
+Position 992:  Fuel: 607989
+Position 993:  Fuel: 608719
+Position 994:  Fuel: 609451
+Position 995:  Fuel: 610183
+Position 996:  Fuel: 610915
+Position 997:  Fuel: 611647
+Position 998:  Fuel: 612379
+Position 999:  Fuel: 613113
+Position 1000:  Fuel: 613849
+Position 1001:  Fuel: 614585
+Position 1002:  Fuel: 615323
+Position 1003:  Fuel: 616061
+Position 1004:  Fuel: 616801
+Position 1005:  Fuel: 617543
+Position 1006:  Fuel: 618289
+Position 1007:  Fuel: 619035
+Position 1008:  Fuel: 619781
+Position 1009:  Fuel: 620529
+Position 1010:  Fuel: 621277
+Position 1011:  Fuel: 622025
+Position 1012:  Fuel: 622773
+Position 1013:  Fuel: 623523
+Position 1014:  Fuel: 624273
+Position 1015:  Fuel: 625023
+Position 1016:  Fuel: 625773
+Position 1017:  Fuel: 626525
+Position 1018:  Fuel: 627277
+Position 1019:  Fuel: 628029
+Position 1020:  Fuel: 628781
+Position 1021:  Fuel: 629533
+Position 1022:  Fuel: 630289
+Position 1023:  Fuel: 631045
+Position 1024:  Fuel: 631801
+Position 1025:  Fuel: 632557
+Position 1026:  Fuel: 633313
+Position 1027:  Fuel: 634071
+Position 1028:  Fuel: 634829
+Position 1029:  Fuel: 635587
+Position 1030:  Fuel: 636347
+Position 1031:  Fuel: 637107
+Position 1032:  Fuel: 637867
+Position 1033:  Fuel: 638627
+Position 1034:  Fuel: 639387
+Position 1035:  Fuel: 640147
+Position 1036:  Fuel: 640907
+Position 1037:  Fuel: 641667
+Position 1038:  Fuel: 642429
+Position 1039:  Fuel: 643191
+Position 1040:  Fuel: 643953
+Position 1041:  Fuel: 644715
+Position 1042:  Fuel: 645479
+Position 1043:  Fuel: 646245
+Position 1044:  Fuel: 647011
+Position 1045:  Fuel: 647777
+Position 1046:  Fuel: 648543
+Position 1047:  Fuel: 649309
+Position 1048:  Fuel: 650075
+Position 1049:  Fuel: 650841
+Position 1050:  Fuel: 651607
+Position 1051:  Fuel: 652373
+Position 1052:  Fuel: 653139
+Position 1053:  Fuel: 653905
+Position 1054:  Fuel: 654671
+Position 1055:  Fuel: 655439
+Position 1056:  Fuel: 656207
+Position 1057:  Fuel: 656975
+Position 1058:  Fuel: 657743
+Position 1059:  Fuel: 658513
+Position 1060:  Fuel: 659283
+Position 1061:  Fuel: 660053
+Position 1062:  Fuel: 660823
+Position 1063:  Fuel: 661593
+Position 1064:  Fuel: 662363
+Position 1065:  Fuel: 663133
+Position 1066:  Fuel: 663903
+Position 1067:  Fuel: 664673
+Position 1068:  Fuel: 665443
+Position 1069:  Fuel: 666213
+Position 1070:  Fuel: 666983
+Position 1071:  Fuel: 667753
+Position 1072:  Fuel: 668523
+Position 1073:  Fuel: 669293
+Position 1074:  Fuel: 670063
+Position 1075:  Fuel: 670833
+Position 1076:  Fuel: 671603
+Position 1077:  Fuel: 672373
+Position 1078:  Fuel: 673143
+Position 1079:  Fuel: 673913
+Position 1080:  Fuel: 674683
+Position 1081:  Fuel: 675453
+Position 1082:  Fuel: 676223
+Position 1083:  Fuel: 676995
+Position 1084:  Fuel: 677769
+Position 1085:  Fuel: 678543
+Position 1086:  Fuel: 679317
+Position 1087:  Fuel: 680091
+Position 1088:  Fuel: 680865
+Position 1089:  Fuel: 681639
+Position 1090:  Fuel: 682413
+Position 1091:  Fuel: 683187
+Position 1092:  Fuel: 683961
+Position 1093:  Fuel: 684735
+Position 1094:  Fuel: 685509
+Position 1095:  Fuel: 686283
+Position 1096:  Fuel: 687057
+Position 1097:  Fuel: 687831
+Position 1098:  Fuel: 688605
+Position 1099:  Fuel: 689379
+Position 1100:  Fuel: 690153
+Position 1101:  Fuel: 690927
+Position 1102:  Fuel: 691707
+Position 1103:  Fuel: 692489
+Position 1104:  Fuel: 693273
+Position 1105:  Fuel: 694057
+Position 1106:  Fuel: 694841
+Position 1107:  Fuel: 695627
+Position 1108:  Fuel: 696413
+Position 1109:  Fuel: 697201
+Position 1110:  Fuel: 697989
+Position 1111:  Fuel: 698777
+Position 1112:  Fuel: 699565
+Position 1113:  Fuel: 700353
+Position 1114:  Fuel: 701141
+Position 1115:  Fuel: 701929
+Position 1116:  Fuel: 702717
+Position 1117:  Fuel: 703505
+Position 1118:  Fuel: 704293
+Position 1119:  Fuel: 705081
+Position 1120:  Fuel: 705871
+Position 1121:  Fuel: 706661
+Position 1122:  Fuel: 707451
+Position 1123:  Fuel: 708241
+Position 1124:  Fuel: 709033
+Position 1125:  Fuel: 709825
+Position 1126:  Fuel: 710617
+Position 1127:  Fuel: 711411
+Position 1128:  Fuel: 712205
+Position 1129:  Fuel: 712999
+Position 1130:  Fuel: 713793
+Position 1131:  Fuel: 714587
+Position 1132:  Fuel: 715381
+Position 1133:  Fuel: 716175
+Position 1134:  Fuel: 716973
+Position 1135:  Fuel: 717773
+Position 1136:  Fuel: 718573
+Position 1137:  Fuel: 719373
+Position 1138:  Fuel: 720173
+Position 1139:  Fuel: 720973
+Position 1140:  Fuel: 721773
+Position 1141:  Fuel: 722573
+Position 1142:  Fuel: 723373
+Position 1143:  Fuel: 724173
+Position 1144:  Fuel: 724973
+Position 1145:  Fuel: 725773
+Position 1146:  Fuel: 726573
+Position 1147:  Fuel: 727375
+Position 1148:  Fuel: 728177
+Position 1149:  Fuel: 728981
+Position 1150:  Fuel: 729785
+Position 1151:  Fuel: 730589
+Position 1152:  Fuel: 731393
+Position 1153:  Fuel: 732199
+Position 1154:  Fuel: 733005
+Position 1155:  Fuel: 733811
+Position 1156:  Fuel: 734617
+Position 1157:  Fuel: 735425
+Position 1158:  Fuel: 736233
+Position 1159:  Fuel: 737041
+Position 1160:  Fuel: 737849
+Position 1161:  Fuel: 738657
+Position 1162:  Fuel: 739465
+Position 1163:  Fuel: 740273
+Position 1164:  Fuel: 741083
+Position 1165:  Fuel: 741893
+Position 1166:  Fuel: 742705
+Position 1167:  Fuel: 743517
+Position 1168:  Fuel: 744329
+Position 1169:  Fuel: 745141
+Position 1170:  Fuel: 745953
+Position 1171:  Fuel: 746765
+Position 1172:  Fuel: 747577
+Position 1173:  Fuel: 748389
+Position 1174:  Fuel: 749203
+Position 1175:  Fuel: 750017
+Position 1176:  Fuel: 750833
+Position 1177:  Fuel: 751649
+Position 1178:  Fuel: 752465
+Position 1179:  Fuel: 753283
+Position 1180:  Fuel: 754101
+Position 1181:  Fuel: 754919
+Position 1182:  Fuel: 755737
+Position 1183:  Fuel: 756555
+Position 1184:  Fuel: 757375
+Position 1185:  Fuel: 758195
+Position 1186:  Fuel: 759015
+Position 1187:  Fuel: 759835
+Position 1188:  Fuel: 760655
+Position 1189:  Fuel: 761475
+Position 1190:  Fuel: 762297
+Position 1191:  Fuel: 763119
+Position 1192:  Fuel: 763941
+Position 1193:  Fuel: 764763
+Position 1194:  Fuel: 765585
+Position 1195:  Fuel: 766409
+Position 1196:  Fuel: 767235
+Position 1197:  Fuel: 768061
+Position 1198:  Fuel: 768887
+Position 1199:  Fuel: 769713
+Position 1200:  Fuel: 770539
+Position 1201:  Fuel: 771365
+Position 1202:  Fuel: 772191
+Position 1203:  Fuel: 773017
+Position 1204:  Fuel: 773845
+Position 1205:  Fuel: 774673
+Position 1206:  Fuel: 775501
+Position 1207:  Fuel: 776329
+Position 1208:  Fuel: 777157
+Position 1209:  Fuel: 777985
+Position 1210:  Fuel: 778815
+Position 1211:  Fuel: 779645
+Position 1212:  Fuel: 780477
+Position 1213:  Fuel: 781309
+Position 1214:  Fuel: 782141
+Position 1215:  Fuel: 782973
+Position 1216:  Fuel: 783805
+Position 1217:  Fuel: 784639
+Position 1218:  Fuel: 785473
+Position 1219:  Fuel: 786307
+Position 1220:  Fuel: 787141
+Position 1221:  Fuel: 787975
+Position 1222:  Fuel: 788809
+Position 1223:  Fuel: 789643
+Position 1224:  Fuel: 790477
+Position 1225:  Fuel: 791311
+Position 1226:  Fuel: 792145
+Position 1227:  Fuel: 792979
+Position 1228:  Fuel: 793815
+Position 1229:  Fuel: 794651
+Position 1230:  Fuel: 795487
+Position 1231:  Fuel: 796323
+Position 1232:  Fuel: 797161
+Position 1233:  Fuel: 797999
+Position 1234:  Fuel: 798837
+Position 1235:  Fuel: 799675
+Position 1236:  Fuel: 800513
+Position 1237:  Fuel: 801351
+Position 1238:  Fuel: 802189
+Position 1239:  Fuel: 803027
+Position 1240:  Fuel: 803865
+Position 1241:  Fuel: 804703
+Position 1242:  Fuel: 805541
+Position 1243:  Fuel: 806379
+Position 1244:  Fuel: 807217
+Position 1245:  Fuel: 808055
+Position 1246:  Fuel: 808895
+Position 1247:  Fuel: 809735
+Position 1248:  Fuel: 810575
+Position 1249:  Fuel: 811417
+Position 1250:  Fuel: 812259
+Position 1251:  Fuel: 813103
+Position 1252:  Fuel: 813947
+Position 1253:  Fuel: 814791
+Position 1254:  Fuel: 815635
+Position 1255:  Fuel: 816479
+Position 1256:  Fuel: 817325
+Position 1257:  Fuel: 818171
+Position 1258:  Fuel: 819019
+Position 1259:  Fuel: 819867
+Position 1260:  Fuel: 820715
+Position 1261:  Fuel: 821565
+Position 1262:  Fuel: 822417
+Position 1263:  Fuel: 823269
+Position 1264:  Fuel: 824121
+Position 1265:  Fuel: 824973
+Position 1266:  Fuel: 825825
+Position 1267:  Fuel: 826677
+Position 1268:  Fuel: 827529
+Position 1269:  Fuel: 828381
+Position 1270:  Fuel: 829235
+Position 1271:  Fuel: 830089
+Position 1272:  Fuel: 830943
+Position 1273:  Fuel: 831799
+Position 1274:  Fuel: 832657
+Position 1275:  Fuel: 833515
+Position 1276:  Fuel: 834373
+Position 1277:  Fuel: 835231
+Position 1278:  Fuel: 836089
+Position 1279:  Fuel: 836947
+Position 1280:  Fuel: 837805
+Position 1281:  Fuel: 838665
+Position 1282:  Fuel: 839525
+Position 1283:  Fuel: 840385
+Position 1284:  Fuel: 841245
+Position 1285:  Fuel: 842107
+Position 1286:  Fuel: 842969
+Position 1287:  Fuel: 843833
+Position 1288:  Fuel: 844699
+Position 1289:  Fuel: 845565
+Position 1290:  Fuel: 846431
+Position 1291:  Fuel: 847297
+Position 1292:  Fuel: 848163
+Position 1293:  Fuel: 849029
+Position 1294:  Fuel: 849895
+Position 1295:  Fuel: 850761
+Position 1296:  Fuel: 851629
+Position 1297:  Fuel: 852497
+Position 1298:  Fuel: 853365
+Position 1299:  Fuel: 854235
+Position 1300:  Fuel: 855105
+Position 1301:  Fuel: 855977
+Position 1302:  Fuel: 856849
+Position 1303:  Fuel: 857721
+Position 1304:  Fuel: 858593
+Position 1305:  Fuel: 859467
+Position 1306:  Fuel: 860341
+Position 1307:  Fuel: 861215
+Position 1308:  Fuel: 862091
+Position 1309:  Fuel: 862967
+Position 1310:  Fuel: 863843
+Position 1311:  Fuel: 864719
+Position 1312:  Fuel: 865595
+Position 1313:  Fuel: 866471
+Position 1314:  Fuel: 867347
+Position 1315:  Fuel: 868223
+Position 1316:  Fuel: 869099
+Position 1317:  Fuel: 869975
+Position 1318:  Fuel: 870853
+Position 1319:  Fuel: 871731
+Position 1320:  Fuel: 872609
+Position 1321:  Fuel: 873487
+Position 1322:  Fuel: 874367
+Position 1323:  Fuel: 875247
+Position 1324:  Fuel: 876127
+Position 1325:  Fuel: 877007
+Position 1326:  Fuel: 877887
+Position 1327:  Fuel: 878769
+Position 1328:  Fuel: 879651
+Position 1329:  Fuel: 880535
+Position 1330:  Fuel: 881419
+Position 1331:  Fuel: 882303
+Position 1332:  Fuel: 883187
+Position 1333:  Fuel: 884071
+Position 1334:  Fuel: 884955
+Position 1335:  Fuel: 885839
+Position 1336:  Fuel: 886723
+Position 1337:  Fuel: 887607
+Position 1338:  Fuel: 888491
+Position 1339:  Fuel: 889375
+Position 1340:  Fuel: 890259
+Position 1341:  Fuel: 891143
+Position 1342:  Fuel: 892027
+Position 1343:  Fuel: 892911
+Position 1344:  Fuel: 893795
+Position 1345:  Fuel: 894679
+Position 1346:  Fuel: 895563
+Position 1347:  Fuel: 896447
+Position 1348:  Fuel: 897333
+Position 1349:  Fuel: 898219
+Position 1350:  Fuel: 899105
+Position 1351:  Fuel: 899991
+Position 1352:  Fuel: 900877
+Position 1353:  Fuel: 901763
+Position 1354:  Fuel: 902649
+Position 1355:  Fuel: 903535
+Position 1356:  Fuel: 904421
+Position 1357:  Fuel: 905309
+Position 1358:  Fuel: 906197
+Position 1359:  Fuel: 907085
+Position 1360:  Fuel: 907973
+Position 1361:  Fuel: 908861
+Position 1362:  Fuel: 909749
+Position 1363:  Fuel: 910637
+Position 1364:  Fuel: 911525
+Position 1365:  Fuel: 912413
+Position 1366:  Fuel: 913303
+Position 1367:  Fuel: 914195
+Position 1368:  Fuel: 915089
+Position 1369:  Fuel: 915983
+Position 1370:  Fuel: 916877
+Position 1371:  Fuel: 917771
+Position 1372:  Fuel: 918665
+Position 1373:  Fuel: 919559
+Position 1374:  Fuel: 920453
+Position 1375:  Fuel: 921347
+Position 1376:  Fuel: 922243
+Position 1377:  Fuel: 923139
+Position 1378:  Fuel: 924035
+Position 1379:  Fuel: 924931
+Position 1380:  Fuel: 925827
+Position 1381:  Fuel: 926723
+Position 1382:  Fuel: 927619
+Position 1383:  Fuel: 928515
+Position 1384:  Fuel: 929411
+Position 1385:  Fuel: 930307
+Position 1386:  Fuel: 931203
+Position 1387:  Fuel: 932099
+Position 1388:  Fuel: 932997
+Position 1389:  Fuel: 933895
+Position 1390:  Fuel: 934793
+Position 1391:  Fuel: 935691
+Position 1392:  Fuel: 936589
+Position 1393:  Fuel: 937487
+Position 1394:  Fuel: 938385
+Position 1395:  Fuel: 939283
+Position 1396:  Fuel: 940181
+Position 1397:  Fuel: 941079
+Position 1398:  Fuel: 941977
+Position 1399:  Fuel: 942875
+Position 1400:  Fuel: 943773
+Position 1401:  Fuel: 944673
+Position 1402:  Fuel: 945575
+Position 1403:  Fuel: 946479
+Position 1404:  Fuel: 947385
+Position 1405:  Fuel: 948291
+Position 1406:  Fuel: 949197
+Position 1407:  Fuel: 950103
+Position 1408:  Fuel: 951009
+Position 1409:  Fuel: 951915
+Position 1410:  Fuel: 952821
+Position 1411:  Fuel: 953727
+Position 1412:  Fuel: 954635
+Position 1413:  Fuel: 955543
+Position 1414:  Fuel: 956451
+Position 1415:  Fuel: 957359
+Position 1416:  Fuel: 958267
+Position 1417:  Fuel: 959175
+Position 1418:  Fuel: 960083
+Position 1419:  Fuel: 960991
+Position 1420:  Fuel: 961899
+Position 1421:  Fuel: 962807
+Position 1422:  Fuel: 963715
+Position 1423:  Fuel: 964623
+Position 1424:  Fuel: 965531
+Position 1425:  Fuel: 966439
+Position 1426:  Fuel: 967349
+Position 1427:  Fuel: 968259
+Position 1428:  Fuel: 969171
+Position 1429:  Fuel: 970083
+Position 1430:  Fuel: 970997
+Position 1431:  Fuel: 971913
+Position 1432:  Fuel: 972829
+Position 1433:  Fuel: 973745
+Position 1434:  Fuel: 974661
+Position 1435:  Fuel: 975579
+Position 1436:  Fuel: 976497
+Position 1437:  Fuel: 977417
+Position 1438:  Fuel: 978337
+Position 1439:  Fuel: 979257
+Position 1440:  Fuel: 980179
+Position 1441:  Fuel: 981101
+Position 1442:  Fuel: 982023
+Position 1443:  Fuel: 982945
+Position 1444:  Fuel: 983867
+Position 1445:  Fuel: 984789
+Position 1446:  Fuel: 985711
+Position 1447:  Fuel: 986635
+Position 1448:  Fuel: 987559
+Position 1449:  Fuel: 988485
+Position 1450:  Fuel: 989411
+Position 1451:  Fuel: 990337
+Position 1452:  Fuel: 991267
+Position 1453:  Fuel: 992197
+Position 1454:  Fuel: 993127
+Position 1455:  Fuel: 994057
+Position 1456:  Fuel: 994987
+Position 1457:  Fuel: 995917
+Position 1458:  Fuel: 996847
+Position 1459:  Fuel: 997777
+Position 1460:  Fuel: 998709
+Position 1461:  Fuel: 999641
+Position 1462:  Fuel: 1000573
+Position 1463:  Fuel: 1001505
+Position 1464:  Fuel: 1002437
+Position 1465:  Fuel: 1003369
+Position 1466:  Fuel: 1004301
+Position 1467:  Fuel: 1005233
+Position 1468:  Fuel: 1006165
+Position 1469:  Fuel: 1007097
+Position 1470:  Fuel: 1008031
+Position 1471:  Fuel: 1008965
+Position 1472:  Fuel: 1009899
+Position 1473:  Fuel: 1010833
+Position 1474:  Fuel: 1011767
+Position 1475:  Fuel: 1012701
+Position 1476:  Fuel: 1013635
+Position 1477:  Fuel: 1014569
+Position 1478:  Fuel: 1015503
+Position 1479:  Fuel: 1016437
+Position 1480:  Fuel: 1017373
+Position 1481:  Fuel: 1018309
+Position 1482:  Fuel: 1019245
+Position 1483:  Fuel: 1020183
+Position 1484:  Fuel: 1021121
+Position 1485:  Fuel: 1022059
+Position 1486:  Fuel: 1022997
+Position 1487:  Fuel: 1023935
+Position 1488:  Fuel: 1024873
+Position 1489:  Fuel: 1025811
+Position 1490:  Fuel: 1026749
+Position 1491:  Fuel: 1027687
+Position 1492:  Fuel: 1028625
+Position 1493:  Fuel: 1029563
+Position 1494:  Fuel: 1030501
+Position 1495:  Fuel: 1031439
+Position 1496:  Fuel: 1032377
+Position 1497:  Fuel: 1033315
+Position 1498:  Fuel: 1034253
+Position 1499:  Fuel: 1035191
+Position 1500:  Fuel: 1036129
+Position 1501:  Fuel: 1037069
+Position 1502:  Fuel: 1038009
+Position 1503:  Fuel: 1038949
+Position 1504:  Fuel: 1039889
+Position 1505:  Fuel: 1040829
+Position 1506:  Fuel: 1041769
+Position 1507:  Fuel: 1042709
+Position 1508:  Fuel: 1043649
+Position 1509:  Fuel: 1044589
+Position 1510:  Fuel: 1045529
+Position 1511:  Fuel: 1046469
+Position 1512:  Fuel: 1047409
+Position 1513:  Fuel: 1048349
+Position 1514:  Fuel: 1049289
+Position 1515:  Fuel: 1050229
+Position 1516:  Fuel: 1051169
+Position 1517:  Fuel: 1052109
+Position 1518:  Fuel: 1053049
+Position 1519:  Fuel: 1053989
+Position 1520:  Fuel: 1054929
+Position 1521:  Fuel: 1055869
+Position 1522:  Fuel: 1056809
+Position 1523:  Fuel: 1057749
+Position 1524:  Fuel: 1058689
+Position 1525:  Fuel: 1059629
+Position 1526:  Fuel: 1060569
+Position 1527:  Fuel: 1061509
+Position 1528:  Fuel: 1062449
+Position 1529:  Fuel: 1063389
+Position 1530:  Fuel: 1064329
+Position 1531:  Fuel: 1065269
+Position 1532:  Fuel: 1066211
+Position 1533:  Fuel: 1067153
+Position 1534:  Fuel: 1068097
+Position 1535:  Fuel: 1069041
+Position 1536:  Fuel: 1069985
+Position 1537:  Fuel: 1070929
+Position 1538:  Fuel: 1071873
+Position 1539:  Fuel: 1072817
+Position 1540:  Fuel: 1073761
+Position 1541:  Fuel: 1074705
+Position 1542:  Fuel: 1075651
+Position 1543:  Fuel: 1076597
+Position 1544:  Fuel: 1077543
+Position 1545:  Fuel: 1078489
+Position 1546:  Fuel: 1079435
+Position 1547:  Fuel: 1080381
+Position 1548:  Fuel: 1081327
+Position 1549:  Fuel: 1082273
+Position 1550:  Fuel: 1083219
+Position 1551:  Fuel: 1084165
+Position 1552:  Fuel: 1085111
+Position 1553:  Fuel: 1086057
+Position 1554:  Fuel: 1087003
+Position 1555:  Fuel: 1087949
+Position 1556:  Fuel: 1088895
+Position 1557:  Fuel: 1089841
+Position 1558:  Fuel: 1090787
+Position 1559:  Fuel: 1091733
+Position 1560:  Fuel: 1092679
+Position 1561:  Fuel: 1093625
+Position 1562:  Fuel: 1094573
+Position 1563:  Fuel: 1095521
+Position 1564:  Fuel: 1096471
+Position 1565:  Fuel: 1097421
+Position 1566:  Fuel: 1098371
+Position 1567:  Fuel: 1099323
+Position 1568:  Fuel: 1100275
+Position 1569:  Fuel: 1101227
+Position 1570:  Fuel: 1102179
+Position 1571:  Fuel: 1103131
+Position 1572:  Fuel: 1104083
+Position 1573:  Fuel: 1105035
+Position 1574:  Fuel: 1105989
+Position 1575:  Fuel: 1106943
+Position 1576:  Fuel: 1107897
+Position 1577:  Fuel: 1108851
+Position 1578:  Fuel: 1109805
+Position 1579:  Fuel: 1110761
+Position 1580:  Fuel: 1111717
+Position 1581:  Fuel: 1112673
+Position 1582:  Fuel: 1113629
+Position 1583:  Fuel: 1114585
+Position 1584:  Fuel: 1115541
+Position 1585:  Fuel: 1116497
+Position 1586:  Fuel: 1117453
+Position 1587:  Fuel: 1118409
+Position 1588:  Fuel: 1119365
+Position 1589:  Fuel: 1120321
+Position 1590:  Fuel: 1121277
+Position 1591:  Fuel: 1122233
+Position 1592:  Fuel: 1123189
+Position 1593:  Fuel: 1124145
+Position 1594:  Fuel: 1125101
+Position 1595:  Fuel: 1126057
+Position 1596:  Fuel: 1127013
+Position 1597:  Fuel: 1127971
+Position 1598:  Fuel: 1128929
+Position 1599:  Fuel: 1129887
+Position 1600:  Fuel: 1130845
+Position 1601:  Fuel: 1131803
+Position 1602:  Fuel: 1132763
+Position 1603:  Fuel: 1133723
+Position 1604:  Fuel: 1134683
+Position 1605:  Fuel: 1135643
+Position 1606:  Fuel: 1136603
+Position 1607:  Fuel: 1137563
+Position 1608:  Fuel: 1138523
+Position 1609:  Fuel: 1139483
+Position 1610:  Fuel: 1140443
+Position 1611:  Fuel: 1141403
+Position 1612:  Fuel: 1142363
+Position 1613:  Fuel: 1143323
+Position 1614:  Fuel: 1144283
+Position 1615:  Fuel: 1145243
+Position 1616:  Fuel: 1146203
+Position 1617:  Fuel: 1147163
+Position 1618:  Fuel: 1148123
+Position 1619:  Fuel: 1149083
+Position 1620:  Fuel: 1150043
+Position 1621:  Fuel: 1151003
+Position 1622:  Fuel: 1151963
+Position 1623:  Fuel: 1152923
+Position 1624:  Fuel: 1153883
+Position 1625:  Fuel: 1154843
+Position 1626:  Fuel: 1155803
+Position 1627:  Fuel: 1156763
+Position 1628:  Fuel: 1157723
+Position 1629:  Fuel: 1158685
+Position 1630:  Fuel: 1159647
+Position 1631:  Fuel: 1160609
+Position 1632:  Fuel: 1161571
+Position 1633:  Fuel: 1162533
+Position 1634:  Fuel: 1163495
+Position 1635:  Fuel: 1164457
+Position 1636:  Fuel: 1165419
+Position 1637:  Fuel: 1166381
+Position 1638:  Fuel: 1167343
+Position 1639:  Fuel: 1168305
+Position 1640:  Fuel: 1169267
+Position 1641:  Fuel: 1170229
+Position 1642:  Fuel: 1171191
+Position 1643:  Fuel: 1172153
+Position 1644:  Fuel: 1173115
+Position 1645:  Fuel: 1174077
+Position 1646:  Fuel: 1175039
+Position 1647:  Fuel: 1176003
+Position 1648:  Fuel: 1176967
+Position 1649:  Fuel: 1177931
+Position 1650:  Fuel: 1178895
+Position 1651:  Fuel: 1179859
+Position 1652:  Fuel: 1180823
+Position 1653:  Fuel: 1181787
+Position 1654:  Fuel: 1182751
+Position 1655:  Fuel: 1183715
+Position 1656:  Fuel: 1184679
+Position 1657:  Fuel: 1185643
+Position 1658:  Fuel: 1186607
+Position 1659:  Fuel: 1187571
+Position 1660:  Fuel: 1188535
+Position 1661:  Fuel: 1189499
+Position 1662:  Fuel: 1190463
+Position 1663:  Fuel: 1191427
+Position 1664:  Fuel: 1192391
+Position 1665:  Fuel: 1193357
+Position 1666:  Fuel: 1194323
+Position 1667:  Fuel: 1195289
+Position 1668:  Fuel: 1196255
+Position 1669:  Fuel: 1197221
+Position 1670:  Fuel: 1198187
+Position 1671:  Fuel: 1199153
+Position 1672:  Fuel: 1200119
+Position 1673:  Fuel: 1201085
+Position 1674:  Fuel: 1202051
+Position 1675:  Fuel: 1203017
+Position 1676:  Fuel: 1203983
+Position 1677:  Fuel: 1204951
+Position 1678:  Fuel: 1205919
+Position 1679:  Fuel: 1206889
+Position 1680:  Fuel: 1207859
+Position 1681:  Fuel: 1208829
+Position 1682:  Fuel: 1209799
+Position 1683:  Fuel: 1210769
+Position 1684:  Fuel: 1211739
+Position 1685:  Fuel: 1212709
+Position 1686:  Fuel: 1213679
+Position 1687:  Fuel: 1214649
+Position 1688:  Fuel: 1215619
+Position 1689:  Fuel: 1216591
+Position 1690:  Fuel: 1217563
+Position 1691:  Fuel: 1218535
+Position 1692:  Fuel: 1219507
+Position 1693:  Fuel: 1220479
+Position 1694:  Fuel: 1221451
+Position 1695:  Fuel: 1222423
+Position 1696:  Fuel: 1223395
+Position 1697:  Fuel: 1224367
+Position 1698:  Fuel: 1225339
+Position 1699:  Fuel: 1226311
+Position 1700:  Fuel: 1227283
+Position 1701:  Fuel: 1228255
+Position 1702:  Fuel: 1229227
+Position 1703:  Fuel: 1230199
+Position 1704:  Fuel: 1231171
+Position 1705:  Fuel: 1232143
+Position 1706:  Fuel: 1233115
+Position 1707:  Fuel: 1234087
+Position 1708:  Fuel: 1235059
+Position 1709:  Fuel: 1236031
+Position 1710:  Fuel: 1237003
+Position 1711:  Fuel: 1237975
+Position 1712:  Fuel: 1238947
+Position 1713:  Fuel: 1239919
+Position 1714:  Fuel: 1240891
+Position 1715:  Fuel: 1241863
+Position 1716:  Fuel: 1242835
+Position 1717:  Fuel: 1243807
+Position 1718:  Fuel: 1244779
+Position 1719:  Fuel: 1245751
+Position 1720:  Fuel: 1246723
+Position 1721:  Fuel: 1247695
+Position 1722:  Fuel: 1248667
+Position 1723:  Fuel: 1249639
+Position 1724:  Fuel: 1250611
+Position 1725:  Fuel: 1251583
+Position 1726:  Fuel: 1252555
+Position 1727:  Fuel: 1253527
+Position 1728:  Fuel: 1254499
+Position 1729:  Fuel: 1255471
+Position 1730:  Fuel: 1256443
+Position 1731:  Fuel: 1257415
+Position 1732:  Fuel: 1258387
+Position 1733:  Fuel: 1259359
+Position 1734:  Fuel: 1260331
+Position 1735:  Fuel: 1261303
+Position 1736:  Fuel: 1262275
+Position 1737:  Fuel: 1263247
+Position 1738:  Fuel: 1264219
+Position 1739:  Fuel: 1265191
+Position 1740:  Fuel: 1266163
+Position 1741:  Fuel: 1267135
+Position 1742:  Fuel: 1268107
+Position 1743:  Fuel: 1269079
+Position 1744:  Fuel: 1270051
+Position 1745:  Fuel: 1271023
+Position 1746:  Fuel: 1271995
+Position 1747:  Fuel: 1272967
+Position 1748:  Fuel: 1273939
+Position 1749:  Fuel: 1274911
+Position 1750:  Fuel: 1275883
+Position 1751:  Fuel: 1276855
+Position 1752:  Fuel: 1277829
+Position 1753:  Fuel: 1278803
+Position 1754:  Fuel: 1279777
+Position 1755:  Fuel: 1280751
+Position 1756:  Fuel: 1281725
+Position 1757:  Fuel: 1282701
+Position 1758:  Fuel: 1283677
+Position 1759:  Fuel: 1284653
+Position 1760:  Fuel: 1285629
+Position 1761:  Fuel: 1286605
+Position 1762:  Fuel: 1287581
+Position 1763:  Fuel: 1288557
+Position 1764:  Fuel: 1289535
+Position 1765:  Fuel: 1290515
+Position 1766:  Fuel: 1291495
+Position 1767:  Fuel: 1292475
+Position 1768:  Fuel: 1293455
+Position 1769:  Fuel: 1294435
+Position 1770:  Fuel: 1295417
+Position 1771:  Fuel: 1296399
+Position 1772:  Fuel: 1297383
+Position 1773:  Fuel: 1298367
+Position 1774:  Fuel: 1299351
+Position 1775:  Fuel: 1300335
+Position 1776:  Fuel: 1301319
+Position 1777:  Fuel: 1302303
+Position 1778:  Fuel: 1303287
+Position 1779:  Fuel: 1304271
+Position 1780:  Fuel: 1305255
+Position 1781:  Fuel: 1306239
+Position 1782:  Fuel: 1307223
+Position 1783:  Fuel: 1308207
+Position 1784:  Fuel: 1309191
+Position 1785:  Fuel: 1310175
+Position 1786:  Fuel: 1311159
+Position 1787:  Fuel: 1312143
+Position 1788:  Fuel: 1313127
+Position 1789:  Fuel: 1314111
+Position 1790:  Fuel: 1315095
+Position 1791:  Fuel: 1316079
+Position 1792:  Fuel: 1317063
+Position 1793:  Fuel: 1318047
+Position 1794:  Fuel: 1319033
+Position 1795:  Fuel: 1320019
+Position 1796:  Fuel: 1321005
+Position 1797:  Fuel: 1321991
+Position 1798:  Fuel: 1322977
+Position 1799:  Fuel: 1323963
+Position 1800:  Fuel: 1324951
+Position 1801:  Fuel: 1325939
+Position 1802:  Fuel: 1326927
+Position 1803:  Fuel: 1327915
+Position 1804:  Fuel: 1328903
+Position 1805:  Fuel: 1329891
+Position 1806:  Fuel: 1330879
+Position 1807:  Fuel: 1331867
+Position 1808:  Fuel: 1332855
+Position 1809:  Fuel: 1333843
+Position 1810:  Fuel: 1334831
+Position 1811:  Fuel: 1335819
+Position 1812:  Fuel: 1336807
+Position 1813:  Fuel: 1337795
+Position 1814:  Fuel: 1338783
+Position 1815:  Fuel: 1339771
+Position 1816:  Fuel: 1340759
+Position 1817:  Fuel: 1341749
+Position 1818:  Fuel: 1342739
+Position 1819:  Fuel: 1343729
+Position 1820:  Fuel: 1344719
+Position 1821:  Fuel: 1345709
+Position 1822:  Fuel: 1346699
+Position 1823:  Fuel: 1347689
+Position 1824:  Fuel: 1348679
+Position 1825:  Fuel: 1349669
+Position 1826:  Fuel: 1350659
+Position 1827:  Fuel: 1351649
+Position 1828:  Fuel: 1352639
+Position 1829:  Fuel: 1353633
+Position 1830:  Fuel: 1354627
+Position 1831:  Fuel: 1355623
+Position 1832:  Fuel: 1356619
+Position 1833:  Fuel: 1357615
+Position 1834:  Fuel: 1358611
+Position 1835:  Fuel: 1359607
+Position 1836:  Fuel: 1360603
+Position 1837:  Fuel: 1361599
+Position 1838:  Fuel: 1362595
+Position 1839:  Fuel: 1363591
+Position 1840:  Fuel: 1364587
+Position 1841:  Fuel: 1365583
+Position 1842:  Fuel: 1366579
+Position 1843:  Fuel: 1367575
+Position 1844:  Fuel: 1368571
+Position 1845:  Fuel: 1369567
+Position 1846:  Fuel: 1370563
+Position 1847:  Fuel: 1371559
+Position 1848:  Fuel: 1372555
+Position 1849:  Fuel: 1373551
+Position 1850:  Fuel: 1374547
+Position 1851:  Fuel: 1375543
+Position 1852:  Fuel: 1376539
+Position 1853:  Fuel: 1377535
+Position 1854:  Fuel: 1378531
+Position 1855:  Fuel: 1379527
+Position 1856:  Fuel: 1380523
+Position 1857:  Fuel: 1381519
+Position 1858:  Fuel: 1382515
+Position 1859:  Fuel: 1383511
+Position 1860:  Fuel: 1384507
+Position 1861:  Fuel: 1385503
+Position 1862:  Fuel: 1386499
+Position 1863:  Fuel: 1387495
+Position 1864:  Fuel: 1388491
+Position 1865:  Fuel: 1389487
+Position 1866:  Fuel: 1390483
+Position 1867:  Fuel: 1391479
+Position 1868:  Fuel: 1392475
+Position 1869:  Fuel: 1393471
+Position 1870:  Fuel: 1394467
+Position 1871:  Fuel: 1395465
+Position 1872:  Fuel: 1396463
+Position 1873:  Fuel: 1397461
+Position 1874:  Fuel: 1398459
+Position 1875:  Fuel: 1399457
+Position 1876:  Fuel: 1400455
+Position 1877:  Fuel: 1401453
+Position 1878:  Fuel: 1402451
+Position 1879:  Fuel: 1403449
+Position 1880:  Fuel: 1404447
+Position 1881:  Fuel: 1405445
+Position 1882:  Fuel: 1406443
+Position 1883:  Fuel: 1407441
+Position 1884:  Fuel: 1408439
+Position 1885:  Fuel: 1409437
+Minimum position: 340    Fuel: 345197
