@@ -11,75 +11,99 @@ using namespace std;
 #define DEBUG 0
 
 
-class Pairs;
 
 typedef struct {
 	point	p;
-	int		matched;
+	int		num_matches;
 } beacon_t;
 
 class scanner  {
-	friend class Pairs;
+	friend bool scanner_compare(scanner &l, scanner &r, rotmat &rm, point &t);
 	public:
 		scanner(FILE *f);	// reads --- scanner N ---, and all triplets until blank line
 	    string  name() const { return _name; };
-		void	analyze(scanner &s);
-		void	analyze(const scanner &s, rotmat &rm, point &left_vec, point &right_vec);
 		void	out(bool out_beacons = false) const;
-		void	adjust(rmobj_t  &rm);
+		void	adjust(rotmat &rm, point offset, point from_loc);
+		void	adjust(rotmat &rm, point offset, scanner *s);
 		point   get_location() { return location; };
+		void	relative_to(scanner *to, rotmat rm, point translate);
 		void	set_location(point rotvec, point offset, point from_loc, point from_rot) {
-			rot_to_zero = rotvec;
-// previous  location = offset - location;
-			////from_loc.out("From Location - relative to s[0]");
-			////from_rot.out("From Rotation - relative to s[0]");
 			offset.out  ("Delta Offset");
 			rotvec.out("Delta Rotation");
 			point t = rotate(offset, rotvec);
-			//t = rotate(t, from_rot);
 			t.out("Rotated offset");
 			location = t + from_loc; //  - location;
-			////location.out("t + from_loc");
-			//location = rotate(location, rotvec);
-			//location.out("After rotation");
 			location = rotate(location, rotvec);
-			//for (size_t i = 0; i < 0 && i < zero_beacon.size(); i++)
-			//{
-			//	zero_beacon[i] = offset - zero_beacon[i];
-			//	zero_beacon[i] = rotate(zero_beacon[i], rotvec);
-			//	beacon[i].p = rotate(beacon[i].p, rotvec);
-			//}
 			location.out(_name + "DEBUG 4");
 		};
-		point	translate_to_frame  (point t) const
-		{
-			location.out("From Location");
-			rot_to_zero.out("From Rotation");
-			t.out("Tanslation point");
-			
-			return rotate(t, rot_to_zero) + location;
-		};
 	private:
+		void	move_to_zero(scanner *to);
 		string _name;
 		point	location;	// relative to 0 - for 0 - (0,0,0)
-		point	rot_to_zero;	// rotate to 0
+		point	translate;	// distance relative to relscan
 		vector<beacon_t> beacon;
-		vector<point> zero_beacon;	// beacons - relative to 0
-		//rotmat	rm;			// rotation matix to orient with 0
+		scanner *relscan;	// location is relative to this scanner
+		rotmat	rm;			// rotation matix to orient with 0
 };
 
-void scanner::adjust(rmobj_t &rmo)
+void
+scanner::move_to_zero(scanner *to)
+{
+	if (!to) return;
+	adjust(to->rm, to->translate, to->get_location());
+	to->rm.out();
+	to->translate.out("Translate");
+	move_to_zero(to->relscan);
+}
+
+void
+scanner::relative_to(scanner *to, rotmat rm, point translate)
+{
+	if (!to) return;
+	printf("Scanner %s   relative_to  %s\n", this->_name.c_str(), to->_name.c_str());
+	this->rm = rm;
+	this->translate = translate;
+	this->relscan = to;
+	this->move_to_zero(to);
+}
+
+
+void scanner::adjust(rotmat &rm, point translate, point from_loc)
 {
 	point	t;
 
 	printf("ADJUST for %s\n", _name.c_str());
-	printf("ADJUST:  From: %d to %d\n", rmo.from, rmo.to);
 
 	for (uint32_t i = 0; i < beacon.size(); i++)
 	{
-		t = rmo.rm * beacon[i].p + rmo.translate;
+		t = rm * beacon[i].p;
 		beacon[i].p = t;
 	}
+	translate.out("ADJUST: translate");
+	from_loc.out("ADJUST: from location");
+	location.out("ADJUST: current location");
+	location =  rm * location + translate + from_loc;
+	location.out("ADJUST: final location");
+}
+
+
+void scanner::adjust(rotmat &rm, point translate, scanner *s)
+{
+	point	t;
+
+	printf("ADJUST for %s\n", _name.c_str());
+
+	for (uint32_t i = 0; i < beacon.size(); i++)
+	{
+		t = rm * beacon[i].p;
+		beacon[i].p = t;
+	}
+	translate.out("ADJUST: translate");
+	point from_loc = s->get_location();
+	from_loc.out("ADJUST: from location");
+	location.out("ADJUST: current location");
+	location =  rm * location + translate + from_loc;
+	location.out("ADJUST: final location");
 }
 
 #define MAX_LINE 100
@@ -90,6 +114,7 @@ scanner::scanner(FILE *f)
 	//cout << line;
 	_name = line;
 	_name.erase(_name.size() - 1);
+	relscan = NULL;
 	int	xr, yr, zr;
 	fgets(line, MAX_LINE, f);
 	while (!feof(f) && strlen(line) > 2)
@@ -98,9 +123,8 @@ scanner::scanner(FILE *f)
 		sscanf(line, "%d,%d,%d", &xr, &yr, &zr);
 		beacon_t bc;
 		bc.p = point(xr, yr, zr);
-		bc.matched = 0;
+		bc.num_matches = 0;
 		beacon.push_back(bc);
-		zero_beacon.push_back(bc.p);
 		fgets(line, MAX_LINE, f);
 	}
 }
@@ -121,13 +145,6 @@ scanner::out(bool out_beacons) const
 
 
 
-
-void scanner::analyze(scanner &s)
-{
-	rotmat rm;
-	point left_vec, right_vec;
-	analyze(s, rm, left_vec, right_vec);
-}
 
 size_t rotvec(vector<point> &z, vector<point> &p, int r1, int r2, int r3, point off)
 {
@@ -159,12 +176,6 @@ int count_match(vector<point> &v, vector<point> &w)
 		{
 			point	c = w[j];
 			if (v[i] == c) count++;
-			//char str[100];
-			//sprintf(str, "v[%d] = ", i);
-			//v[i].out(str);
-			//sprintf(str, "w[%d] + off = ", j);
-			//c.out(str);
-			
 		}	
 	}
 	return count;
@@ -198,317 +209,230 @@ void rotcheck(vector<beacon_t> &v, vector<beacon_t> &w, point off, point revp)
 	}
 
 }
-		
 
-
-typedef struct {
-	int	l;
-	int r;
-	int count;
-} lr_t;
-
-class Pairs {
+class bdelta {
 	public:
-		Pairs(scanner *l,  scanner const *r) { sl = l; sr = r; };
-		void add(int l, int r);	
-		void flag(point rvec, point off);		
+		void clear();
+		int add(point diff);
+		bool get(point &diff, int N);	// returns most popular beacon delta, and true if 
+										// greater than or equal to N
 	private:
-		vector<lr_t> p;
-		scanner *sl;
-		scanner  const * sr;
+		vector<beacon_t> bdiffs;
 };
 
-static int num_matches = 0;
-
-void Pairs::flag(point rvec, point offset)
+void bdelta::clear()
 {
-	for (size_t i = 0; i < p.size(); i++)
+	bdiffs.clear();
+}
+
+int bdelta::add(point diff)
+{
+	for (size_t i = 0; i < bdiffs.size(); i++)
 	{
-		if (p[i].count >= 3)
+		if (diff == bdiffs[i].p)
 		{
-			point l = sl->beacon[p[i].l].p;
-			point r = sr->beacon[p[i].r].p;
-			sl->beacon[p[i].l].matched = ++num_matches;
-			//sr->beacon[p[i].r].matched = num_matches;
-			/*printf("Left %d    Right: %d    Count: %d    num_matches = %d\n",
-				p[i].l, p[i].r, p[i].count, num_matches); */
-			
-		}
-		else
-		{
-			printf("pair: l: %d  r: %d  count: %d\n", p[i].l, p[i].r, p[i].count);
+			bdiffs[i].num_matches++;
+			return bdiffs[i].num_matches;
 		}
 	}
-	for (size_t i = 0; i < sr->beacon.size(); i++)
+	// if we get here we had no matches - add new point
+	beacon_t b;
+	b.p = diff;
+	b.num_matches = 1;
+	bdiffs.push_back(b);
+}
+
+bool bdelta::get(point &diff, int N)
+{
+	point max;
+	int   maxN = 0;
+	for (size_t i = 0; i < bdiffs.size(); i++)
 	{
-		// rotate vector
-		// add offset
-		//sr->beacon[i].p.out("Right Beacon");
-		point l = rotate(sr->beacon[i].p, rvec.x, rvec.y, rvec.z);
-		//l.out("After rotations");
-		//sr->beacon[i].p = l;
-		//l -= offset;
-		//l = l - sl->location;
-
-		//l.out("Right Final");
+		if (maxN < bdiffs[i].num_matches)
+		{
+			maxN = bdiffs[i].num_matches;
+			max = bdiffs[i].p;
+		}
 	}
-	point zero(0,0,0);
+	if ( DEBUG && (maxN >= N) )
+	{
+		printf("MaxN: %d\n", maxN);
+		max.out("Max vector");
+	}
+	diff = max;
+	return maxN >= N;
+}
 
-	//offset = rotate(offset, rvec);
-	offset.out("OFFSET");
-	rvec.out("ROTATE VECTOR");
-	string nm = sr->name();
-	string st = nm + "INITIAL RIGHT LOCATION";
-	sr->location.out(st);
-	sl->location = sr->translate_to_frame(offset);
-	sl->location.out(sl->name() + "LEFT LOCATION");
-	
-	point	sll = sl->location;
-	point	newp = sll - offset;
-	//newp.out("DAVE");
-	//sr->location =  newp;
-	//sr->location = zero - sr->location;
-	//sr->location.out(sr->name() + "FINAL RIGHT LOCATION");
-	//sr->location = point(0,0,0) - sl->location;
-	//sr->location = offset - sr->location;
-	//sr->location = rotate(sr->location, rvec);
-	//sr->location.out("LOCATION");
-	//sr->location = point(0,0,0) - sr->location;
-	sr->out(false);
-	printf("Number of matches: %d\n", num_matches);
+//
+// returns true if
+// rm * l has 12 or more common beacons (rm is a rotation matrix, l is the 'left' beacon
+// a common beacon is one with 12 or more delta vectors in common
+// when this occurs, true is returned and trans is set to this delta in the rotated
+// frame
+bool scanner_compare(scanner &l, scanner &r, rotmat &rm, point &trans)
+{
+	bdelta	b;
+	//
+	// find the delta
+	for (size_t i = 0; i < l.beacon.size(); i++)
+	{
+		point lrv = rm * l.beacon[i].p;
+		for (size_t j = 0; j < r.beacon.size(); j++)
+		{
+			point d;
+			d = r.beacon[j].p - lrv;
+			b.add(d);
+		}
+	}
+	//
+	// if 12 or more common differences, return trans as the delta in the rotated frame
+	//
+
+	return b.get(trans, 12);
+}		
+				
 
 //  scanner 1 must be at 68,-1246,-43
 //  scanner 2 must be at 1105,-1205,1229
 //  scanner 3 must be at -92,-2380,-20
 //  scanner 4 must be at -20,-1133,1061
 
-}
 
-void Pairs::add(int l, int r)
+//
+// NOTE: we have already compared two beacons, keeping a histogram of all coordinated
+// differences (x - x, x + x, x - y, etc.).  If there are 12 (or more) values that 
+//
+// index of left beacon (l) and index of right beacon (r)
+// indices are the array entry of the beacon within the scanner
+// this object keeps track of the 'left' beacon relative to the right 
+// beacon.  add(l, r) is called whenever beacon[l] and beacon[r] have a common
+// difference in their coordinates, for example, if beacon[l].x and beacon[r].y have
+// a common difference.  If this happens three times,
+
+
+bool	scanner_search(scanner &s1, scanner &s2, rotmat &rm, point &offset)
 {
-	for (size_t i = 0; i < p.size(); i++)
-	{
-		if ( (p[i].l == l) && (p[i].r == r) )
+	for (int x = -3; x <= 3; x++)
+	{ 
+		if (x == 0) continue;
+		for (int y = -3; y <= 3; y++)
 		{
-			p[i].count++;
-			return;
-		}
-	}
-	lr_t x;
-	x.l = l;
-	x.r = r;
-	x.count = 1;
-	p.push_back(x);
-}
-#define XYZ(c)	( (c == 'x' ? 0 : (c == 'y' ? 1 : (c == 'z') ? 2 : -1)))
-
-#define INDEX(a)	( (a[0] == 'x') ? 0 : (a[0] == 'y') ? 1 : 2 )
-
-#define HIST(v, A, B, op)		hist	v(-2000, 2000); 			\
-								for (uint32_t i = 0; i < beacon.size(); i++)	\
-								    for (uint32_t j = 0; j < s.beacon.size(); j++) \
-										v.add(beacon[i].p.A op s.beacon[j].p.B); \
-								v.most(value, count); \
-								if (DEBUG) printf("%s %s %s - value: %d   count: %d\n", \
-									#A, #op, #B, value, count); \
-								l = #A; \
-								r = #B; \
-								pm = #op; \
-								i = XYZ(l[0]); \
-								j = XYZ(r[0]); \
-								pm1 = (pm[0] == '+' ? -1 : pm[0] == '-' ? 1 : 0); \
-								if (count >= 12)  { rm.set(i, j, pm1); \
-									right_vec.A = value;	\
-									left_vec.B = value;	\
-									rvec.A = pm1 * ( 1 + (INDEX(#B)) ); \
-									if (DEBUG)printf("%d:: pm1 = %d    A: %s  B: %s   INDEX: %d\n", __LINE__, \
-									pm1, #A, #B, INDEX(#B));\
-									for (size_t i = 0; i < beacon.size(); i++) \
-										for (size_t j = 0; j < s.beacon.size(); j++) { \
-											if ((beacon[i].p.A op s.beacon[j].p.B) == value) {\
-												if (DEBUG) printf("%d  L[%lu]: %d  %s  %d  R[%lu]\n", \
-												value, i, beacon[i].p.A, #op, s.beacon[j].p.B, j); \
-											    pairs.add(i, j); \
-											 }	\
-										}	\
-								}
-
-
-static int num_matched = 0;
-void scanner::analyze(const scanner &s, rotmat &rm, point &left_vec, point &right_vec)
-{
-	int	value, count;
-	rotmat m;
-	const char *l;
-	const char *r;
-	const char *pm;
-	point	rvec;
-	int i;
-	int j; 
-	int pm1;
-	Pairs pairs(this, &s);
-	left_vec.clear();
-	right_vec.clear();
-	rm.clear();
-	cout << endl << endl << _name << " vs. " << s._name << endl;
-	HIST(xpx, x, x, +);
-	HIST(xmx, x, x, -);
-	HIST(xpy, x, y, +); 
-	HIST(xmy, x, y, -);
-	HIST(xpz, x, z, +);
-	HIST(xmz, x, z, -);
-	HIST(ypx, y, x, +); 
-	HIST(ymx, y, x, -); 
-	HIST(ypy, y, y, +);
-	HIST(ymy, y, y, -); 
-	HIST(ypz, y, z, +);
-	HIST(ymz, y, z, -);
-	HIST(zpx, z, x, +); 
-	HIST(zmx, z, x, -); 
-	HIST(zpy, z, y, +); 
-	HIST(zmy, z, y, -);
-	HIST(zpz, z, z, +);
-	HIST(zmz, z, z, -);
-	
-	rm.out("Rotation Matrix");
-
-	if (rm.det()) // this and s have vectors in common - eliminate them
-	{
-		//pairs.flag(rvec, left_vec);
-		if (DEBUG) printf("Comparing %s and %s \n",
-					this->_name.c_str(), 
-					s._name.c_str());
-
-		//rotcheck(beacon, s.beacon, left_vec, rvec);
-		set_location(rvec, right_vec, s.location, s.rot_to_zero);
-
-		return;
-		rvec = rotate(rvec, rvec.x, rvec.y, rvec.z);
-
-		//rotcheck(beacon, s.beacon, left_vec, rvec);
-		printf("\n\nLINE :%d\n", __LINE__);
-		//rotcheck(s.beacon, beacon, left_vec, rvec);
-		return;
-		for (uint32_t i = 0; i < beacon.size(); i++)
-		{
-			if (beacon[i].matched) continue;
-			//point	a = beacon[i].p;
-			point	a =  rm * beacon[i].p + left_vec;
-			for (uint32_t j = 0; j < s.beacon.size(); j++)
+			if (abs(x) == abs(y)) continue;
+			if (y == 0) continue;
+			for (int z = -3; z <= 3; z++)
 			{
-				if (s.beacon[j].matched) continue;
-				point	b = s.beacon[j].p;
-				//point	b = rm * s.beacon[j].p + left_vec;
-				//printf("[%d] : ", i); a.out(" Bcn");
-				//printf("[%d] : ", j); b.out(" Bcn");
-				if (a == b) {
-					if ( (!beacon[i].matched) && (!s.beacon[j].matched) )
-					{
-						beacon[i].matched = ++num_matched;
-						//s.beacon[j].matched = num_matched;
-						printf(" *** MATCHED\n");
-						break;
-					}
-					else if (!beacon[i].matched)	// means s.beacon is already set
-					{
-						beacon[i].matched = s.beacon[j].matched;
-						printf(" *** X-MATCHED - %d\n", s.beacon[j].matched);
-						break;
-					}
-					else if (!s.beacon[j].matched)
-					{
-						//s.beacon[j].matched = beacon[i].matched;
-						printf(" *** Y-MATCHED\n");
-						break;
-					}
-					else
-					{
-						printf("\nERROR - both %s @ %d and %s @ %d are already set\n",
-							this->_name.c_str(), i,
-							s._name.c_str(), j);
-					}
-				}
+				if ( (abs(x) == abs(z)) ||
+					 (abs(y) == abs(z)) ||
+					 z == 0) continue;
+				rm.setrot(x, y, z);
+				//printf("\nx:%d y:%d z:%d\n", x, y, z);
+				//rm.out();
+				if (scanner_compare(s1, s2, rm, offset)) return true;
+			
 			}
 		}
 	}
-					
+	return false;
 }
+
+
+#ifdef SCANNER_MAP
+typedef struct {
+	scan_map_t	*parent;		// if NULL - top of map
+	scan_map_t	*first_child;	// if NULL - end of map
+	scan_map_t	*next_sibling;	// if NULL - no sibling
+	rotmat   rot_to_parent;		// "R" rotate to parent
+	point	 trans_to_parent;	// "T" adjust child to parent::  C[n] = R * C[n] + T
+} scan_map_t;
+	
+class scanner_map{
+	public:
+		scanner_map() { map = NULL; };
+		void associate(scanner *parent, scanner *first_child, rotmat &rm, point &translate);
+		scan_map_t	*find_parrent(scanner *s);	// find parrent matching s - NULL if no match
+		
+	private:
+		scan_map_t	*map;
+}
+
+scan_map_t
+* scanner_map::search_parent(scan_map_t *here, scanner *s)
+{
+	if (!here) return NULL;
+	if (here->parent == s) return here;
+	if (here->first_child) return search_parent(here->first_child, s);
+	if (here->next_sibling) return search_parent(here->next_sibling, s);
+	return NULL;
+}
+
+scan_map_t
+* scanner_map::find_parent(scanner *s)
+{
+	
+void
+scanner_map::associate(scanner *parent, scanner *first_child, rotmat &rm, point &translate)
+{
+	scan_map_t	*sm = (scan_map_t *) calloc (1, sizeof(scan_map_t));
+	scan_map_t	*p = find(map, parent);
+	if (!p)
+#endif
+
+// Need to create a map relationship between scanners:
+//
+//						s[3]
+//						/
+//      s[0] -> s[1] --
+//						\
+//						s[4] ---- s[2]
+//
+//      s[1] transforms to s[0] frame via R1,0 * s[1] + T1,0
+//      s[4] transforms to s[0] via R
 
 
 
 int main(int argc, char **argv)
 {
 	
-	point	left(68,-1246,-43);
-	point	offset(160,1134,-23);
-	point	j = left - offset;
-	point	k = offset - left;
-
-	
-	
 	scanner *s[100];
 	FILE *f = fopen("ex.txt", "r");
 	int  n = 0;
 	rotmat	rm;
-	point left_vec, right_vec;
+	point translate;
 	rotmat I;
-	rMatrices rScan;
-	//int    offidx = 1;
-	//point relpos[50];
-	I.set(0,0,1);
-	I.set(1,1,1);
-	I.set(2,2,1);
+	I.setrot(1,2,3);
+
 	while (!feof(f))
 	{
 		s[n++] = new scanner(f);
 		//cout << "calling cout" << endl;
 		//s[n-1]->out();
 	}
-	
-	point zero(0,0,0);
-	s[0]->set_location(point(1,2,3), zero, zero, point(1,2,3));
-	s[1]->analyze(*s[0], rm, left_vec, right_vec);
-	s[3]->analyze(*s[1], rm, left_vec, right_vec);
-	//s[3]->analyze(*s[1], rm, left_vec, right_vec);
-	//s[4]->analyze(*s[1], rm, left_vec, right_vec);
-	s[4]->analyze(*s[1], rm, left_vec, right_vec);
-	s[4]->analyze(*s[2], rm, left_vec, right_vec);
-	fflush(stdout);
-	exit(1);
-	s[2]->analyze(*s[4], rm, left_vec, right_vec);
-	printf("Num beacons: %d\n", num_matched);
-	for (int i = 1; i < n; i++)
+	s[0]->relative_to(NULL, I, translate);
+
+
+	//
+	// search through all scanners
+	// create mapping as follows:
+	// place each scanner in map, each pointing to one or more scanners that they overlap with
+	// the mapping should include the rotation and translation to 'align' the two scanners to
+	// same coordiante system.   S[0] is the 'head' of the map
+	//
+	for (int i = 0; i < n; i++)
 	{
-	    for (int j = 0; j < n; j++)
+	    for (int j = 0; j < i; j++)
 	    {
 			if (i == j) continue;
-			s[i]->analyze(*s[j], rm, left_vec, right_vec);
-			if (rm.det())
+			if (scanner_search(*s[i], *s[j], rm, translate))
 			{
-				cout << s[j]->name() << " vs. " << s[i]->name() << endl;
-				left_vec.out("Translation");
-				rm.out();
-				rScan.add(rm, left_vec, j, i);
-				//s[j]->adjust(left_vec, *s[i]);
-				cout << endl << endl;
-				//exit(1); // QQQ
+				printf("\n\nScanner %d  ---  Scanner %d\n", i, j);
+				//s[i]->relative_to(s[j], rm, translate);
+				s[i]->adjust(rm, translate, s[j]->get_location()); //, s[j]->get_location());
 			}
-			rm.clear();
 		}
 	}
 	for (int i = 0; i < n; i++)
 	{
-		printf(" | ");
-		for (int j = 0; j < n; j++)
-		{
-			rmobj_t r;
-			rScan.get(r, i, j);
-			if (r.rm.det()) printf(" 1 ");
-			else printf("   ");
-		}
-		printf(" | \n");
+		s[i]->out(false);
 	}
-
-	rScan.out();
-	printf("Num beacons: %d\n", num_matched);
+	exit(1);
 }

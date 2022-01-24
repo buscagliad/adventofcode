@@ -17,6 +17,16 @@ class rotmat {
 		point	rotTrans(point &x);
 		void	set(int i, int j, int v) { m[i][j] = v; };
 		void	out(bool transpose = false);
+		bool    setrot(int x, int y, int z)
+		{
+			clear();
+			if (abs(x) + abs(y) + abs(z) != 6) return false;
+			if (abs(x * y * z) != 6) return false;
+			m[abs(x) - 1][0] = sign(x);
+			m[abs(y) - 1][1] = sign(y);
+			m[abs(z) - 1][2] = sign(z);
+			m_valid = true;
+		}
 		rotmat	trans() {
 			rotmat r;
 			for (int i = 0; i < 3; i++)
