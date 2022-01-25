@@ -1,0 +1,133 @@
+INIT: OKSBBKHFBPVNOBKHBPCO
+B occurs 5 times
+C occurs 1 times
+F occurs 1 times
+H occurs 2 times
+K occurs 3 times
+N occurs 1 times
+O occurs 3 times
+P occurs 2 times
+S occurs 1 times
+V occurs 1 times
+Most occuring polymer: B - 5 times
+Least occuring polymer: C - 1 times
+DIFFERENCE: 4 times
+Total polymer pairs: 21
+There are 100 rules:
+CB -> P
+VH -> S
+CF -> P
+OV -> B
+CH -> N
+PB -> F
+KF -> O
+BC -> K
+FB -> F
+SN -> F
+FV -> B
+PN -> K
+SF -> V
+FN -> F
+SS -> K
+VP -> F
+VB -> B
+OS -> N
+HP -> O
+NF -> S
+SK -> H
+OO -> S
+PF -> C
+CC -> P
+BP -> F
+OB -> C
+CS -> N
+BV -> F
+VV -> B
+HO -> F
+KN -> P
+VC -> K
+KK -> N
+BO -> V
+NH -> O
+HC -> S
+SB -> F
+NN -> V
+OF -> V
+FK -> S
+OP -> S
+NS -> C
+HV -> O
+PC -> C
+FO -> H
+OH -> F
+BF -> S
+SO -> O
+HB -> P
+NK -> H
+NV -> C
+NB -> B
+FF -> B
+BH -> C
+SV -> B
+BK -> K
+NO -> C
+VN -> P
+FC -> B
+PH -> V
+HH -> C
+VO -> O
+SP -> P
+VK -> N
+CP -> H
+SC -> C
+KV -> H
+CO -> C
+OK -> V
+ON -> C
+KS -> S
+NP -> O
+CK -> C
+BS -> F
+VS -> B
+KH -> O
+KC -> C
+KB -> N
+OC -> F
+PP -> S
+HK -> H
+BN -> S
+KO -> K
+NC -> B
+PK -> K
+CV -> H
+PO -> O
+BB -> C
+HS -> F
+SH -> K
+CN -> S
+HN -> S
+KP -> O
+FP -> H
+HF -> F
+PS -> B
+FH -> K
+PV -> O
+FS -> N
+VF -> V
+
+
+After step 10:
+B occurs 2783 times
+C occurs 2407 times
+F occurs 3801 times
+H occurs 1317 times
+K occurs 1627 times
+N occurs 1605 times
+O occurs 910 times
+P occurs 1491 times
+S occurs 2098 times
+V occurs 1418 times
+Most occuring polymer: F - 3801 times
+Least occuring polymer: O - 910 times
+DIFFERENCE: 2891 times
+Total polymer pairs: 19458
