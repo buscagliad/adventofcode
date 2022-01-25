@@ -1,0 +1,1252 @@
+start connected to A [1]
+A connected to start [0]
+>>>>>>>>> start --- A <<<<<<<<<<<<
+start connected to b [2]
+b connected to start [0]
+>>>>>>>>> start --- b <<<<<<<<<<<<
+A connected to c [1]
+c connected to A [1]
+>>>>>>>>> A --- c <<<<<<<<<<<<
+A connected to b [2]
+b connected to A [1]
+>>>>>>>>> A --- b <<<<<<<<<<<<
+b connected to d [2]
+d connected to b [1]
+>>>>>>>>> b --- d <<<<<<<<<<<<
+A connected to end [3]
+end connected to A [0]
+>>>>>>>>> A --- end <<<<<<<<<<<<
+b connected to end [3]
+end connected to b [0]
+>>>>>>>>> b --- end <<<<<<<<<<<<
+Input file: ex1.txt
+start --> A
+start --> b
+A --> c
+A --> b
+A --> end
+b --> A
+b --> d
+b --> end
+c --> A
+d --> b
+END OF DISPLAY
+
+
+===========================
+Setting path_count = 0
+Pushing start - connections = 2
+
+
+===========================
+[  0] TRY:: start,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  0] TRY:: start,A,(c)
+S::c
+Path has 1 of start
+Pushing c - connections = 1
+
+
+===========================
+[  0] TRY:: start,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  0] TRY:: start,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of c
+Pushing c - connections = 1
+
+
+===========================
+[  0] TRY:: start,A,c,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  0] TRY:: start,A,c,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of c
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[  0] TRY:: start,A,c,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of c
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[  0] TRY:: start,A,c,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+SUCCESSFULL path - start,A,c,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,A,c,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,c,A,
+
+
+===========================
+[  1] TRY:: start,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of c
+Pushing b - connections = 3
+
+
+===========================
+[  1] TRY:: start,A,c,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  1] TRY:: start,A,c,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of c
+Path has 1 of b
+Pushing c - connections = 1
+
+
+===========================
+[  1] TRY:: start,A,c,A,b,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  1] TRY:: start,A,c,A,b,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of c
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[  1] TRY:: start,A,c,A,b,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of c
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[  1] TRY:: start,A,c,A,b,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,A,c,A,b,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,c,A,b,A,
+
+
+===========================
+[  2] TRY:: start,A,c,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of c
+Path has 1 of b
+Pushing b - connections = 3
+
+
+===========================
+[  2] TRY:: start,A,c,A,b,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  2] TRY:: start,A,c,A,b,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of c
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[  2] TRY:: start,A,c,A,b,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of c
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[  2] TRY:: start,A,c,A,b,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,c,A,b,A,b,
+
+
+===========================
+[  3] TRY:: start,A,c,A,b,A,b,(d)
+S::d
+Path has 1 of start
+Path has 1 of c
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[  3] TRY:: start,A,c,A,b,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,c,A,b,A,
+
+
+===========================
+[  4] TRY:: start,A,c,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,c,A,b,
+
+
+===========================
+[  5] TRY:: start,A,c,A,b,(d)
+S::d
+Path has 1 of start
+Path has 1 of c
+Path has 1 of b
+Pushing d - connections = 1
+
+
+===========================
+[  5] TRY:: start,A,c,A,b,d,(b)
+S::b
+Path has 1 of start
+Path has 1 of c
+Path has 1 of b
+Path has 1 of d
+Pushing b - connections = 3
+
+
+===========================
+[  5] TRY:: start,A,c,A,b,d,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  5] TRY:: start,A,c,A,b,d,b,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of c
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[  5] TRY:: start,A,c,A,b,d,b,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of c
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[  5] TRY:: start,A,c,A,b,d,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,d,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,c,A,b,d,b,
+
+
+===========================
+[  6] TRY:: start,A,c,A,b,d,b,(d)
+S::d
+Path has 1 of start
+Path has 1 of c
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[  6] TRY:: start,A,c,A,b,d,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,d,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning d
+B::NULL ptr from d
+B:FAILED path - start,A,c,A,b,d,
+
+
+===========================
+WTF!!!!!d!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,c,A,b,
+
+
+===========================
+[  7] TRY:: start,A,c,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,c,A,
+
+
+===========================
+[  8] TRY:: start,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,
+
+
+===========================
+[  9] TRY:: start,A,(b)
+S::b
+Path has 1 of start
+Pushing b - connections = 3
+
+
+===========================
+[  9] TRY:: start,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  9] TRY:: start,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of b
+Pushing c - connections = 1
+
+
+===========================
+[  9] TRY:: start,A,b,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  9] TRY:: start,A,b,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of b
+Path has 1 of c
+Pushing c - connections = 1
+
+
+===========================
+[  9] TRY:: start,A,b,A,c,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[  9] TRY:: start,A,b,A,c,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of b
+Path has 2 of c
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[  9] TRY:: start,A,b,A,c,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Path has 2 of c
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[  9] TRY:: start,A,b,A,c,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,c,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,A,b,A,c,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,b,A,c,A,
+
+
+===========================
+[ 10] TRY:: start,A,b,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Path has 1 of c
+Pushing b - connections = 3
+
+
+===========================
+[ 10] TRY:: start,A,b,A,c,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 10] TRY:: start,A,b,A,c,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 10] TRY:: start,A,b,A,c,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 10] TRY:: start,A,b,A,c,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,c,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,b,A,c,A,b,
+
+
+===========================
+[ 11] TRY:: start,A,b,A,c,A,b,(d)
+S::d
+Path has 1 of start
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[ 11] TRY:: start,A,b,A,c,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,c,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,b,A,c,A,
+
+
+===========================
+[ 12] TRY:: start,A,b,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,A,b,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,b,A,
+
+
+===========================
+[ 13] TRY:: start,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Pushing b - connections = 3
+
+
+===========================
+[ 13] TRY:: start,A,b,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 13] TRY:: start,A,b,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 13] TRY:: start,A,b,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 13] TRY:: start,A,b,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,b,A,b,
+
+
+===========================
+[ 14] TRY:: start,A,b,A,b,(d)
+S::d
+Path has 1 of start
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[ 14] TRY:: start,A,b,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,b,A,
+
+
+===========================
+[ 15] TRY:: start,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,b,
+
+
+===========================
+[ 16] TRY:: start,A,b,(d)
+S::d
+Path has 1 of start
+Path has 1 of b
+Pushing d - connections = 1
+
+
+===========================
+[ 16] TRY:: start,A,b,d,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Path has 1 of d
+Pushing b - connections = 3
+
+
+===========================
+[ 16] TRY:: start,A,b,d,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 16] TRY:: start,A,b,d,b,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 16] TRY:: start,A,b,d,b,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 16] TRY:: start,A,b,d,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,d,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,b,d,b,
+
+
+===========================
+[ 17] TRY:: start,A,b,d,b,(d)
+S::d
+Path has 1 of start
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[ 17] TRY:: start,A,b,d,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,d,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning d
+B::NULL ptr from d
+B:FAILED path - start,A,b,d,
+
+
+===========================
+WTF!!!!!d!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,A,b,
+
+
+===========================
+[ 18] TRY:: start,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,A,
+
+
+===========================
+[ 19] TRY:: start,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning start
+B::NULL ptr from start
+B:FAILED path - start,
+
+
+===========================
+[ 20] TRY:: start,(b)
+S::b
+Path has 1 of start
+Pushing b - connections = 3
+
+
+===========================
+[ 20] TRY:: start,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 20] TRY:: start,b,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of b
+Pushing c - connections = 1
+
+
+===========================
+[ 20] TRY:: start,b,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 20] TRY:: start,b,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of b
+Path has 1 of c
+Pushing c - connections = 1
+
+
+===========================
+[ 20] TRY:: start,b,A,c,A,c,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 20] TRY:: start,b,A,c,A,c,A,(c)
+S::c
+Path has 1 of start
+Path has 1 of b
+Path has 2 of c
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 20] TRY:: start,b,A,c,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Path has 2 of c
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 20] TRY:: start,b,A,c,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,c,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,b,A,c,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,b,A,c,A,
+
+
+===========================
+[ 21] TRY:: start,b,A,c,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Path has 1 of c
+Pushing b - connections = 3
+
+
+===========================
+[ 21] TRY:: start,b,A,c,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 21] TRY:: start,b,A,c,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 21] TRY:: start,b,A,c,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 21] TRY:: start,b,A,c,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,c,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,b,A,c,A,b,
+
+
+===========================
+[ 22] TRY:: start,b,A,c,A,b,(d)
+S::d
+Path has 1 of start
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[ 22] TRY:: start,b,A,c,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,c,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,b,A,c,A,
+
+
+===========================
+[ 23] TRY:: start,b,A,c,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,c,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning c
+B::NULL ptr from c
+B:FAILED path - start,b,A,c,
+
+
+===========================
+WTF!!!!!c!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,b,A,
+
+
+===========================
+[ 24] TRY:: start,b,A,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Pushing b - connections = 3
+
+
+===========================
+[ 24] TRY:: start,b,A,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 24] TRY:: start,b,A,b,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 24] TRY:: start,b,A,b,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 24] TRY:: start,b,A,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,b,A,b,
+
+
+===========================
+[ 25] TRY:: start,b,A,b,(d)
+S::d
+Path has 1 of start
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[ 25] TRY:: start,b,A,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning A
+B::NULL ptr from A
+B:FAILED path - start,b,A,
+
+
+===========================
+[ 26] TRY:: start,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,b,
+
+
+===========================
+[ 27] TRY:: start,b,(d)
+S::d
+Path has 1 of start
+Path has 1 of b
+Pushing d - connections = 1
+
+
+===========================
+[ 27] TRY:: start,b,d,(b)
+S::b
+Path has 1 of start
+Path has 1 of b
+Path has 1 of d
+Pushing b - connections = 3
+
+
+===========================
+[ 27] TRY:: start,b,d,b,(A)
+C:Pushing A - connections = 3
+
+
+===========================
+[ 27] TRY:: start,b,d,b,A,(c)
+S::c
+Path has 1 of start
+Path has 2 of b
+Small node: c exists
+Next from obj: A
+
+
+===========================
+[ 27] TRY:: start,b,d,b,A,(b)
+S::b
+Path has 1 of start
+Path has 2 of b
+Small node: b exists
+Next from obj: A
+
+
+===========================
+[ 27] TRY:: start,b,d,b,A,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,d,b,A,end,
+Popping returning A
+
+
+===========================
+WTF!!!!!A!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,b,d,b,
+
+
+===========================
+[ 28] TRY:: start,b,d,b,(d)
+S::d
+Path has 1 of start
+Path has 2 of b
+Small node: d exists
+Next from obj: b
+
+
+===========================
+[ 28] TRY:: start,b,d,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,d,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning d
+B::NULL ptr from d
+B:FAILED path - start,b,d,
+
+
+===========================
+WTF!!!!!d!!!!!!!!
+Popping returning b
+B::NULL ptr from b
+B:FAILED path - start,b,
+
+
+===========================
+[ 29] TRY:: start,b,(end)
+S::end
+Pushing end - connections = 0
+
+
+===========================
+WTF!!!!!end!!!!!!!!
+SUCCESSFULL path - start,b,end,
+Popping returning b
+
+
+===========================
+WTF!!!!!b!!!!!!!!
+Popping returning start
+B::NULL ptr from start
+B:FAILED path - start,
+
+
+===========================
+Path count is: 30
+Path Count = 30, not in agreement with true count: 9
+Num Enters: 174   Num Returns: 174
