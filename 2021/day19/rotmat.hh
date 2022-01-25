@@ -139,7 +139,7 @@ typedef struct {
 class rMatrices {
 	public:
 		void	add (rotmat &rm, point &offset, uint32_t f, uint32_t t);
-		bool	get (rmobj_t &r, uint32_t f, uint32_t t);
+		bool	get (rmobj_t &r, uint32_t f);
 		point	rot(point p, uint32_t f, uint32_t t);
 		point	adjust(point p, uint32_t f, uint32_t t);
 		void	out(uint32_t i, uint32_t j);
@@ -148,13 +148,13 @@ class rMatrices {
 		vector<rmobj_t>	m;
 };
 
-bool	rMatrices::get(rmobj_t &rm, uint32_t f, uint32_t t)
+bool	rMatrices::get(rmobj_t &rm, uint32_t f)
 {
 
 	for (uint32_t i = 0; i < m.size(); i++)
 	{
 		//printf("GET(loop)   from: %d  to: %d  det: %d\n", m[i].from, m[i].to, m[i].rm.det());
-		if ( (m[i].from == f) && (m[i].to == t) )
+		if ( (m[i].from == f) )
 		{
 			rm = m[i];
 			//printf("GET    from: %d  to: %d  det: %d\n", f, t, rm.det());

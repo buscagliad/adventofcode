@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <set>
 #include <iostream>
 #include <string.h>
 #include "hist.hh"	
@@ -26,6 +27,7 @@ class scanner  {
 		void	adjust(rotmat &rm, point offset, point from_loc);
 		void	adjust(rotmat &rm, point offset, scanner *s);
 		point   get_location() { return location; };
+		bool    get_location(point &loc) { loc = location; return final_location; };
 		void	relative_to(scanner *to, rotmat rm, point translate);
 		void	set_location(point rotvec, point offset, point from_loc, point from_rot) {
 			offset.out  ("Delta Offset");
@@ -36,6 +38,9 @@ class scanner  {
 			location = rotate(location, rotvec);
 			location.out(_name + "DEBUG 4");
 		};
+		point	get_beacon(size_t n) {
+			return beacon[n].p + location; };
+		size_t	size() { return beacon.size(); };
 	private:
 		void	move_to_zero(scanner *to);
 		string _name;
@@ -44,6 +49,7 @@ class scanner  {
 		vector<beacon_t> beacon;
 		scanner *relscan;	// location is relative to this scanner
 		rotmat	rm;			// rotation matix to orient with 0
+		bool	final_location;
 };
 
 void
@@ -210,48 +216,61 @@ void rotcheck(vector<beacon_t> &v, vector<beacon_t> &w, point off, point revp)
 
 }
 
-class bdelta {
+class bcn_set {
 	public:
 		void clear();
-		int add(point diff);
-		bool get(point &diff, int N);	// returns most popular beacon delta, and true if 
+		int add(point bcn);
+		bool get(point &bcn, int N);	// returns most popular beacon delta, and true if 
 										// greater than or equal to N
+		int	size() { return beacons.size(); };
+		void out();
 	private:
-		vector<beacon_t> bdiffs;
+		vector<beacon_t> beacons;
 };
 
-void bdelta::clear()
+void bcn_set::out()
 {
-	bdiffs.clear();
+	for (size_t i = 0; i < beacons.size(); i++)
+	{
+		char num[10];
+		sprintf(num, "[%4d]", i + 1);
+		beacons[i].p.out(num);
+	}
+	printf("Number of beacons: %d\n", beacons.size());
 }
 
-int bdelta::add(point diff)
+void bcn_set::clear()
 {
-	for (size_t i = 0; i < bdiffs.size(); i++)
+	beacons.clear();
+}
+
+int bcn_set::add(point add_beacon)
+{
+	for (size_t i = 0; i < beacons.size(); i++)
 	{
-		if (diff == bdiffs[i].p)
+		if (add_beacon == beacons[i].p)
 		{
-			bdiffs[i].num_matches++;
-			return bdiffs[i].num_matches;
+			beacons[i].num_matches++;
+			return beacons[i].num_matches;
 		}
 	}
 	// if we get here we had no matches - add new point
 	beacon_t b;
-	b.p = diff;
+	b.p = add_beacon;
 	b.num_matches = 1;
-	bdiffs.push_back(b);
+	beacons.push_back(b);
 }
 
-bool bdelta::get(point &diff, int N)
+bool bcn_set::get(point &diff, int N)
 {
 	point max;
 	int   maxN = 0;
-	for (size_t i = 0; i < bdiffs.size(); i++)
+	for (size_t i = 0; i < beacons.size(); i++)
 	{
-		if (maxN < bdiffs[i].num_matches)
+		if (maxN < beacons[i].num_matches)
 		{
-			maxN = bdiffs[i].num_matches;
-			max = bdiffs[i].p;
+			maxN = beacons[i].num_matches;
+			max = beacons[i].p;
 		}
 	}
 	if ( DEBUG && (maxN >= N) )
@@ -271,7 +290,7 @@ bool bdelta::get(point &diff, int N)
 // frame
 bool scanner_compare(scanner &l, scanner &r, rotmat &rm, point &trans)
 {
-	bdelta	b;
+	bcn_set	b;
 	//
 	// find the delta
 	for (size_t i = 0; i < l.beacon.size(); i++)
@@ -394,13 +413,14 @@ int main(int argc, char **argv)
 {
 	
 	scanner *s[100];
-	FILE *f = fopen("ex.txt", "r");
+	FILE *f = fopen("data.txt", "r");
 	int  n = 0;
 	rotmat	rm;
 	point translate;
 	rotmat I;
 	I.setrot(1,2,3);
-
+	rMatrices	rScan;
+	set<int>	scanset;
 	while (!feof(f))
 	{
 		s[n++] = new scanner(f);
@@ -417,22 +437,35 @@ int main(int argc, char **argv)
 	// the mapping should include the rotation and translation to 'align' the two scanners to
 	// same coordiante system.   S[0] is the 'head' of the map
 	//
+	for (int i = 1; i < n; i++) scanset.insert(i);  // .erase removes the value
+													// .find(v) returns iterator to v
 	for (int i = 0; i < n; i++)
 	{
-	    for (int j = 0; j < i; j++)
+	    for (set<int>::iterator j = scanset.begin(); j != scanset.end(); j++)
 	    {
-			if (i == j) continue;
-			if (scanner_search(*s[i], *s[j], rm, translate))
+			if (i == *j) continue;
+			if (scanner_search(*s[*j], *s[i], rm, translate))
 			{
-				printf("\n\nScanner %d  ---  Scanner %d\n", i, j);
+				rScan.add(rm, translate, *j, i);
+				//printf("\n\nScanner %d  ---  Scanner %d\n", i, j);
 				//s[i]->relative_to(s[j], rm, translate);
-				s[i]->adjust(rm, translate, s[j]->get_location()); //, s[j]->get_location());
+				s[*j]->adjust(rm, translate, s[i]->get_location()); //, s[j]->get_location());
+				scanset.erase(j);
 			}
 		}
 	}
+	rScan.out();
+	//
+	// collect all beacon actual location
+	//
+	bcn_set bcn_map;
 	for (int i = 0; i < n; i++)
 	{
-		s[i]->out(false);
+		for (size_t j = 0; j < s[i]->size(); j++)
+		{
+			point	b = s[i]->get_beacon(j);
+			bcn_map.add(b);
+		}
 	}
-	exit(1);
+	bcn_map.out();
 }
