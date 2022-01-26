@@ -3,7 +3,6 @@
 #include <set>
 #include <iostream>
 #include <string.h>
-#include "hist.hh"	
 #include "point.hh"
 #include "rotmat.hh"
 
@@ -78,18 +77,18 @@ void scanner::adjust(rotmat &rm, point translate, point from_loc)
 {
 	point	t;
 
-	printf("ADJUST for %s\n", _name.c_str());
+	//printf("ADJUST for %s\n", _name.c_str());
 
 	for (uint32_t i = 0; i < beacon.size(); i++)
 	{
 		t = rm * beacon[i].p;
 		beacon[i].p = t;
 	}
-	translate.out("ADJUST: translate");
-	from_loc.out("ADJUST: from location");
-	location.out("ADJUST: current location");
+	//translate.out("ADJUST: translate");
+	//from_loc.out("ADJUST: from location");
+	//location.out("ADJUST: current location");
 	location =  rm * location + translate + from_loc;
-	location.out("ADJUST: final location");
+	//location.out("ADJUST: final location");
 }
 
 
@@ -97,7 +96,7 @@ void scanner::adjust(rotmat &rm, point translate, scanner *s)
 {
 	point	t;
 
-	printf("ADJUST for %s\n", _name.c_str());
+	//printf("ADJUST for %s\n", _name.c_str());
 
 	for (uint32_t i = 0; i < beacon.size(); i++)
 	{
@@ -219,10 +218,11 @@ void rotcheck(vector<beacon_t> &v, vector<beacon_t> &w, point off, point revp)
 class bcn_set {
 	public:
 		void clear();
-		int add(point bcn);
+		size_t add(point bcn);
+		bool getb(point &bcn, size_t N);	// returns entry N, false if N is out of bounds
 		bool get(point &bcn, int N);	// returns most popular beacon delta, and true if 
 										// greater than or equal to N
-		int	size() { return beacons.size(); };
+		size_t	size() { return beacons.size(); };
 		void out();
 	private:
 		vector<beacon_t> beacons;
@@ -233,10 +233,10 @@ void bcn_set::out()
 	for (size_t i = 0; i < beacons.size(); i++)
 	{
 		char num[10];
-		sprintf(num, "[%4d]", i + 1);
+		sprintf(num, "[%4lu]", i + 1);
 		beacons[i].p.out(num);
 	}
-	printf("Number of beacons: %d\n", beacons.size());
+	printf("Number of beacons: %lu\n", beacons.size());
 }
 
 void bcn_set::clear()
@@ -244,7 +244,7 @@ void bcn_set::clear()
 	beacons.clear();
 }
 
-int bcn_set::add(point add_beacon)
+size_t bcn_set::add(point add_beacon)
 {
 	for (size_t i = 0; i < beacons.size(); i++)
 	{
@@ -259,9 +259,19 @@ int bcn_set::add(point add_beacon)
 	b.p = add_beacon;
 	b.num_matches = 1;
 	beacons.push_back(b);
+	
+	return beacons.size();
 }
 
-bool bcn_set::get(point &diff, int N)
+bool bcn_set::getb(point &bcn, size_t N)
+{
+	if (N >= beacons.size()) return false;
+	bcn = beacons[N].p;
+	return true; 
+
+}
+
+bool bcn_set::get(point &maxe, int N)
 {
 	point max;
 	int   maxN = 0;
@@ -278,7 +288,7 @@ bool bcn_set::get(point &diff, int N)
 		printf("MaxN: %d\n", maxN);
 		max.out("Max vector");
 	}
-	diff = max;
+	maxe = max;
 	return maxN >= N;
 }
 
@@ -354,54 +364,12 @@ bool	scanner_search(scanner &s1, scanner &s2, rotmat &rm, point &offset)
 	return false;
 }
 
-
-#ifdef SCANNER_MAP
-typedef struct {
-	scan_map_t	*parent;		// if NULL - top of map
-	scan_map_t	*first_child;	// if NULL - end of map
-	scan_map_t	*next_sibling;	// if NULL - no sibling
-	rotmat   rot_to_parent;		// "R" rotate to parent
-	point	 trans_to_parent;	// "T" adjust child to parent::  C[n] = R * C[n] + T
-} scan_map_t;
-	
-class scanner_map{
-	public:
-		scanner_map() { map = NULL; };
-		void associate(scanner *parent, scanner *first_child, rotmat &rm, point &translate);
-		scan_map_t	*find_parrent(scanner *s);	// find parrent matching s - NULL if no match
-		
-	private:
-		scan_map_t	*map;
-}
-
-scan_map_t
-* scanner_map::search_parent(scan_map_t *here, scanner *s)
-{
-	if (!here) return NULL;
-	if (here->parent == s) return here;
-	if (here->first_child) return search_parent(here->first_child, s);
-	if (here->next_sibling) return search_parent(here->next_sibling, s);
-	return NULL;
-}
-
-scan_map_t
-* scanner_map::find_parent(scanner *s)
-{
-	
-void
-scanner_map::associate(scanner *parent, scanner *first_child, rotmat &rm, point &translate)
-{
-	scan_map_t	*sm = (scan_map_t *) calloc (1, sizeof(scan_map_t));
-	scan_map_t	*p = find(map, parent);
-	if (!p)
-#endif
-
 // Need to create a map relationship between scanners:
 //
 //						s[3]
 //						/
 //      s[0] -> s[1] --
-//						\
+//						\   /* test */
 //						s[4] ---- s[2]
 //
 //      s[1] transforms to s[0] frame via R1,0 * s[1] + T1,0
@@ -413,14 +381,17 @@ int main(int argc, char **argv)
 {
 	
 	scanner *s[100];
-	FILE *f = fopen("data.txt", "r");
-	int  n = 0;
+	FILE *f = fopen(argv[1], "r");
+	size_t  n = 0;
 	rotmat	rm;
 	point translate;
 	rotmat I;
 	I.setrot(1,2,3);
 	rMatrices	rScan;
-	set<int>	scanset;
+	typedef	set<size_t> set_t;
+	set_t	scanset;
+	set_t	nextset;
+	set_t	finalset;
 	while (!feof(f))
 	{
 		s[n++] = new scanner(f);
@@ -437,35 +408,75 @@ int main(int argc, char **argv)
 	// the mapping should include the rotation and translation to 'align' the two scanners to
 	// same coordiante system.   S[0] is the 'head' of the map
 	//
-	for (int i = 1; i < n; i++) scanset.insert(i);  // .erase removes the value
-													// .find(v) returns iterator to v
-	for (int i = 0; i < n; i++)
+	// .erase removes the value
+	// .find(v) returns iterator to v
+	//
+	// first find all scanners related to 0
+	//
+	scanset.insert(0);	// find 0's first
+	finalset.insert(0);
+	while (finalset.size() < n)
 	{
-	    for (set<int>::iterator j = scanset.begin(); j != scanset.end(); j++)
-	    {
-			if (i == *j) continue;
-			if (scanner_search(*s[*j], *s[i], rm, translate))
+		for (size_t i = 1; i < n; i++)
+		{
+			if (finalset.count(i)) continue;
+			for (set_t::iterator j = scanset.begin(); j != scanset.end(); j++)
 			{
-				rScan.add(rm, translate, *j, i);
-				//printf("\n\nScanner %d  ---  Scanner %d\n", i, j);
-				//s[i]->relative_to(s[j], rm, translate);
-				s[*j]->adjust(rm, translate, s[i]->get_location()); //, s[j]->get_location());
-				scanset.erase(j);
+				//printf("Finding %lu related scanners ...\n", *j);
+				if (finalset.count(i)) continue;
+				if (scanner_search(*s[i], *s[*j], rm, translate))
+				{
+					s[i]-> adjust(rm, translate, s[*j]->get_location());
+					nextset.insert(i);
+					finalset.insert(i);
+					printf("Scanner %lu related to scanner %lu\n", i, *j);
+				}
+			}
+		}
+		scanset.clear();
+		scanset = nextset;
+		nextset.clear();
+		printf("Final set size: %lu\n", finalset.size());
+	}
+
+	//
+	// count unique beacons
+	// class bcn_set holds unique beacons
+	//
+
+	bcn_set	bcn_map;
+	for (size_t i = 0; i < n; i++)
+	{
+		for (size_t j = 0; j < s[i]->size(); j++)	// grab each beacon from the sensor
+		{
+			point b = s[i]->get_beacon(j);
+			bcn_map.add(b);	// add will increment counter if b already exists, otherwise inserts
+		}
+	}
+	printf("Number of unique beacons: %lu\n", bcn_map.size());
+
+	//
+	// furthest sensors
+	//
+	point	max_s1;
+	point	max_s2;
+	int		max_dist = -1;
+	for (size_t i = 0; i < n; i++)
+	{
+		point	s1 = s[i]->get_location();
+		for (size_t j = 0; j < i; j++)
+		{
+			point	s2 = s[j]->get_location();
+			if (s1.dist(s2) > max_dist)
+			{
+				max_s1 = s1;
+				max_s2 = s2;
+				max_dist = s1.dist(s2);
 			}
 		}
 	}
-	rScan.out();
-	//
-	// collect all beacon actual location
-	//
-	bcn_set bcn_map;
-	for (int i = 0; i < n; i++)
-	{
-		for (size_t j = 0; j < s[i]->size(); j++)
-		{
-			point	b = s[i]->get_beacon(j);
-			bcn_map.add(b);
-		}
-	}
-	bcn_map.out();
+	max_s1.out("Sensor max 1");
+	max_s2.out("Sensor max 2");
+	printf("Max sensor distance: %d\n\n", max_dist);
+
 }

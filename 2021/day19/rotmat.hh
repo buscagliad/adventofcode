@@ -26,6 +26,7 @@ class rotmat {
 			m[abs(y) - 1][1] = sign(y);
 			m[abs(z) - 1][2] = sign(z);
 			m_valid = true;
+			return m_valid;
 		}
 		rotmat	trans() {
 			rotmat r;
@@ -201,7 +202,7 @@ void	rMatrices::add(rotmat &rm, point &off, uint32_t f, uint32_t t)
 	r.from = f;
 	r.to = t;
 	r.translate = off;
-	printf("From: %d  To: %d   Det: %d\n", f, t, r.rm.det());
+	//printf("From: %d  To: %d   Det: %d\n", f, t, r.rm.det());
 	m.push_back(r);
 }
 
