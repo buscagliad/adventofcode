@@ -784,8 +784,7 @@ void	run_reboot(const char *fname, int64_t max_abs, int64_t expected)
 
 int main(int argc, char **argv)
 {
-	//run_reboot("example.part1.txt", 50, 590784); // example from part 1
 	run_reboot("data.txt", 50, 553201);	// part 1 test
-	//run_reboot("data.txt",  0, 1263946820845866);
+	run_reboot("data.txt",  0, 1263946820845866);
 	return 1;
 }
