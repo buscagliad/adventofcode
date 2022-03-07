@@ -3,6 +3,7 @@
 #include <string.h>
 #include <vector>
 #include <stdlib.h>
+#include <time.h>
 /*        11
  12345678901
 #############
@@ -272,6 +273,8 @@ void	out_burrow(burrow &b)
   #C#C#B#B#
   #########
 */
+	time_t t = time(0);
+	printf("Time: %s\n", ctime(&t));
 #define CH(n)		occ_char(b, n)
 	printf("#############\n");
 	printf("#%c%c.%c.%c.%c.%c%c#\n",
@@ -637,10 +640,10 @@ bool back(int f)
 int	can_move(burrow &b, int f, int t)
 {
 	if (b.s[f].occupied < 0) return -1;
+	if (b.s[f].occupied > 99) return -1;
 	if (valid(b, f, t)) return t;
 	return -1;
 }
-
 
 int	get_moves(burrow &b, vm_t &t, bool debug = false)
 {
@@ -702,20 +705,27 @@ bool	recurse(burrow b)
 		}
 		return true;
 	}
-	moves m(b);
+//	moves m(b);
+//	move_t nm;
+//	m.reset();
+//	bool v = m.first(nm);
+//	burrow c = b;
+	vm_t	mvs;
+	get_moves(b, mvs, false);
+	vm_t_i	it = mvs.begin();
 	move_t nm;
-	m.reset();
-	bool v = m.first(nm);
 	burrow c = b;
-	while(v)
+	
+	while(it != mvs.end())
 	{
+		nm = *it;
 		b = c;
-		bool bm = move(b, nm.from, nm.to);
+		move(b, nm.from, nm.to);
 		//printf("RECURSE: moving %d to %d  %s\n", nm.from, nm.to, TF(bm));
 		//out_burrow(b);
 		b.v.push_back(nm);
 		recurse(b);
-		v = m.next(nm);
+		it++;
 	}
 	//printf("NO MOVES:\n");
 	//out_burrow(b);
@@ -742,6 +752,7 @@ void	r_init(const char *fn, int n)
 		}
 	}
 	reset(gb, ch);
+	out_burrow(gb);
 	recurse(gb); 
 }
 void ixx(burrow bb)
@@ -885,7 +896,7 @@ Move_from (15, 0);
 */
 int	main(int argc, char **argv)
 {
-	r_init("data.txt", 0);
+	r_init("part1.txt", 0);
 }
 
 
