@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 //   inp a - Read an input value and write it to variable a.
 //   add a b - Add the value of a to the value of b, then store the result in variable a.
@@ -11,6 +12,65 @@
 //            (Here, "truncate" means to round the value toward zero.)
 //   mod a b - Divide the value of a by the value of b, then store the remainder in variable a. (This is also called the modulo operation.)
 //   eql a b - If the value of a and b are equal, then store the value 1 in variable a. Otherwise, store the value 0 in variable a.
+//
+// the input has only three commands that are different between steps, these are:
+// inp w		This will be the n'th digit - obtained via recursion and for loops
+// mul x 0		ALWAYS zeroes X
+// add x z		ALWAYS sets X to z (z persists across steps)
+// mod x 26		ALWAYS mod x by 26
+// div z 1		--> div z by either 1 or 26 (this will determine max_z
+// add x 10		--> add_x: number changes at each step
+// eql x w		ALWAYS sets x to 1 if it's equal to w, 0 otherwise
+// eql x 0		ALWAYS sets x to 1 if it's equal to 0, 0 otherwise
+// mul y 0		ALWAYS sets y to 0
+// add y 25		ALWAYS sets y to 25
+// mul y x		ALWAYS sets y = y * x
+// add y 1		ALWAYS increments y by 1
+// mul z y		ALWAYS set z = z * y
+// mul y 0		ALWAYS set y = 0
+// add y w		ALWAYS set y = y + w
+// add y 2		--> add_y: y = y + this value
+// mul y x		ALWAYS set y = y * x
+// add z y		ALWAYS set z = z + y
+
+// These values shown below are 'hardcoded' for my specific data.txt input file
+// I (for no good reason) wanted to genericize this based on the input file
+#define T7 8031810176 // 26 ^ 7
+#define T6 308915776  // 26 ^ 6
+#define T5 11881376   // 26 ^ 5
+#define T4 456976     // 26 ^ 4
+#define T3 17576      // 26 ^ 3
+#define T2 676        // 26 ^ 2
+#define T1 26         // 26 ^ 1
+		        //  1   2   3   4   5   6   7   8   9  10  11  12   13  14
+int64_t add_x[] = {10, 10, 14, 11, 14,-14, 0, 10, -10, 13,-12, -3, -11, -2};
+int64_t add_y[] = { 2,  4,  8,  7, 12, 7, 10, 14,   2,  6,  8, 11,  5,  11};
+int64_t div_z[] = { 1,  1,  1,  1,  1, 26, 26,  1, 26,  1, 26, 26,  26, 26};
+int64_t max_z[] = {T7, T7, T7, T7, T7, T7, T6, T5, T5, T4, T4, T3,  T2, T1};
+
+int		step = -1;	// "inp w" indicates start of a step - will increment then
+int		step_line = 0;
+void	update_add_z(int64_t divz)
+{
+	div_z[step] = divz;
+}
+void	update_add_y(int64_t addy)
+{
+	add_y[step] = addy;
+}
+void	update_add_x(int64_t addx)
+{
+	add_x[step] = addx;
+}
+
+void	update_max_z()
+{
+	max_z[13] = div_z[13];
+	for (int i = 12; i >= 0; i--)
+	{
+		max_z[i] = div_z[i] * max_z[i+1];
+	}
+}
 
 typedef enum { ERROR, INP, ADD, MUL, DIV, MOD, EQL} op_t;
 
@@ -24,56 +84,6 @@ int64_t	get_input();
 void	set_value(const char *n);
 
 
-class var {
-	public:
-		var(char _nm) {nm = _nm; value = 0; };
-		void op(op_t ot, int64_t v);
-		void op(op_t ot, var *wv);
-		void inp()			{int64_t v = get_input(); value = v; DEBUG; };
-		void add(int64_t v)	{value += v; DEBUG; };
-		void add(var v)		{value += v.value; DEBUGC; };
-		void mul(int64_t v)	{value *= v; DEBUG; };
-		void mul(var v)		{value *= v.value; DEBUGC; };
-		void div(int64_t v)	{value /= v; DEBUG; };
-		void div(var v)		{value /= v.value; DEBUGC; };
-		void mod(int64_t v)	{value %= v; DEBUG; };
-		void mod(var v)		{value %= v.value; DEBUGC; };
-		void eql(int64_t v)	{value = (value == v) ? 1 : 0; DEBUG; };
-		void eql(var v)		{value = (value == v.value) ? 1 : 0; DEBUGC; };
-		void set(int64_t v)	{value = v;};
-		int64_t get()		{return value;};
-		void out()			{printf("VAR: %c  value: %ld\n", nm, value); };
-	private:
-		int64_t value;
-		char	nm;
-};
-
-void var::op(op_t ot, int64_t v)
-{
-	switch (ot)
-	{
-		case INP: inp(); break;
-		case ADD: add(v); break;
-		case MUL: mul(v); break;
-		case DIV: div(v); break;
-		case MOD: mod(v); break;
-		case EQL: eql(v); break;
-		default:
-			printf("ERROR - cannot perform this operation\n");
-	}
-}
-		
-void var::op(op_t ot, var *wv)
-{
-	op(ot, wv->get());
-}
-
-
-var	x('x');
-var y('y');
-var w('w');
-var z('z');
-
 #define	MAX_DIGS 15
 char	digs[MAX_DIGS];
 int		dig_index = 0;
@@ -81,10 +91,6 @@ void	set_value(const char *n)
 {
 	strncpy(digs, n, MAX_DIGS);
 	dig_index = 0;
-	w.set(0);
-	x.set(0);
-	y.set(0);
-	z.set(0);
 }
 int64_t	get_input()
 {
@@ -103,191 +109,61 @@ op_t	get_op(char *op)
 	return ERROR;
 }
 
-var	*get_var(char c)
+bool	get_val(char *s, int64_t &v)
 {
-	switch(c)
-	{
-		case 'w': return &w;
-		case 'x': return &x;
-		case 'y': return &y;
-		case 'z': return &z;
-		default: return NULL;
-	}
-	return NULL;
-}
-
-int64_t	get_val(char *s)
-{
-	var	*v = get_var(*s);
-	if (v) return v->get();
-	return atoll(s);
+	if (isalpha(*s)) return false;
+	v = atoll(s);
+	return true;
 }
 
 
-bool	parse_line(char	*inl)
+void	parse_line(char	*inl)
 {
 	op_t	op = get_op(inl);
-	var		*vr = get_var(inl[4]);
-	int64_t	vl = get_val(inl+6);
-	if (debug) printf("INLINE: %s :: ", inl);
-	vr->op(op, vl);
-	if (debug) printf("w: %ld  x: %ld  y: %ld  z: %ld\n", w.get(), x.get(), y.get(), z.get());
-	if (op == INP) return true;
-	return false;
+	char	var = inl[4];
+	int64_t	v;
+	bool	is_a_value = get_val(inl+6, v);
+	if (op == INP) { step++; step_line = 1;  return;} else step_line++;
+	if ( (op == DIV) && (var == 'z') && (step_line == 5) && (is_a_value) ) update_add_z(v);
+	if ( (op == ADD) && (var == 'x') && (step_line == 6) && (is_a_value) ) update_add_x(v);
+	if ( (op == ADD) && (var == 'y') && (step_line == 16) && (is_a_value) ) update_add_y(v);
+	return;
 }
+
+#define PVEC(s, v, n)		printf("%s: %ld", s, v[0]); for (int i = 1; i < n; i++)\
+							{printf(", %ld", v[i]); } printf("\n");
+
 
 void	parse_file(const char *fn)
 {
 	FILE *f = fopen(fn, "r");
 	char	inl[100];
 	fgets(inl, 100, f);
+	if (0)
+	{		printf("Hard coded values\n");
+		PVEC("div_z", div_z, 14);
+		PVEC("max_z", max_z, 14);
+		PVEC("add_x", add_x, 14);
+		PVEC("add_y", add_y, 14);
+	}
 	while (!feof(f))
 	{
 		inl[strlen(inl)-1] = 0;
-		//parse_line(inl);
-		if(parse_line(inl))
-		{
-			printf("Current state:  %s  digits: %d  w:%ld  x: %ld  y: %ld  z: %ld\n", digs, dig_index-1,
-				w.get(), x.get(), y.get(), z.get());
-			//x.set(0);
-			//w.set(0);
-			//z.set(0);
-			//y.set(0);
-		}
+		parse_line(inl);
 		fgets(inl, 100, f);
 	}
-	if (1)
+	update_max_z();
+	if (0)
 	{
-		printf("Final state:  %s  digits: %d  w:%ld  x: %ld  y: %ld  z: %ld\n", digs, dig_index,
-				w.get(), x.get(), y.get(), z.get());
+		printf("Input from file: %s\n", fn);
+		PVEC("div_z", div_z, 14);
+		PVEC("max_z", max_z, 14);
+		PVEC("add_x", add_x, 14);
+		PVEC("add_y", add_y, 14);
+			
 	}
 	fclose(f);
 }
-
-char	randig()
-{
-	double	r = rand() / (double) RAND_MAX * 9;
-	int     ir = r;
-	return '1' + ir;
-}
-	
-
-void	ran_value()
-{
-	char	rv[15];
-	rv[14] = 0;
-	for (int i = 0; i < 14; i++)
-		rv[i] = randig();
-	set_value(rv);
-}
-
-bool	is_valid(const char *s)
-{
-	for (int i = 0; i < 14; i++)
-	{
-		if (s[i] < '1') return false;
-		if (s[i] > '9') return false;
-	}
-	return true;
-}
-
-void	make_valid(char *s)
-{
-	for (int i = 0; i < 14; i++)
-	{
-		if (s[i] < '1') s[i] = '1';
-		if (s[i] > '9') s[i] = '9';
-	}
-}
-	
-
-void	set_int_value(int64_t v)
-{
-	char	sv[20];
-	sprintf(sv, "%ld", v);
-	make_valid(sv);
-	set_value(sv);
-}
-	
-int	max_search = 0;
-#define MAX_SEARCH 1000
-
-int64_t	binary_step(int64_t start, int64_t end)
-{
-	if (max_search > MAX_SEARCH) return 0;
-	max_search++;
-	set_int_value(start);
-	parse_file("data.txt");
-	int64_t start_z = z.get();
-	set_int_value(end);
-	parse_file("data.txt");
-	int64_t end_z = z.get();
-	if (end_z * start_z > 0) {
-		printf("Same side of zero\n");
-	}
-	//int64_t mid = start + (start-end)/2;
-	int64_t mid_z = z.get();
-	if ( (mid_z > start_z) ||
-	     (mid_z > end_z) )
-	     { printf("No Convergence\n");
-		return 0;
-	}
-
-	return mid_z;
-}
-
-void test1()
-{
-	int64_t sv = 11111111111111;
-	int64_t cv = 11111111111111;
-	int64_t k = 1;
-	set_int_value(sv);
-	for (k = 1; k < 100000000000000; k = k*10)
-	{
-		sv = cv;
-		for (int i = 1; i <= 9; i++)
-		{
-			set_int_value(sv);
-			parse_file("data.txt");
-			printf("[%d] - serial number: %s   z = %ld\n", i, digs, z.get());
-			sv += k;
-		}
-	}
-}
-
-void test2()
-{
-	for (int64_t k = 1; k < 1000000; k++)
-	{
-
-		ran_value();
-		parse_file("data.txt");
-		if (z.get() == 0) printf("[%ld] - serial number: %s   z = %ld\n", k, digs, z.get());
-	}
-}
-void test3()
-{
-	for (int64_t k = 11111111111111; k < 100000000000000; k+=11111111111111)
-	{
-
-		set_int_value(k);
-		parse_file("data.txt");
-		if (z.get() == 0) printf("[%ld] - serial number: %s   z = %ld\n", k, digs, z.get());
-	}
-}
-
-#define T7 8031810176 // 26 ^ 7
-#define T6 308915776  // 26 ^ 6
-#define T5 11881376   // 26 ^ 5
-#define T4 456976     // 26 ^ 4
-#define T3 17576      // 26 ^ 3
-#define T2 676        // 26 ^ 2
-#define T1 26         // 26 ^ 1
-					  //  1   2   3   4   5   6   7   8   9  10  11  12   13  14
-const int64_t div_z[] = { 1,  1,  1,  1,  1, 26, 26,  1, 26,  1, 26, 26,  26, 26};
-const int64_t max_z[] = {T7, T7, T7, T7, T7, T7, T6, T5, T5, T4, T4, T3,  T2, T1};
-const int64_t add_x[] = {10, 10, 14, 11, 14,-14, 0, 10, -10, 13,-12, -3, -11, -2};
-const int64_t add_y[] = { 2,  4,  8,  7, 12, 7, 10, 14,   2,  6,  8, 11,  5,  11};
 
 bool try_digit(int dig_index, int dig_value, int64_t z, int64_t serial_number, bool largest)
 {
@@ -345,23 +221,9 @@ void	solution()
 
 int	main(int argc, char **argv)
 {
-	srand(time(0));
-	if (1) {
-		solution();
-		return 1;
-	}
-	if (1) {
-		set_int_value(99429795993929);		// largest
-		parse_file("data.txt");
-		return 1;
-	}
-	set_int_value(61191516111321);
 	parse_file("data.txt");
-	set_int_value(18113181571611);		// smallest
-	parse_file("data.txt");
-	return 1;
-	test3();
-	//parse_file("ex.txt");
+	solution();
+
 	return 1;
 }
 	
