@@ -1,6 +1,5 @@
 #include <stdlib.h>
 
-\
 
 class hist {
 	public:

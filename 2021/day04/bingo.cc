@@ -1,5 +1,7 @@
 #include <vector>
 #include <stdio.h>
+#include "log.hh"
+
 
 class	cell {
 	public:
@@ -18,6 +20,7 @@ class	cell {
 #define	NUM_ROWS 5
 #define NUM_COLS 5
 #define NO_SOLUTION -1
+#define DEBUG 0
 
 class	bingo {
 	public:
@@ -36,7 +39,6 @@ class	bingo {
 bingo::bingo(FILE *f)
 {
 	int	r = 0;
-	int	c = 0;
 	int	v1, v2, v3, v4, v5;
 	for (r = 0; r < NUM_ROWS; r++)
 	{
@@ -73,6 +75,7 @@ bool	bingo::mark(int val)	// returns true if row/col bingo
 				board[r][c]->set_mark();
 		}
 	}
+	return is_bingo();
 }
 	
 int		bingo::unmarked_sum()
@@ -141,13 +144,13 @@ bool	bingo::is_bingo()	// returns true if row or column bingo
 
 int main(int argc, char **argv)
 {
-	int		balls[100];
-	int		ball_count = 0;
 	char	line[500];
 	FILE	*f = fopen(argv[1], "r");
 	fgets(line, 500, f);
 	std::vector<bingo> boards;
 	std::vector<int> numbers;
+	int		part1_answer = -1;
+	int		part2_answer = -1;
 	
 	char *p = line;
 	int	v = 0;
@@ -186,18 +189,23 @@ int main(int argc, char **argv)
 
 			if (it -> is_bingo()) 
 			{
-				it -> out();
-				printf("BINGO!!!!!!!\n\n");
-				int	msum = it->marked_sum();
+				if (DEBUG) it -> out();
+				if (DEBUG) printf("BINGO!!!!!!!\n\n");
 				int usum = it->unmarked_sum();
 				int fnum = *ni;
-				printf("Final number: %d\n", fnum);
-				printf("Sum unmarked: %d\n", usum);
-				printf("Product: %d\n", fnum * usum);
+				if (DEBUG) printf("Final number: %d\n", fnum);
+				if (DEBUG) printf("Sum unmarked: %d\n", usum);
+				if (DEBUG) printf("Product: %d\n", fnum * usum);
+				if (part1_answer < 0) part1_answer = fnum * usum;
+				part2_answer = fnum * usum;	// will be the last score
 				board_count --;
-				if (board_count == 0) return 0;
+				if (board_count == 0) break;
 			}
 		}
 	}
-	
+	// part 1
+	// part 2
+	result(4, 1, part1_answer, 27027);
+	result(4, 2, part2_answer, 36975);
+	return 1;
 }
