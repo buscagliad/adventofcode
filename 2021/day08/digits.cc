@@ -246,7 +246,7 @@ int	out_digits(char *bf[], char *af[])
 		v = 10 * v + d;
 	    //printf("%s --> %d\n", af[i], d);
 	}
-	printf("Display: %d\n", v);
+	//printf("Display: %d\n", v);
 	return v;
 }
 
@@ -289,6 +289,7 @@ int init(FILE *f)
 	int  bf_num;
 	char *af[100];
 	int  af_num;
+	rewind(f);
 
 	fgets(c, MAXLINE, f);
 	while (!feof(f))
@@ -309,12 +310,37 @@ int init(FILE *f)
 	return counter;
 }
 
+int count_2_3_4_7s(FILE *f)
+{
+	int v = 0;
+	int counter = 0;
+	char c[MAXLINE];
+	char *bf[100];
+	int  bf_num;
+	char *af[100];
+	int  af_num;
+	rewind(f);
+	fgets(c, MAXLINE, f);
+	while (!feof(f))
+	{
+		parseline(c, bf, bf_num, af, af_num);
+	    for (int i = 0; i < af_num; i++)
+	    {
+			v = strlen(af[i]);
+			if ( (v == 2) || (v == 3) || (v == 4) || (v == 7) )
+			    counter++;
+		}
+		fgets(c, MAXLINE, f);
+	}
+	return counter;
+}
 
 int main(int argc, char **argv)
 {
 	FILE *f = fopen(argv[1], "r");
 
-	printf("Sum of all outpus: %d\n", init(f));
+	printf("Count of 2's, 3's, 4's and 8's: %d\n", count_2_3_4_7s(f));
+	printf("Sum of all outputs: %d\n", init(f));
 
 	return 0;
 }
