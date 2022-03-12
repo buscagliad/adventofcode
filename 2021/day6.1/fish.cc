@@ -3,6 +3,10 @@
 #include <vector>
 #include <ctype.h>
 
+#include "log.hh"
+
+#define DEBUG 0
+
 using namespace std;
 
 class	fish {
@@ -82,21 +86,29 @@ void init(FILE *f, school &s)
 	}
 }
 
-
-int main(int argc, char **argv)
+int64_t	lantern_fish(FILE *f, int num_days)
 {
-	int		num_days = atoi(argv[2]);
-	FILE *f = fopen(argv[1], "r");
+	rewind(f);
 	school	s;
 	init(f, s);
-	printf("Initial state: ");
-	s.out();
+	if (DEBUG) printf("Initial state: ");
+	if (DEBUG) s.out();
 	for (int i = 1; i <= num_days; i++)
 	{
 		s.next();
-		printf("After %2d days: ", i);
-		s.out();
+		if (DEBUG) printf("After %2d days: ", i);
+		if (DEBUG) s.out();
 	}
-	printf("Total number of fish: %lld\n", s.population());
+	if (DEBUG) printf("Total number of fish: %lld\n", s.population());
+	return s.population();
+}
+
+int main(int argc, char **argv)
+{
+	FILE *f = fopen(argv[1], "r");
+	
+	result64(6, 1, lantern_fish(f, 80), 363101);
+	result64(6, 2, lantern_fish(f, 200), 12440520375);
+
 	return 0;
 }
