@@ -165,8 +165,6 @@ void solve(const char *v, int tsynerr, long long int tacomp)
 
 int main(int argc, char **argv)
 {
-	solve("ex.txt", 26397, 288957);
-    printf("\n\n");
 	solve("data.txt", 339537, 2412013412);
 
 	return 0;
