@@ -224,8 +224,6 @@ void solve(const char *v, int trisk, int ttop3)
 
 int main(int argc, char **argv)
 {
-	solve("ex.txt", 15, 1134);
-    printf("\n\n");
 	solve("data.txt", 588, 964712);
 
 	return 0;
