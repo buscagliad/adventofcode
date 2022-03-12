@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "log.hh"
 
+#define DEBUG  0
 
 class	graph {
 	public:
@@ -66,15 +68,16 @@ bool		readline(FILE *f, int *x1, int *y1, int *x2, int *y2)
 {
 	// read line
 	char	l[MAXLINE];
+	l[0] = 0;
 	if (feof(f)) return false;
 	fgets(l, MAXLINE, f);
 	// parse x1,y1 -> x2,y2
-	sscanf(l, "%d,%d -> %d,%d", x1, y1, x2, y2);
-	printf("%d,%d -> %d,%d\n", *x1, *y1, *x2, *y2);
+	if (sscanf(l, "%d,%d -> %d,%d", x1, y1, x2, y2) < 4) return false;
+	if (DEBUG) printf("%d,%d -> %d,%d\n", *x1, *y1, *x2, *y2);
 	return true;
 }
 
-void	fill(graph &g, FILE *f)
+void	fill(graph &g, FILE *f, bool use_diagonals)
 {
 	rewind(f);
 	int	x1, y1, x2, y2;
@@ -98,8 +101,18 @@ void	fill(graph &g, FILE *f)
 			    for (int i = x2; i <= x1; i++)
 			        g.mark(i, y1);
 		}
-		else
-		    printf("^^^^^NOT USING^^^^\n");
+		else if (use_diagonals)
+		{
+			int dx = (x2 > x1) ? 1 : -1;
+			int dy = (y2 > y1) ? 1 : -1;
+			g.mark(x1, y1);
+			do 
+			{
+				x1 += dx;
+				y1 += dy;
+				g.mark(x1, y1);
+			} while (x1 != x2);
+		}
 	}
 	rewind(f);
 }
@@ -120,7 +133,7 @@ void	maxnums(FILE *f, int &max_x, int &max_y)
 			if (max_y < y2) max_y = y2;
 		}
 		else
-		    printf("ratio: %.3f\n", (double)(y2 - y1)/(double)(x2 - x1));
+		    if (DEBUG) printf("ratio: %.3f\n", (double)(y2 - y1)/(double)(x2 - x1));
 	}
 	rewind(f);
 }
@@ -128,14 +141,16 @@ void	maxnums(FILE *f, int &max_x, int &max_y)
 
 int main(int argc, char **argv)
 {
-	char	line[500];
 	FILE	*f = fopen(argv[1], "r");
 	int		max_x, max_y;
 	maxnums(f, max_x, max_y);
-	printf("MAX X: %d   MAX Y: %d\n", max_x, max_y);
-	graph	g(max_x, max_y);
-	fill(g, f);
-	g.out();
-	printf("Total 'bad' spots (>= 2) is: %d\n\n", g.count(2));
+	if (DEBUG) printf("MAX X: %d   MAX Y: %d\n", max_x, max_y);
+	graph	p1(max_x, max_y);
+	graph	p2(max_x, max_y);
+	fill(p1, f, false);
+	result(4, 1, p1.count(2), 5092);
+	if (DEBUG) p1.out();
+	fill(p2, f, true);
+	result(4, 2, p2.count(2), 20484);
 	return 0;
 }
