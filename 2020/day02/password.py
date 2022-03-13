@@ -9,14 +9,14 @@ def valid(pline, part):
         c = list[2].count(charv)
         if minc <= c and c <= maxc: return True
     else:
-        print(pline)
+        #print(pline)
         if list[2][minc-1] == charv  and  list[2][maxc-1] != charv:
-            print("{True } Line: " + list[2] + "  charv: " + charv + "  minc = " + str(minc) + "  maxc = " + str(maxc) + "  c1 = " + list[2][minc-1] + "  c2 = " + list[2][maxc-1])
+            #print("{True } Line: " + list[2] + "  charv: " + charv + "  minc = " + str(minc) + "  maxc = " + str(maxc) + "  c1 = " + list[2][minc-1] + "  c2 = " + list[2][maxc-1])
             return True
         elif list[2][minc-1] != charv  and  list[2][maxc-1] == charv:
-            print("{True } Line: " + list[2] + "  charv: " + charv + "  minc = " + str(minc) + "  maxc = " + str(maxc) + "  c1 = " + list[2][minc-1] + "  c2 = " + list[2][maxc-1])
+            #print("{True } Line: " + list[2] + "  charv: " + charv + "  minc = " + str(minc) + "  maxc = " + str(maxc) + "  c1 = " + list[2][minc-1] + "  c2 = " + list[2][maxc-1])
             return True
-        print("{False} Line: " + list[2] + "  charv: " + charv + "  minc = " + str(minc) + "  maxc = " + str(maxc) + "  c1 = " + list[2][minc-1] + "  c2 = " + list[2][maxc-1])
+        #print("{False} Line: " + list[2] + "  charv: " + charv + "  minc = " + str(minc) + "  maxc = " + str(maxc) + "  c1 = " + list[2][minc-1] + "  c2 = " + list[2][maxc-1])
     return False
 
 
