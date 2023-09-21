@@ -15,9 +15,11 @@ class grid :
 		return self.g[r][c]
 		
 	def inline(self, r, rpm1, c, cpm1):
+		r += rpm1
+		c += cpm1
+		#print("r: ", r, " dr: ", rpm1, "c: ", c, " dc: ", cpm1)
 		while r >= 0 and r < self.rows and c >= 0 and c < self.columns :
 			thischair = self.get(r, c)
-			#print("r: ", r, "c: ", c, "chair: ", thischair)
 			if thischair == 'L' : return 0
 			if thischair == '#' : return 1
 			r += rpm1
@@ -30,6 +32,7 @@ class grid :
 			for dc in [-1, 0, 1] :
 				if dr == 0 and dc == 0 : continue
 				cnt += self.inline(r, dr, c, dc)
+		#print ("@ (", r, c, ") = ", cnt);
 		return cnt
 					
 	def count(self, r, c) :
@@ -81,21 +84,21 @@ class grid :
 		print()
 		print("Number of occupied seats: ", self.occupied())
 
-g = grid("test.txt")
+g = grid("data.txt")
 #g.output()
-x = 1
-
-while x > 0 :
-	x = g.update()
-print("Part 1: Number of occupied seats: ", g.occupied())
-
-g = grid("test.txt", True)
 x = 1
 n = 0
 
 while x > 0 :
 	n += 1
 	x = g.update()
-	g.output()
-	print(n, " occupied: ", x)
-print("Part 2: Number of occupied seats: ", g.occupied())
+print("Part 1: Number of occupied seats: ", g.occupied(), " after ", n, " updates")
+
+g = grid("data.txt", True)
+x = 1
+n = 0
+
+while x > 0 :
+	n += 1
+	x = g.update()
+print("Part 2: Number of occupied seats: ", g.occupied(), " after ", n, " updates")
