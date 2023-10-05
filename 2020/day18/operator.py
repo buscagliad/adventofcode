@@ -72,7 +72,7 @@ def Equation(line):
 	rv = 0
 	for j in range(len(line)):
 		s = line[j]
-		print(s)
+		if not s == ' ' : print("[",g_depth,"] ", s)
 		if s == '\n' : return rv, len(line)
 		elif s == ' ': continue
 		elif s == '+' :
@@ -80,25 +80,25 @@ def Equation(line):
 		elif s == '*' :
 			mult = True
 		elif s == '(' :
-			print("  (", rv, " mult: ", mult)
+			print("[",g_depth,"]   rv:", rv, " mult: ", mult)
 			if mult:
 				#return rv * Equation(line, mult, j+1)
 				#rv *= Equation(line, mult, j+1)
 				g_depth += 1
 				nrv, dj = Equation(line[j+1:])
+				g_depth -= 1
 				rv *= nrv
 				j += dj+2
-				g_depth -= 1
-				print ("Line : ", line[j:], " * rv ", rv, " nrv", nrv, " j = ", j, " dj = ", dj)
+				print ("[",g_depth,"] Line: ", line[j:], " * rv ", rv, " nrv", nrv, " j = ", j, " dj = ", dj)
 			else:
 				#return rv + Equation(line, mult, j+1)
 				#rv += Equation(line, mult, j+1)
 				g_depth += 1
 				nrv, dj = Equation(line[j+1:])
+				g_depth -= 1
 				j += dj+2
 				rv += nrv
-				print ("Line : ", line[j:], " + rv ", rv, " nrv", nrv, " j = ", j, " dj = ", dj)
-				g_depth -= 1
+				print ("[",g_depth,"] Line: ", line[j:], " + rv ", rv, " nrv", nrv, " j = ", j, " dj = ", dj)
 
 		elif s == ')' :
 			print("[",g_depth,"] ",rv, " line[",j,":] ", line[j:])
@@ -108,7 +108,7 @@ def Equation(line):
 			thisValue = int(s)
 			if 'mult' not in locals():
 				rv = thisValue
-				print("First value ", thisValue)
+				print("[",g_depth,"] First value ", thisValue)
 			elif mult :
 				rv *= thisValue
 				#rv = thisValue * Equation(line, False, rv, j + 1)
@@ -128,7 +128,7 @@ eq = "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2"
 eq = "1 + (2 * 3) + (4 * (5 + 6))"
 #eq = "1 + 2 * 3 + 4 * 5 + 6"
 
-print("$$$ eqRun: ", eq, " = ", EqRun(eq))
+#print("$$$ eqRun: ", eq, " = ", EqRun(eq))
 print("$$$ equation: ", eq, " = ", Equation(eq))
 
 #for eq in open("test.txt", "r"):
