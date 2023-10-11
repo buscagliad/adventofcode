@@ -1,11 +1,19 @@
 import math
 import numpy as np
+import collections
 
 def hasedge(edge, edges):
 	for e in edges:
 		if edge == e: return True
 		if edge == e[::-1]: return True
 	return False
+
+def findtiles(side, tiles):
+	tlist = []
+	if side == None: return tlist
+	for t in tiles:
+		if hasedge(side, t.side) : tlist.append(t.num)
+	return tlist
 
 def findedge(thistile, s, tiles):
 	thisedge = thistile.side[s]
@@ -51,6 +59,7 @@ class Tile:
 		self.side.append(right)
 		self.type = 0  # unknown type
 		self.rrows = self.rows.copy()
+		self.used = False
 
 	def display(self):
 		print("Tile: ", self.num)
@@ -93,14 +102,39 @@ class Tile:
 				else: self.rrows[i][j] = self.rows[i][n-j-1]
 		return self.rrows
 				
-	def find(top, right, bottom, left):
-		if not top == None:
-		if not right == None:
-		if not bottom == None:
-		if not left == None:		
+def findPiece(tiles, top, right, bottom, left):
+	tlist = []
+	needed = 0
+	c = collections.Counter()
+	if not top == None:
+		t = findtiles(top, tiles)
+		for i in t: c[i] += 1
+		needed += 1
+		
+	if not right == None:
+		t = findtiles(right, tiles)
+		for i in t: c[i] += 1
+		needed += 1
+		
+	if not bottom == None:
+		t = findtiles(bottom, tiles)
+		for i in t: c[i] += 1
+		needed += 1
+		
+	if not left == None:	
+		t = findtiles(left, tiles)
+		for i in t: c[i] += 1
+		needed += 1
+	
+	for i in tlist:
+		print(i)
+		#c[i] += 1
+	tn = c.most_common(1)[0][0]
+	if tn == needed:
+		print("Found tile: ", tn)
+	print(c)
 
-		
-		
+
 		
 tiles = []
 f = open("data.txt", "r")
@@ -113,32 +147,34 @@ while not l == "":
 #exit(1)
 
 prod = 1
-##
-## needed for Part 2
-corners = []
-corners[0] = [False,True,True,False]
-corners[1] = [False,False,True,True]
-corners[2] = [True,False,False,True]
-corners[3] = [True,True,False,False]
-puzzle = np.zeros((numpixels, numpixels))
-c = 0  # first corner
 
 for t in tiles:
 	t.mark(tiles)
 	if (t.type == 2) : 
 		prod *= t.num ## Part 1 corner product
 		print(t.num, " ", t.xside)
-		##
-		## start with the corners:
-		##
-		t.rotate(corners[c])
-		c += 1
+		top = right = bottom = left = None
+		if t.xside[0] : top = t.side[0]
+		if t.xside[1] : right = t.side[1]
+		if t.xside[2] : bottom = t.side[2]
+		if t.xside[3] : left = t.side[3]
+		findPiece(tiles, top, right, bottom, left)
+
 
 
 print("Part 1: Product is: ", prod)
 
-numpixels = math.floor(math.sqrt(len(tiles)) + 0.5)
 
+##
+## needed for Part 2
+numpixels = math.floor(math.sqrt(len(tiles)) + 0.5)
+corners = []
+corners.append([False,True,True,False])
+corners.append([False,False,True,True])
+corners.append([True,False,False,True])
+corners.append([True,True,False,False])
+puzzle = np.zeros((numpixels, numpixels))
+c = 0  # first corner
 
 ##
 ## start with the corners:
