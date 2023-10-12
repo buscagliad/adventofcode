@@ -33,8 +33,16 @@ def findedge(thistile, s, tiles):
 
 def displaytiles(tiles):
 	for s in range(len(tiles)):
-		tiles[s].display()
+		tiles[s].displayedges()
 
+def tostring(arr):
+	rs = ""
+	for i in arr:
+		if i == b'#':
+			rs += '#'
+		else:
+			rs += '.'
+	return rs
 
 class Tile:
 	def __init__(self, f, tline):
@@ -42,31 +50,57 @@ class Tile:
 		#print(line)
 		self.num = int(line[1].strip(":\n"))
 		#print("Number: ", self.num)
-		self.rows = []
+		self.rows = np.zeros(shape=(10,10),dtype=np.character)
 		for i in range(10):
-			self.rows.append(f.readline().strip())
+			for j, r in enumerate(f.readline().strip()):
+				self.rows[i][j] = r
 		f.readline()
 		self.side = []
-		self.side.append(self.rows[0])
 		self.xside = [False]*4
-		left = ""
+		top = ""
 		right = ""
+		bottom = ""
+		left = ""
 		for i in range(10):
-			left += self.rows[i][0]
-			right += self.rows[i][9]
-		self.side.append(left)
-		self.side.append(self.rows[9])
+			if self.rows[0][i] == b'#':
+				top += '#'
+			else:
+				top += '.'
+			if self.rows[i][9] == b'#':
+				right += '#'
+			else:
+				right += '.'
+			if self.rows[9][i] == b'#':
+				bottom += '#'
+			else:
+				bottom += '.'
+			if self.rows[i][0] == b'#':
+				left += '#'
+			else:
+				left += '.'
+		self.side.append(top)
 		self.side.append(right)
+		self.side.append(bottom)
+		self.side.append(left)
+		#print(self.side)
 		self.type = 0  # unknown type
 		self.rrows = self.rows.copy()
 		self.used = False
+		self.flipped = False # Not flipped
+		self.cw = 0		# Not rotated
 
-	def display(self):
+	def displayedges(self):
 		print("Tile: ", self.num)
 		print("  Left:", self.side[0], "   ~Left:", self.side[0][::-1])
 		print("   Top:", self.side[1], "    ~Top:", self.side[1][::-1])
 		print("Bottom:", self.side[2], " ~Bottom:", self.side[2][::-1])
 		print(" Right:", self.side[3], "  ~Right:", self.side[3][::-1])
+
+	def display(self):
+		print("Tile: ", self.num, "  CW: ", self.cw, "  Flipped: ", self.flipped)
+		for r in self.rows:
+			print(tostring(r))
+		print(" ")
 
 	def mark(self, tiles):
 		count = 0
@@ -78,16 +112,21 @@ class Tile:
 				self.xside[s] = False
 		#print("Tile: ", self.num, " sides that have a match ", count, " sides")
 		self.type = count	# 2 is corner, 3 is edge, 4 is interior
+	
+	def swap(self, x1, y1, x2, y2):
+		save = self.rows[x1][y1]
+		self.rows[x1][y1] = self.rows[x2][y2]
+		self.rows[x2][y2] = save
 
-	def rotate(self, cw):
-		if (cw == 0): return self.rrows
+	def rotate(self, cw, firstcall = True):
+		if firstcall : self.cw = cw
+		if (cw == 0): return
 		cw -= 1
 		n = len(self.rows[0])
-		for r in range(n):
-			for c in range(n):
-				self.rrows[i][j] = self.rows[n-j][i]
-		cw -= 1
-		return rotate(self, cw)
+		for i in range(n):
+			for j in range(i+1,n):
+				self.swap(i, j, n-j, i)
+		self.rotate(cw, False)
 				
 	def rotcount(self, tside):
 		for cw in range(4):
@@ -95,6 +134,7 @@ class Tile:
 			tside = tside[-1]+tside[0:3]
 				
 	def flip(self, horz = True):
+		self.flipped = True;
 		n = len(self.rows[0])
 		for r in range(n):
 			for c in range(n):
@@ -187,3 +227,9 @@ for t in tiles:
 
 
 print("Part 2: Number of non-serpant pixels is: ", numpixels)
+
+tiles[0].display()
+for i in range(5):
+	tiles[0].rotate(1)
+	tiles[0].display()
+
