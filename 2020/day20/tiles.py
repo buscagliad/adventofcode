@@ -164,16 +164,23 @@ class Tile:
 
 		# need to rotate sno - r
 		cw = (sno - r + 4 ) % 4
+		print("cw: ", cw, " r = ", r)
 		self.rotate(cw)
-		if f and sno % 2: self.flip(True)
-		elif f : self.flip(False)
+		#self.display()
+		if f and sno % 2: 
+			print("Vertical flip")
+			self.flip(True)
+		elif f : 
+			print("Horizontal flip")
+			self.flip(True)
+		#self.display()
 	
-	def hasSide(self, s):
+	def hasSide(self, s, dbg = False):
 		found = False
 		rot = -1
 		flip = False
 		for r in range(4):
-			print (r, self.side[r], self.side[r][::-1], s, sep = " ")
+			if (dbg) : print (r, self.side[r], self.side[r][::-1], s, sep = " ")
 			if self.side[r] == s:
 				found = True
 				rot = r
@@ -184,6 +191,7 @@ class Tile:
 				flip = True
 				rot = r
 				break
+		if (dbg) : print ("found", found, "rot", rot, "flip", flip, sep = " ")
 		return found, rot, flip
 #
 # find a tile with top, right, bottom and/or left matches
@@ -242,7 +250,7 @@ for t in tiles:
 	t.mark(tiles)
 	if (t.type == 2) : 
 		prod *= t.num ## Part 1 corner product
-		print(t)
+		#print(t)
 		corners.append(t)
 		
 		#print(t.num, " ", t.xside)
@@ -304,7 +312,7 @@ def addTileToGrid(grid, tile, x, y):
 ##
 ## Build Frame, orient first corner at the upper left
 
-corners[0].display()
+## corners[0].display()
 ##
 ## Get upper left corner
 ##
@@ -323,7 +331,7 @@ col = 0
 corners[0].display()
 side = corners[0].side[2]
 addTiles(grid, row, col, corners[0], gridLayOut)
-print("Upper right corner: ", corners[0].num, side)
+print("Upper left corner: ", corners[0].num, side)
 corners[0].used = True
 found = False
 ##
@@ -339,6 +347,7 @@ for n in range(1,numpixels-1):
 			e.orientToSide(side, 0)
 			addTiles(grid, row, col, e, gridLayOut)
 			print("Next left edge: ", e.num)
+			e.display()
 			side = e.side[2]
 			break
 found = False
@@ -355,6 +364,7 @@ for c in corners:
 		addTiles(grid, row, col, c, gridLayOut)
 		side = c.side[1]
 		print("Lower left corner: ", c.num)
+		c.display()
 		break
 	
 found = False
@@ -371,6 +381,7 @@ for n in range(1,numpixels-1):
 			e.orientToSide(side, 3)
 			addTiles(grid, row, col, e, gridLayOut)
 			print("Next bottom edge: ", e.num)
+			e.display()
 			side = e.side[1]
 			break
 
@@ -380,13 +391,14 @@ found = False
 for c in corners:
 	if found : break
 	if c.used : continue
-	found, rot, flip = c.hasSide(side)
+	found, rot, flip = c.hasSide(side, True)
 	if found:
 		col += 1
 		c.used = True
 		c.orientToSide(side, 3)
 		addTiles(grid, row, col, c, gridLayOut)
 		side = c.side[0]
+		c.display()
 		print("Lower right corner: ", c.num)
 		break
 		
@@ -404,6 +416,7 @@ for n in range(1,numpixels-1):
 			e.orientToSide(side, 2)
 			addTiles(grid, row, col, e, gridLayOut)
 			print("Next right edge: ", e.num)
+			e.display()
 			side = e.side[0]
 			break
 
