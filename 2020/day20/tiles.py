@@ -149,7 +149,7 @@ class Tile:
 			self.side[3] = self.side[3][::-1]
 			self.side[1] = self.side[1][::-1]
 
-	def orientToSide(self, side, sno):
+	def orientToSideOld(self, side, sno):
 		f = False
 		found = False
 		for r in range(4):
@@ -159,6 +159,7 @@ class Tile:
 			if self.side[r][::-1] == side:
 				found = True
 				f = True
+				break
 		if not found:
 			print("ERROR - requested side: ", side, " not in this tile: ", self.num)
 
@@ -173,6 +174,31 @@ class Tile:
 		elif f : 
 			print("Horizontal flip")
 			self.flip(True)
+		#self.display()
+
+	def orientToSide(self, side, sno):
+		f = False
+		found = False
+		for r in range(4):
+			if self.side[sno] == side:
+				found = True
+				break
+			if self.side[sno][::-1] == side:
+				found = True
+				f = True
+				break
+			self.rotate(1)
+		if not found:
+			print("ERROR - requested side: ", side, " not in this tile: ", self.num)
+
+		#self.display()
+		if f:
+			if sno % 2 == 1: 
+				print("Vertical flip")
+				self.flip(True)
+			else: 
+				print("Horizontal flip")
+				self.flip(True)
 		#self.display()
 	
 	def hasSide(self, s, dbg = False):
@@ -233,7 +259,7 @@ def findPiece(tiles, top, right, bottom, left):
 
 		
 tiles = []
-f = open("test.txt", "r")
+f = open("data.txt", "r")
 l = f.readline()
 while not l == "":
 	tiles.append(Tile(f, l))
@@ -267,7 +293,7 @@ print("Part 1: Product is: ", prod)
 ##
 ## needed for Part 2
 numpixels = math.floor(math.sqrt(len(tiles)) + 0.5)
-
+print("Numpixels: ", numpixels)
 upperLeftCorner = ([False,True,True,False])
 upperRightCorner = ([False,False,True,True])
 lowerRightCorner = ([True,False,False,True])
@@ -328,16 +354,15 @@ gridLayOut = []
 
 row = 0
 col = 0
-corners[0].display()
 side = corners[0].side[2]
 addTiles(grid, row, col, corners[0], gridLayOut)
 print("Upper left corner: ", corners[0].num, side)
+corners[0].display()
 corners[0].used = True
 found = False
 ##
 ## Get left edges, matching side is 2
 for n in range(1,numpixels-1):
-	if found : break
 	for e in edges:
 		if e.used: continue
 		found, rot, flip = e.hasSide(side)
@@ -354,7 +379,6 @@ found = False
 ##
 ## Bottom row, corner
 for c in corners:
-	if found : break
 	if c.used : continue
 	found, rot, flip = c.hasSide(side)
 	if found:
@@ -371,7 +395,6 @@ found = False
 ##
 ## Get bottom edge
 for n in range(1,numpixels-1):
-	if found : break
 	for e in edges:
 		if e.used: continue
 		found, rot, flip = e.hasSide(side)
@@ -389,7 +412,6 @@ found = False
 ##
 ## Get lower right edge corner
 for c in corners:
-	if found : break
 	if c.used : continue
 	found, rot, flip = c.hasSide(side, True)
 	if found:
@@ -406,7 +428,6 @@ found = False
 ##
 ## Get right edge
 for n in range(1,numpixels-1):
-	if found : break
 	for e in edges:
 		if e.used: continue
 		found, rot, flip = e.hasSide(side)
@@ -424,23 +445,23 @@ found = False
 ##
 ## Get upper right corder
 for c in corners:
-	if found : break
 	if c.used : continue
 	found, rot, flip = c.hasSide(side)
 	if found:
 		row -= 1
 		c.used = True
-		c.orientToSide(side, 3)
+		c.orientToSide(side, 2)
 		addTiles(grid, row, col, c, gridLayOut)
 		print("Upper right corner: ", c.num)
+		c.display()
 		side = c.side[3]
 		break
 		
 found = False
+print("*********************************", numpixels)
 ##
 ## Get right edge
 for n in range(1,numpixels-1):
-	if found : break
 	for e in edges:
 		if e.used: continue
 		found, rot, flip = e.hasSide(side)
