@@ -11,6 +11,11 @@ class Allergen:
 				return
 		self.ing.append(ingredient)
 		self.ingcount.append(1)
+	def ingnum(self, ing):
+		for n in range(len(self.ing)):
+			if self.ing[n] == ing:
+				return self.ingcount[n]
+		return 0
 	def inc(self):
 		self.count += 1
 	def display(self):
@@ -39,6 +44,12 @@ class Ingredient:
 		print(self.name)
 		for a in self.allergens:
 			print("  ", a.name, ":", a.count)
+	def sort(self):
+		self.allergens.sort(key=lambda x: x.count, reverse = True)
+	def numalg(self, alg):	# returns number of times this ingredient was associated with
+		for a in self.allergens:
+			if a.name == alg: return a.count
+		return 0
 
 def lineparse(line):
 	return [x.strip() for x in line.split(',')]
@@ -70,7 +81,7 @@ class Food:
 
 foods = []
 n = 0
-for line in open("test.txt", "r"):
+for line in open("data.txt", "r"):
 	n += 1
 	#print(line)
 	foods.append(Food(n, line))
@@ -131,8 +142,31 @@ for f in foods:
 print("\n\nIngredients:\n")
 
 for i in ing:
+	i.sort()
 	i.display()
 	
-print("\n\nAllergens:\n")
+#print("\n\nAllergens:\n")
+#for a in alg:
+#	a.display()
+
+print("Number of allergens: ", len(alg))
+print("Number of ingredients: :", len(ing))
+
+def findmost(ing, alg):
+	i = "None"
+	c = 0
+	for ingr in ing:
+		for allergen in ingr.allergens:
+			if allergen.name == alg:
+				ni = ingr.name
+				nc = allergen.count
+				if nc > c:
+					i = ni
+					c = nc
+	return i, c
+		
+
 for a in alg:
-	a.display()
+	i, c = findmost(ing, a.name)
+	print("Allergen ", a.name, " found most often in ingredient ", i, c, " times.")
+
