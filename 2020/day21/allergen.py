@@ -26,6 +26,8 @@ class Allergen:
 class Ingredient:
 	def __init__(self, name, allergy):
 		self.name = name
+		self.set = False
+		self.isthisallergen = None
 		self.count = 1
 		self.appears = 1
 		self.allergens = []
@@ -46,10 +48,12 @@ class Ingredient:
 			print("  ", a.name, ":", a.count)
 	def sort(self):
 		self.allergens.sort(key=lambda x: x.count, reverse = True)
-	def numalg(self, alg):	# returns number of times this ingredient was associated with
+	def numalg(self):	# returns number of times this ingredient was associated with
+		num = 0
 		for a in self.allergens:
-			if a.name == alg: return a.count
-		return 0
+			num += a.count
+		return num
+			
 
 def lineparse(line):
 	return [x.strip() for x in line.split(',')]
@@ -65,12 +69,13 @@ class Food:
 		als = lineparse(line[s+9:e])
 		#print (als)
 		for i in line[:s-1].split():
-			#print (i)
 			self.ing.append(i)
 		for a in als:
-			#for i in ing:
-			#	self.ing.append(Ingredient(i, a))
 			self.all.append(a)
+
+	def ingcount(self, ingr):
+		if ingr in self.ing: return 1
+		return 0
 
 	def display(self):
 		print("Food item: ", self.id)
@@ -78,23 +83,24 @@ class Food:
 		print("   Allergies: ", [(x) for x in self.all])
 		print("")
 
-
+#
+# read in data file into foods list
+#
 foods = []
 n = 0
 for line in open("data.txt", "r"):
 	n += 1
-	#print(line)
 	foods.append(Food(n, line))
-
-print("\n\nFoods:\n")
-for f in foods:
-	f.display()
 
 def find(s, n):
 	for i in range(len(s)):
 		if s[i].name == n : return i
 	return -1
 
+#
+# create both an ingredient list (mapping to allergens)
+#         and an allergen list (mapping to ingredients)
+#
 ing = []
 alg = []
 newing = False
@@ -119,54 +125,88 @@ for a in alg:
 			if a.name == na:
 				for i in f.ing:
 					a.add(i)
-			
+		
 
 
 for f in foods:
-	#f.display()
-	#print ("Food: ", f.id)
 	for i in f.ing:
-		#print("     Ingredient: ", i)
 		n = find(ing, i)
 		if (n < 0):
 			newing = True
 		for a in f.all:
-			#print("        allergy: ", a)
 			if newing :
 				newing = False
-				#print("          Adding new allergy: ", a, "   to  ", i)
 				ing.append(Ingredient(i, a))
 			else:
 				ing[n].add(a)
 
-print("\n\nIngredients:\n")
+def setingalg(ing, ingredient, allergen):
+	for ingr in ing:
+		if ingr.name == ingredient:
+			ingr.set = True
+			ingr.isthisallergen = allergen
+			for alg in ingr.allergens:
+				if alg.name != allergen:
+					alg.count = 0
+		else:
+			for alg in ingr.allergens:
+				if alg.name == allergen:
+					alg.count = 0
 
-for i in ing:
-	i.sort()
-	i.display()
-	
-#print("\n\nAllergens:\n")
-#for a in alg:
-#	a.display()
 
-print("Number of allergens: ", len(alg))
-print("Number of ingredients: :", len(ing))
-
-def findmost(ing, alg):
-	i = "None"
+def findmosting(ing, alg):
+	i = []
 	c = 0
 	for ingr in ing:
+		if ingr.set : continue
 		for allergen in ingr.allergens:
 			if allergen.name == alg:
 				ni = ingr.name
 				nc = allergen.count
 				if nc > c:
-					i = ni
+					i = [ni]
 					c = nc
+				elif nc == c:
+					i.append(ni)
 	return i, c
 		
 
-for a in alg:
-	i, c = findmost(ing, a.name)
-	print("Allergen ", a.name, " found most often in ingredient ", i, c, " times.")
+for n in range(len(alg)):
+	ingredient = None
+	allergen = -1
+	maxall = 0
+	for a in alg:
+		i, c = findmosting(ing, a.name)
+		if c > maxall and len(i) == 1:
+			maxall = c
+			ingredient = i[0]
+			allergen = a.name
+	setingalg(ing, ingredient, allergen)
 
+count = 0
+for i in ing:
+	if i.set: continue
+	for f in foods:
+		count += f.ingcount(i.name)
+
+		
+print("Part 1: Number of ingredients that have no allergens: ", count)
+
+#
+# Need to map ingredients to allergens
+#
+p2list = []
+for i in ing:
+	if i.set:
+		p2list.append((i.isthisallergen, i.name))
+		p2list.sort(key=lambda x: x[0])
+
+k = 0
+print ("Part 2: List of ordered ingredients: ", end="")
+for i in p2list:
+	print(i[1], end="")
+	k += 1
+	if k < len(p2list): print(",", end="")
+print("")
+
+	
