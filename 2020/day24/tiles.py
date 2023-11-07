@@ -22,12 +22,15 @@ class Tile:
 		self.southeast = None
 		self.black = False
 		tilelist.append(self)
+		self.part2flip = False
+		
 	def display(self):
 		print(getnum(self.northwest), "      ", getnum(self.northeast))
 		print("    \    / ");
 		print(getnum(self.west), "--", self.tile, "--", getnum(self.east))
 		print("    /    \ ");
 		print(getnum(self.southwest), "      ", getnum(self.southeast))
+		
 	def flip(self, debug=False):
 		if self.black:
 			self.black = False
@@ -35,8 +38,16 @@ class Tile:
 		else:
 			self.black = True
 			if debug: print(self.tile, " flipping to Black")
-		
 
+	def neighbors(self):
+		c = 0
+		if not self.east is None and self.east.black: c += 1
+		if not self.west is None and self.west.black: c += 1
+		if not self.southeast is None and self.southeast.black: c += 1
+		if not self.northeast is None and self.northeast.black: c += 1
+		if not self.southwest is None and self.southwest.black: c += 1
+		if not self.northwest is None and self.northwest.black: c += 1
+		return c
 
 def findTile(tn):
 	global tilelist
@@ -44,6 +55,25 @@ def findTile(tn):
 		if t.tile == n:
 			return t
 
+def checkNeighbors():
+	global tilelist
+	for t in tilelist:
+		c = t.neighbors()
+		if t.black:
+			if c == 0 or c > 2:
+				t.part2flip = True
+		else:
+			if c == 2:
+				t.part2flip = True
+				
+def part2day():
+	global tilelist
+	checkNeighbors()
+	for t in tilelist:
+		if t.part2flip : t.flip()
+		t.part2flip = False
+				
+				
 def count():
 	global tilelist
 	c = 0
@@ -127,9 +157,14 @@ def process(line, debug = False):
 	ct.flip()
 			
 
-createGrid(100)
-centerTile.display()
+createGrid(200)
+# centerTile.display()
 
 for line in open("data.txt", "r"):
 	process(line)
-print("Number of black tiles: ", count())
+print("Part 1: Number of black tiles: ", count())
+
+for day in range(1, 101):
+	part2day()
+
+print("Part 2: After Day ", day, ", there are ", count(), " black tiles")
