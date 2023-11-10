@@ -162,45 +162,49 @@ def renumber(maxnum):
 	global circleList
 	tilenumber = 1
 	sequence = 0
-	centerTile.tilenumber = tilenumber
+	centerTile.tile = tilenumber
 	tile = centerTile
 	done = False
 	while tilenumber < maxnum:
 		sequence += 1
-		tile = centerTile.east
+		tile = tile.east
+		endtile = tile
 		tilenumber += 1
-		tile.tilenumber = tilenumber
-		for i in range(6):
-			# (nw, w, sw, se, e, ne)
-			for j in range(sequence):
-				tile = centerTile.northwest
-				tilenumber += 1
-				tile.tilenumber = tilenumber
-			for j in range(sequence):
-				tile = centerTile.west
-				tilenumber += 1
-				tile.tilenumber = tilenumber
-			for j in range(sequence):
-				tile = centerTile.southwest
-				tilenumber += 1
-				tile.tilenumber = tilenumber
-			for j in range(sequence):
-				tile = centerTile.southeast
-				tilenumber += 1
-				tile.tilenumber = tilenumber
-			for j in range(sequence):
-				tile = centerTile.east
-				tilenumber += 1
-				tile.tilenumber = tilenumber
-			for j in range(sequence):
-				tile = centerTile.northeast
-				tilenumber += 1
-				tile.tilenumber = tilenumber
-				
+		print("Tile number changed from ", tile.tile, " to ", tilenumber)
+		tile.tile = tilenumber
+		# (nw, w, sw, se, e, ne)
+		for j in range(sequence):
+			tile = tile.northwest
+			tilenumber += 1
+			tile.tile = tilenumber
+		for j in range(sequence):
+			tile = tile.west
+			tilenumber += 1
+			tile.tile = tilenumber
+		for j in range(sequence):
+			tile = tile.southwest
+			tilenumber += 1
+			tile.tile = tilenumber
+		for j in range(sequence):
+			tile = tile.southeast
+			tilenumber += 1
+			tile.tile = tilenumber
+		for j in range(sequence):
+			tile = tile.east
+			tilenumber += 1
+			tile.tile = tilenumber
+		tile = tile.northeast
+		while not endtile == tile:
+			tilenumber += 1
+			tile.tile = tilenumber
+			tile = tile.northeast
+
 	
 	
 createGrid(200)
-renumber(100)
+centerTile.display()
+centerTile.tile = 3023
+renumber(30)
 centerTile.display()
 exit(1)
 
