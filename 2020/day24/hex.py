@@ -164,6 +164,7 @@ def renumber(maxnum):
 	sequence = 0
 	centerTile.tile = tilenumber
 	tile = centerTile
+	circleList.append(tile)
 	done = False
 	while tilenumber < maxnum:
 		sequence += 1
@@ -172,32 +173,39 @@ def renumber(maxnum):
 		tilenumber += 1
 		print("Tile number changed from ", tile.tile, " to ", tilenumber)
 		tile.tile = tilenumber
+		circleList.append(tile)
 		# (nw, w, sw, se, e, ne)
 		for j in range(sequence):
 			tile = tile.northwest
 			tilenumber += 1
 			tile.tile = tilenumber
+			circleList.append(tile)
 		for j in range(sequence):
 			tile = tile.west
 			tilenumber += 1
 			tile.tile = tilenumber
+			circleList.append(tile)
 		for j in range(sequence):
 			tile = tile.southwest
 			tilenumber += 1
 			tile.tile = tilenumber
+			circleList.append(tile)
 		for j in range(sequence):
 			tile = tile.southeast
 			tilenumber += 1
 			tile.tile = tilenumber
+			circleList.append(tile)
 		for j in range(sequence):
 			tile = tile.east
 			tilenumber += 1
 			tile.tile = tilenumber
+			circleList.append(tile)
 		tile = tile.northeast
 		while not endtile == tile:
 			tilenumber += 1
 			tile.tile = tilenumber
 			tile = tile.northeast
+			circleList.append(tile)
 
 	
 	
@@ -206,6 +214,7 @@ centerTile.display()
 centerTile.tile = 3023
 renumber(30)
 centerTile.display()
+circleList[11].display()
 exit(1)
 
 for line in open("data.txt", "r"):
