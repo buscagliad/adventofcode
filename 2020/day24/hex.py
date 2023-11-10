@@ -171,7 +171,7 @@ def renumber(maxnum):
 		tile = tile.east
 		endtile = tile
 		tilenumber += 1
-		print("Tile number changed from ", tile.tile, " to ", tilenumber)
+		#print("Tile number changed from ", tile.tile, " to ", tilenumber)
 		tile.tile = tilenumber
 		circleList.append(tile)
 		# (nw, w, sw, se, e, ne)
@@ -212,9 +212,10 @@ def renumber(maxnum):
 createGrid(200)
 centerTile.display()
 centerTile.tile = 3023
-renumber(30)
+renumber(4000)
 centerTile.display()
-circleList[11].display()
+circleList[3000].display()
+print ("cl size: ", len(circleList))
 exit(1)
 
 for line in open("data.txt", "r"):
