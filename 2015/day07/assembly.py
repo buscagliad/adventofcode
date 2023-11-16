@@ -1,4 +1,14 @@
-
+'''
+match term:
+    case pattern-1:
+         action-1
+    case pattern-2:
+         action-2
+    case pattern-3:
+         action-3
+    case _:
+        action-default
+'''
 
 class Wire(object):
 	def __init__(self, name, op, in1, in2):
@@ -17,7 +27,7 @@ class Wire(object):
 		elif onlyset: 
 			return
 		elif self.op == "ASS":
-			print(self.value, " -> ", self.name)
+			print(self.in1, " -> ", self.name)
 		elif self.op == "NOT":
 			print("NOT", self.in1, " -> ", self.name)
 		else:
@@ -44,11 +54,11 @@ class Symbol:
 			op = "NOT"
 			in1 = words[1]
 		elif words[1] == "RSHIFT":
-			op = "RS"
+			op = "RSHIFT"
 			in1 = words[0]
 			in2 = words[2]
 		elif words[1] == "LSHIFT":
-			op = "LS"
+			op = "LSHIFT"
 			in1 = words[0]
 			in2 = words[2]
 		elif words[1] == "AND":
@@ -64,10 +74,78 @@ class Symbol:
 		for x in self.connect:
 			w = self.connect[x]
 			w.out(onlyset)
+	def display(self, name):
+		x = self.connect[name]
+		if x is None:
+			print("Invalid connector name: ", name)
+		else:
+			x.out()
+	def set(self, name, value):
+		x = self.connect[name]
+		if x is None:
+			print("Invalid connector name: ", name)
+		else:
+			x.value = value
+			x.op = "SET"
+	#
+	# finds all instance of 'name' and updates them with the value
+	def findValue(self, name, debug=False):
+		if name[0].isdigit(): return int(name)
+		x = self.connect[name]
+		#x.out()
+		match x.op:
+			case "SET":
+				if (debug) : print(name, "SET has value: ", x.value)
+				return x.value
+			case "ASS":
+				x.value = self.findValue(x.in1) & 0x0000FFFF
+				if (debug) : print(name, "ASS has value: ", x.value)
+				x.op = "SET"
+				return x.value
+			case "LSHIFT":
+				x.value = (self.findValue(x.in1) << int(x.in2)) & 0x0000FFFF
+				if (debug) : print(name, "LSHIFT has value: ", x.value)
+				x.op = "SET"
+				return x.value
+			case "RSHIFT":
+				x.value = (self.findValue(x.in1) >> int(x.in2)) & 0x0000FFFF
+				if (debug) : print(name, "RSHIFT has value: ", x.value)
+				x.op = "SET"
+				return x.value
+			case "AND":
+				x.value = (self.findValue(x.in1) & self.findValue(x.in2)) & 0x0000FFFF
+				if (debug) : print(name, "AND has value: ", x.value)
+				x.op = "SET"
+				return x.value
+			case "OR":
+				x.value = (self.findValue(x.in1) | self.findValue(x.in2)) & 0x0000FFFF
+				if (debug) : print(name, "OR has value: ", x.value)
+				x.op = "SET"
+				return x.value
+			case "NOT":
+				x.value = (~self.findValue(x.in1)) & 0x0000FFFF
+				if (debug) : print(name, "NOT has value: ", x.value)
+				x.op = "SET"
+				return x.value
+			case _:
+				print("ERROR with name: ", name)
+				exit(1)
+		
+
 
 sym = Symbol()
 for line in open("data.txt", "r"):
 	sym.add(line)
 
-sym.out(True)
-print("Number of entries: ", len(sym.connect))
+wire = 'a'
+wire_value = sym.findValue(wire)
+print("Part 1: wire ", wire, " has value ", wire_value)
+
+sym2 = Symbol()
+for line in open("data.txt", "r"):
+	sym2.add(line)
+
+sym2.set('b', wire_value)
+wire_value = sym2.findValue(wire)
+print("Part 2: wire ", wire, " has value ", wire_value)
+
