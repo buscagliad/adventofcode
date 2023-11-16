@@ -8,10 +8,15 @@ class Wire(object):
 		self.in1 = in1	# name of input wire
 		self.in2 = in2	# name of input wire OR shift number
 		self.value = None	# Value is assigned later
-		if op == "SET": self.value = int(in1)
+		if op == "SET": 
+			self.value = int(in1)
 
-	def out(self):
+	def out(self, onlyset = False):
 		if self.op == "SET":
+			print(self.value, " -> ", self.name)
+		elif onlyset: 
+			return
+		elif self.op == "ASS":
 			print(self.value, " -> ", self.name)
 		elif self.op == "NOT":
 			print("NOT", self.in1, " -> ", self.name)
@@ -28,7 +33,14 @@ class Symbol:
 		in1 = ""
 		in2 = ""
 		op = ""
-		if words[0] == "NOT":
+		if len(words) == 3:
+			n = words[0]
+			in1 = n
+			if n.isnumeric():
+				op = "SET"
+			else:
+				op = "ASS"	# assigned
+		elif words[0] == "NOT":
 			op = "NOT"
 			in1 = words[1]
 		elif words[1] == "RSHIFT":
@@ -48,14 +60,14 @@ class Symbol:
 			in1 = words[0]
 			in2 = words[2]
 		self.connect[name] = Wire(name, op, in1, in2)
-	def out(self):
+	def out(self, onlyset = False):
 		for x in self.connect:
 			w = self.connect[x]
-			w.out()
+			w.out(onlyset)
 
 sym = Symbol()
 for line in open("data.txt", "r"):
 	sym.add(line)
 
-sym.out()
+sym.out(True)
 print("Number of entries: ", len(sym.connect))
