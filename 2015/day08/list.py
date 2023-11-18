@@ -11,25 +11,39 @@ def cline(line):
 			if c == 'x': 
 				ignore = 2
 				suptotal += 1
-			elif c == '\\':
-				suptotal += 1
 			mem += 1
 			slash = False
 		elif ignore > 0:
 			ignore -= 1
+		elif c == '\"':
+			mem += 1
+			suptotal += 2
 		elif c == '\\':
 			slash = True
 			suptotal += 1
 		else:
 			mem += 1
-	return suptotal+4, total, mem-2
+	return total, mem-2
+
+def dline(line):
+	line = line.strip()
+	total = 6
+	for c in line[1:len(line)-1]:
+		if c == '\"':
+			total += 2
+		elif c == '\\':
+			total += 2
+		else:
+			total += 1
+	return total
 
 suptotal = 0
 total = 0
 mem = 0
-for line in open("test.txt", "r"):
-	s, t, m = cline(line)
-	print(line, "S: ", s, " T: ", t, " M: ", m)
+for line in open("data.txt", "r"):
+	t, m = cline(line)
+	s = dline(line)
+	# print(line, "S: ", s, " T: ", t, " M: ", m)
 	total += t
 	mem += m
 	suptotal += s
