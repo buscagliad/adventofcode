@@ -165,9 +165,9 @@ def main():
 	n = 0
 	for p in pList:
 		if (n == 0) :
-			p.simpleout(0)
+			p.out()
 			n += 1
-		p.simpleout(n)
+		p.out()
 		n += 1
 
 if __name__ == "__main__":
