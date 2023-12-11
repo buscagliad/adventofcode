@@ -111,10 +111,12 @@ def outCSV(members_json):
 				m["completion_day_level"]
 				) for m in members_json.values()]
 	for q in members:
+		print()
 		print("**************** ", q[0], " ************************")
 		print()
 		tm = time.localtime(q[3])
 		stm = time.strftime("%d %b %Y %H:%M:%S", tm)
+
 		print("Score: ", q[1], " Number of stars: ", q[2], " Last Star: ", stm);
 		for j in q[4]:
 			print("3", " j: ", j, "  ", q[4][j])
@@ -164,9 +166,6 @@ def main():
 	pList = playerList(r.json()["members"])
 	n = 0
 	for p in pList:
-		if (n == 0) :
-			p.out()
-			n += 1
 		p.out()
 		n += 1
 

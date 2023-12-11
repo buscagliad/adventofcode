@@ -29,7 +29,7 @@ Roster[3198185] = ["Dominick Beaman", "dominick.beaman@vts-i.com"]
 Roster[1096925] = ["Macie Matthews", "macie.matthews@vts-i.com"]
 Roster[2246495] = ["Sean McCarthy", "sean.mccarthy@vts-i.com"]
 Roster[2258724] = ["Mattie Sanz", "mattie.sanz@vts-i.com"]
-
+Roster[3690597] = ["Matthew Luckenbihl", "matthew.luckenbihl@vts-i.com"]
 
 def getPlayerName(idx):
 	global Roster
@@ -97,10 +97,13 @@ class Player:
 		for d in range(len(self.problems)):
 			t1, t2 = self.problems[d]
 			if t1 == 0 and t2 == 0: continue
-			print("  Day ", d, end = "")
-			print("   Part1: ", pltime(t1), end = "")
+			sp = ""
+			if d < 10: sp = " "
+			
+			print("   Day ", sp, d, end = "", sep = "")
+			print("   Part 1: ", pltime(t1), end = "", sep = "")
 			if t2 > 0:
-				print("    Part2: ", pltime(t2), end = "")
+				print("   Part 2: ", pltime(t2), end = "", sep = "")
 			print()
 		print()
 
