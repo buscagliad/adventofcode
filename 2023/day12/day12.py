@@ -1,6 +1,5 @@
 import numpy as np
 from itertools import combinations
-import bitstring
 
 def seqcount(q, m):
 	c = 0
@@ -77,24 +76,93 @@ def process2(line):
 	for i in x: m.append(int(i))
 	return doline(fields, m)
 
+	
+def process3(line):
+	line = line.strip()
+	#print(line)
+	w = line.split(' ')
+	fields = w[0]
+	x = w[1].split(',')
+	#print(fields)
+	m = []
+	for i in x: m.append(int(i))
+	return slinexx(fields, m)
 
-def sline(pline, w, li=0, wi=0, sindex=0, rec=False):
+lakes = [".", "#."]
+for i in range(2,25):
+	lakes.append(''.join(["#", lakes[i-1]]))
+
+print(lakes)
+
+def slinexx(pline, w):
+	st = []
+	wi = 0
+	numwi = len(w)
+	st.append([pline, wi])
+	count = 0
+	while st:
+		aline, wi = st.pop()
+		if len(aline) == 0 or wi >= numwi: continue
+		print(aline, "wi: ", wi, "  w[wi]: ", w[wi], "Lake: ", lakes[w[wi]])
+		##
+		## check to see if this is a completed product
+		## check to see if the next 'n+1' chars are an n-length spring
+		if aline[:w[wi]+1] == lakes[w[wi]]:
+			print("Match at index: ", w[wi])
+			if wi + 1 == len(w):
+				if aline.find('#') == -1:
+					print("Count is ", count)
+					count += 1
+			else:
+				st.append([aline[w[wi]+1:], wi+1])
+
+		elif len(aline) == 0:
+			continue
+			
+		##
+		## if first char is ., ignore and put next line on the stack
+		elif aline[0] == '.':
+			print("Ignoring .")
+			st.append([aline[1:], wi])
+			
+
+		else:
+			q = aline.find('?')
+			print("Found ? at ", q)
+			if q == 0:
+				st.append([''.join(['#', aline[1:]]), wi])
+				## ignore the dot and pass in line starting with next char
+				st.append([''.join(['.', aline[1:]]), wi])
+			elif q > 0:
+				st.append([''.join([aline[:q], '#', aline[q+1:]]), wi])
+				## ignore the dot and pass in line starting with next char
+				st.append([''.join([aline[:q], '.', aline[q+1:]]), wi])
+				
+			
+	return count
+
+
+def slinexx3(pline, w, li=0, wi=0, sindex=0, rec=False):
+	if pline[li] == '?':
+		return sline(''.join([pline[:li], '#', pline[li+1:]]), w, li, wi, sindex, True) \
+		      + sline(''.join([pline[:li], '.', pline[li+1:]]), w, li, wi, sindex, True)
 	line=pline[li:]
+	if wi + 1 == len(w):
+		if line.count('#') == 0:
+			sindex += 1
+			return 1
+		return 0
 	if rec: print("   ", end="")
 	print("sline: ", line, " w[", wi, "] = ", w[wi])
-	if wi + 1 == len(w) and line.count('#') == 0:
-		sindex += 1
-		return 1 + sline(line, w, sindex, wi+1, sindex, True)
 	if len(line) == 0: return 0
 	c = 0
 	i = 0
 	while i < len(line) and line[i] == '.': i += 1
 	questionmark = line[i] == '?'
 	qindex = i
-	print("Q found", qindex)
 	if i >= len(line): return 0
 	for i in range(len(line)):
-		if line[i] == '#' or line[i] == '?' : c += 1
+		if line[i] == '#' : c += 1
 		print("i: ", i, " c: ", c, " wi: ", wi)
 		if c == w[wi] :
 			if wi == len(w) - 1: 
@@ -131,8 +199,9 @@ def slinex(line, w, wi, rec=False):
 				return sline(line[i+2:], w, wi+1, True)
 			return False
 
+
 print("Part 1 process: ", process("?###???????? 3,2,1"))
-print("Part 2 process: ", process2("?###???????? 3,2,1"))
+print("Part 2 process: ", process3("?###???????? 3,2,1"))
 exit(1)
 count = 0
 for line in open("test.txt"):
