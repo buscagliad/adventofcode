@@ -30,6 +30,7 @@ Roster[1096925] = ["Macie Matthews", "macie.matthews@vts-i.com"]
 Roster[2246495] = ["Sean McCarthy", "sean.mccarthy@vts-i.com"]
 Roster[2258724] = ["Mattie Sanz", "mattie.sanz@vts-i.com"]
 Roster[3690597] = ["Matthew Luckenbihl", "matthew.luckenbihl@vts-i.com"]
+Roster[3853633] = ["Sean Severson", "sean.severson@vts-i.com"]
 
 def getPlayerName(idx):
 	global Roster

@@ -1,213 +1,192 @@
 import numpy as np
 from itertools import combinations
+import functools
+from typing import List, Tuple
 
-def seqcount(q, m):
-	c = 0
-	a = []
-
-	#print(q)
-	for i in q:
-		if (i == 1): c += 1
-		elif i == 0 and c > 0:
-			a.append(c)
-			c = 0
-	if c > 0: a.append(c)
-	#print("Before: ", a)
-	if len(m) == len(a):
-		for i, k in enumerate(a):
-			if not m[i] == k: return False
-		return True
-	return False
-	#print(a)
-#
-# play counts all possible combinations of sequences of #
-# give and string of #'s and ?'s
-# each ? is alternately a . or a #
-# counting each run of #'s for each combination
-#
-def play(s, x):
-	qcount = s.count('?')
+def hashinarow(l):
 	count = 0
-	#print("qcount: ", qcount)
-	# bi will generat ALL possible bit sequences for 
-	# ? mark replacements (0 -> .   1 -> #)
-	for bi in range(2**qcount, 2**(qcount+1)):
-		dig = 1
-		seq = np.zeros(len(s), dtype=int)
-		for i, a in enumerate(s):
-			if a == '#' : seq[i] = 1
-			elif a == '.': seq[i] = 0
-			else:  # it is a ?
-				#print("dave...", i, ix)
-				if dig & bi:
-					seq[i] = 1
-				dig = dig << 1
-		if seqcount(seq, x) : count += 1
+	for a in l:
+		if a == '#' : count += 1
+		else: return count
 	return count
 
-
-def doline(line, w):
-	return sline(line, w)
-#	count = 0
-#	for i in range(len(line)):
-#		if sline(line[i:], w, 0) : count += 1
-#	return count
-
-
-def process(line):
-	line = line.strip()
-	#print(line)
-	w = line.split(' ')
-	fields = w[0]
-	x = w[1].split(',')
-	#print(fields)
-	m = []
-	for i in x: m.append(int(i))
-	return play(fields, m)
-	
-def process2(line):
-	line = line.strip()
-	#print(line)
-	w = line.split(' ')
-	fields = w[0]
-	x = w[1].split(',')
-	#print(fields)
-	m = []
-	for i in x: m.append(int(i))
-	return doline(fields, m)
-
-	
-def process3(line):
-	line = line.strip()
-	#print(line)
-	w = line.split(' ')
-	fields = w[0]
-	x = w[1].split(',')
-	#print(fields)
-	m = []
-	for i in x: m.append(int(i))
-	return slinexx(fields, m)
 
 lakes = [".", "#."]
 for i in range(2,25):
 	lakes.append(''.join(["#", lakes[i-1]]))
 
-print(lakes)
 
-def slinexx(pline, w):
+###
+#
+# procline, will do the following:
+#     find w[i], i = 0..n, such that 
+#       sum(w[:n]) < len(pline) + n
+#
+# procline2 will keep a stack of sub-strings s all starting with ? or #
+#			and going for w[wi] characters - then the following cases are dealt with
+#			the next char is:
+#				# - if first char is ? push onto stack s[1:]
+#						otherwise do not push onto stack
+#				? - required to be a dot, increase counter
+#						push string after ? starting with a ? or #  onto stack
+#				. - increase counter, push string after . starting with a ? or #  onto stack
+#
+
+@functools.cache
+def counter(lstr : str, w: Tuple[int], wc : int) -> int:
+	#
+	# check to see if we have completed this list:
+	if len(lstr) == 0:
+		if len(w) == 0:
+			#print("FOUND")
+			return 1
+		return 0
+
+	# # check to see if we are at the end of our w number
+	# if (len(w) == 0) :
+		# ## check if we have
+		# numslashes = lstr.count('#')
+		# if numslashes > 0 : return 0
+		# else:
+			# return counter(lstr[1:], w[1:], 0)
+	#
+	# deal with current char
+	#
+	if lstr[0] == '.': # ignore
+		return counter(lstr[1:], w, wc)
+		
+	if lstr[0] == '#':
+		if len(w) == 0: # no more lakes to find
+			return 0
+		
+		if (len(lstr) < w[0]): # could do: sum(w) + len(w) - 1 ??
+			return 0	# not enough room to finish
+			
+		# do a look ahead to see that there are NO dots
+		for i in range(w[0]):
+			if lstr[i] == '.' : return 0
+		
+		#
+		# we have found w[0] hashes, this will fail above
+		# 
+		if len(lstr) == w[0]:
+			#print("lstr: ", lstr, "  w: ", w, "  wc: ", wc)
+			return counter("", w[1:], wc)
+			
+		if lstr[w[0]] == "#":
+			#print("lstr: ", lstr, "  w: ", w, "  wc: ", wc)
+			return 0
+		
+		# if we go here, lstr has w[0] hashes
+		return counter(lstr[w[0]+1:], w[1:], 0)	# increment pound count and put on stand
+		
+		
+	# if we get here: we have a '?'
+	return (counter(''.join(['#', lstr[1:]]), w, 0)	# treat '?' as a '#'				
+		       + counter(''.join(['.', lstr[1:]]), w, 0))	# treat '?' as a '.'				
+
+
+
+###
+#
+#   procline2 uses the list structure:
+##		line is the string of '.', '#', '?'
+#		s = [ix, wi, wc]
+#		ix is the current index of line that is being processed
+#		wi is the index into the list of lakes
+#       wc is the count of #'s (when wc == w[wi] you can continue!!
+#
+def procline2(pline, w, debug = False):
 	st = []
 	wi = 0
 	numwi = len(w)
-	st.append([pline, wi])
+	st.append([0, 0, 0])
+	if debug: print(pline, "  w: ", w)
 	count = 0
 	while st:
-		aline, wi = st.pop()
-		if len(aline) == 0 or wi >= numwi: continue
-		print(aline, "wi: ", wi, "  w[wi]: ", w[wi], "Lake: ", lakes[w[wi]])
-		##
-		## check to see if this is a completed product
-		## check to see if the next 'n+1' chars are an n-length spring
-		if aline[:w[wi]+1] == lakes[w[wi]]:
-			print("Match at index: ", w[wi])
-			if wi + 1 == len(w):
-				if aline.find('#') == -1:
-					print("Count is ", count)
-					count += 1
-			else:
-				st.append([aline[w[wi]+1:], wi+1])
-
-		elif len(aline) == 0:
-			continue
-			
-		##
-		## if first char is ., ignore and put next line on the stack
-		elif aline[0] == '.':
-			print("Ignoring .")
-			st.append([aline[1:], wi])
-			
-
+		ix, wi, wc = st.pop()
+		if debug: print("ix: ", ix, "  wi: ", wi, "  wc: ", wc)
+		
+		if ix < len(pline):
+			ch = pline[ix]
 		else:
-			q = aline.find('?')
-			print("Found ? at ", q)
-			if q == 0:
-				st.append([''.join(['#', aline[1:]]), wi])
-				## ignore the dot and pass in line starting with next char
-				st.append([''.join(['.', aline[1:]]), wi])
-			elif q > 0:
-				st.append([''.join([aline[:q], '#', aline[q+1:]]), wi])
-				## ignore the dot and pass in line starting with next char
-				st.append([''.join([aline[:q], '.', aline[q+1:]]), wi])
-				
+			ch = 'X'	# fake end of line
+
+		if ch == '.' and wc == 0:
+			st.append([ix+1, wi, 0])
+			continue
+		#
+		# did we find a solution?
+		#
+		if wi == len(w):
+			if pline[ix:].find('#') >= 0: 
+				continue	# fail, we've found all the lakes but there are still more #'s
+				if debug: print("FAIL, found all lakes but there are ", pline[ix:].count('#'), " #'s left")
+			else:
+				count += 1	# success
+				if debug: print("SUCCESS! count: ", count)
+				continue
+			
+		if wc == w[wi]:
+			if ch == '#':
+				if debug: print("Found string of #'s for w[", wi, "] = ", w[wi], " but next char is a #")
+			elif ch == '?' or ch == '.': # we'll use it as a dot
+				if debug: print("Found lake for w[", wi, "] = ", w[wi])
+				st.append([ix+1, wi+1, 0])
+			continue	# failed to find the lake
+		
+		#
+		# deal with current char
+		#
+		if ch == '#':
+			st.append([ix+1, wi, wc+1])	# increment pound count and put on stand
+		elif ch == '.':
+			continue					# ran into a dead end
+		elif ch == '?':
+			st.append([ix+1, wi, wc+1])	# treat '?' as a '#'				
+			if wc == 0 : st.append([ix+1, wi, 0])	# treat '?' as a '.'				
 			
 	return count
 
 
-def slinexx3(pline, w, li=0, wi=0, sindex=0, rec=False):
-	if pline[li] == '?':
-		return sline(''.join([pline[:li], '#', pline[li+1:]]), w, li, wi, sindex, True) \
-		      + sline(''.join([pline[:li], '.', pline[li+1:]]), w, li, wi, sindex, True)
-	line=pline[li:]
-	if wi + 1 == len(w):
-		if line.count('#') == 0:
-			sindex += 1
-			return 1
-		return 0
-	if rec: print("   ", end="")
-	print("sline: ", line, " w[", wi, "] = ", w[wi])
-	if len(line) == 0: return 0
-	c = 0
-	i = 0
-	while i < len(line) and line[i] == '.': i += 1
-	questionmark = line[i] == '?'
-	qindex = i
-	if i >= len(line): return 0
-	for i in range(len(line)):
-		if line[i] == '#' : c += 1
-		print("i: ", i, " c: ", c, " wi: ", wi)
-		if c == w[wi] :
-			if wi == len(w) - 1: 
-				print("TRUE")
-				return 1 + sline(line, w, sindex+1, wi+1, sindex+1, True)
-				
-			if i < len(line) - 1 and not line[i+1] == '#':
-				if questionmark:
-					return sline(line, w,      i+2, wi+1, sindex, True) + \
-						   sline(line, w, qindex+1, wi+1, sindex, True)
-				return     sline(line, w,      i+2, wi+1, sindex, True)
 
-			return sline(line, w, sindex+1, wi+1, sindex+1, True)
-			
-	return sline(line, w, sindex+1, wi+1, sindex+1, True)
+def processPart1(line):
+	line = line.strip()
+	w = line.split(' ')
+	fields = w[0]
+	x = w[1].split(',')
+	#m = Tuple[int
+	#m = [int(i) for i in x]
+	m = tuple(int(i) for i in x)
+	#for i in x: m.append(int(i))
+	#print(line, "  arangements: ",  procline2(fields, m, False))
+	c = counter(fields, tuple(m), 0)
+	#print(fields, m, "  arrangements: ", c) 
+	return c
 
-def slinex(line, w, wi, rec=False):
-	if rec: print("   ", end="")
-	print("sline: ", line, " w[", wi, "] = ", w[wi])
-	if wi + 1 == len(w) and line.count('#') == 0:
-		return True
-	if len(line) == 0: return False
-	c = 0
-	i = 0
-	while i < len(line) and line[i] == '.': i += 1
-	if i >= len(line): return False
-	for i in range(len(line)):
-		if line[i] == '#' or line[i] == '?' : c += 1
-		if c == w[wi] :
-			if wi == len(w) - 1: 
-				#print("TRUE")
-				return True
-			if i < len(line) - 1 and not line[i+1] == '#':
-				return sline(line[i+2:], w, wi+1, True)
-			return False
+def processPart2(line):
+	line = line.strip()
+	w = line.split(' ')
+	fields = w[0]
+	x = w[1].split(',')
 
+	fields = w[0]
+	x = w[1].split(',')
+	m = 5 * tuple(int(i) for i in x)
+	for i in range(4):
+		fields = ''.join([fields,'?',w[0]])
+	c = counter(fields, tuple(m), 0)
+	#print(fields, m, "  arrangements: ", c) 
+	return c
 
-print("Part 1 process: ", process("?###???????? 3,2,1"))
-print("Part 2 process: ", process3("?###???????? 3,2,1"))
-exit(1)
 count = 0
-for line in open("test.txt"):
-	print(line)
-	print("Part 1 process: ", process(line))
-	print("Part 2 process: ", process2(line) )
-	#count += process(line)
-	
+for line in open("data.txt"):
+	count += processPart1(line)
 print ("Part 1: Number of possible valid arrangements: ", count)
+
+
+count = 0
+for line in open("data.txt"):
+	count += processPart2(line)
+	
+print ("Part 2:: Number of possible 5-fold arrangements: ", count)
