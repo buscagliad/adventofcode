@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 '''
 This script will grab the leaderboard from Advent of Code and print it
 '''
@@ -165,9 +165,10 @@ def main():
 	# outCSV(r.json()["members"])
 	pList = playerList(r.json()["members"])
 	n = 0
+	pList[0].simpleout(n)
 	for p in pList:
-		p.out()
 		n += 1
+		p.simpleout(n)
 
 if __name__ == "__main__":
 	main()
