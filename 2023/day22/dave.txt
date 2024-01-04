@@ -1,0 +1,2 @@
+Part 1, we can disintegrate 515 bricks
+Part 2, a total of 101541 bricks will fall

@@ -1,0 +1,195 @@
+
+def isect(r1, r2):
+	a, b = r1
+	c, d = r2
+	if c > b  or  a > d: return False
+	if c <= a and a <= d: return True
+	if a <= c and c <= b: return True
+	print("ERROR", a, b, c, d) 
+
+brickName=1
+
+class Brick:
+	def __init__(self, line):
+		global brickName
+		w=line.split(",")
+		tilde = w[2].find("~")
+		e1 = [int(w[0]),int(w[1]),int(w[2][:tilde])]
+		e2 = [int(w[2][tilde+1:]),int(w[3]),int(w[4])]
+		self.v = tuple(map(lambda i, j: j - i, e1, e2))
+		self.xrange = [e1[0], e1[0]+self.v[0]]
+		self.yrange = [e1[1], e1[1]+self.v[1]]
+		self.zrange = [e1[2], e1[2]+self.v[2]]
+		self.frozen = e1[2] == 1
+		self.name = brickName
+		brickName += 1
+		self.isupport = []
+		self.supportsme = []
+		self.candestroy = False
+	def setdestroy(self):
+		self.candestroy = True
+	def doesSupport(self, nm):
+		for b in self.isupport: 
+			if b.name == nm: return True
+		return False
+	def supports(self, b):
+		if b in self.isupport: return
+		self.isupport.append(b)
+	def supportedby(self, b):
+		if b in self.supportsme: return
+		self.supportsme.append(b)
+	def drop(self):
+		if self.frozen : return 0
+		if self.zrange[0] == 1: return 0
+		self.zrange[0] -= 1
+		self.zrange[1] -= 1
+		return 1
+	def dropto(self, z):
+		if self.frozen : return 0
+		if z > self.zrange[0]:
+			print("ERROR - z range is bad for item", self.name, " drop to ",
+				z, "from", self.zrange[0])
+			exit(1)
+		zd = self.zrange[1] - self.zrange[0]
+		self.zrange[0]  = z
+		self.zrange[1]  = z + zd
+		return 1
+	def above(self, other):
+		if self.zrange[1] > other.zrange[1]: return True
+		return False
+	def rise(self):
+		self.zrange[0] += 1
+		self.zrange[1] += 1
+	def xycover(self, ob):
+		if ( isect(self.yrange, ob.yrange) and
+		     isect(self.xrange, ob.xrange) ) : return True
+		return False
+	def intersect(self, ob):
+		if ( isect(self.zrange, ob.zrange) and
+		     isect(self.yrange, ob.yrange) and
+		     isect(self.xrange, ob.xrange) ) : return True
+		return False
+	def touches(self, ob):	# z coords difer by one and xy intersect
+		myz = self.zrange[1] 
+		hisz = ob.zrange[0]
+		if abs(myz - hisz) == 1:
+			if ( isect(self.yrange, ob.yrange) and
+				 isect(self.xrange, ob.xrange) ) : return True
+		return False
+	def out(self):
+		print("Brick: ", self.name, " Frozen: ", self.frozen, self.xrange, self.yrange, self.zrange)
+		for s in self.isupport:
+			print("   supports ", s.name)
+		for s in self.supportsme:
+			print("   supports me ", s.name)
+	def freeze(self):
+		self.frozen = True
+
+	
+	
+bricks = []      
+for line in open("data.txt", "r"):
+	b = Brick(line.strip())
+	#b.out()
+	bricks.append(b)
+	#print(c1, c2)
+	#if c1[2] == c2[2]:
+	#	pass
+	#else:
+	#	print("Z ERROR")
+	
+def firsthit(inb):
+	global bricks
+	for b in bricks:	# skip all bricks above inb
+		if b.above(inb): continue
+		if b.xycover(inb):
+			return b
+	return None
+
+def freezecount():
+	global bricks
+	cnt = 0
+	for b in bricks:	# skip all bricks above inb
+		if b.frozen: cnt += 1
+	return cnt
+
+bricks.sort(key=lambda a: a.zrange[0], reverse=True)
+
+def getbricks( znum):
+	global bricks
+	rlist = []
+	for b in bricks:
+		if b.zrange[0] == znum:
+			rlist.append(b)
+	return rlist
+	
+def getfrozen():
+	global bricks
+	rlist = []
+	maxz = 0
+	for b in bricks:
+		if b.frozen:
+			rlist.append(b)
+			if maxz < b.zrange[0]: maxz = b.zrange[0]
+	return rlist, maxz
+
+
+
+maxz = 2
+while maxz < 400:
+	xlist = getbricks(maxz)
+	flist, n = getfrozen()
+	print(len(xlist), len(flist))
+	for x in xlist:
+		for f in flist:
+			if x.xycover(f):
+
+				if x.frozen and x.zrange[1] - f.zrange[0] > 1: continue
+				#if b2.zrange[0] < b1.zrange[1]+1: 
+				#	print(b2.name, b2.zrange[0], " Z trouble with ", b1.name, b1.zrange[1])
+
+
+				x.dropto(f.zrange[1]+1)
+				x.freeze()
+				f.supports(x)
+				x.supportedby(f)
+				print(x.name, " dropped to ", f.zrange[1]+1,
+					" supported by ", f.name)
+	bricks.sort(key=lambda a: a.zrange[0], reverse=True)
+	maxz += 1
+
+for b in bricks:
+	b.out()
+
+n = 1
+remb = 0
+for b in bricks:
+	if len(b.isupport) == 0: 
+		remb += 1
+		#print(b.name, " does not support any brick")
+	else:
+		otherSupportCount = 0
+		print("\n\nChecking on ", b.name, " has ", len(b.isupport))
+		for isup in b.isupport: print("       -> ", isup.name)
+		for isup in b.isupport:
+			# check to see if another brick supports this brick
+			ok = False
+			for cb in bricks:
+				if cb.name == b.name: continue
+				if cb.doesSupport(isup.name):
+					# another entity supports this brick
+					print(cb.name, " supports ", isup.name, otherSupportCount)
+					ok = True
+			if ok: otherSupportCount += 1
+		if otherSupportCount == len(b.isupport):
+			print(b.name, " can be removed ", otherSupportCount)
+			remb += 1
+		else:
+			print(b.name, " cannot be removed")
+
+
+print("Part 1, we can disintegrate", remb, "bricks")
+## 797 is too high
+## 550 is too high
+## 547 is too high
+## 515

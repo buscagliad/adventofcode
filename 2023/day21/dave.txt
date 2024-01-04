@@ -1,0 +1,2 @@
+Part 1: Number of gardens visited is:  3503
+Part 1: Number of gardens visited is:  1828

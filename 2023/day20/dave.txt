@@ -1,0 +1,2 @@
+Part 1: low * high pulses after 1000 button presses:  788081152
+Part2 - rm to go low at button press:  224602011344203
