@@ -14,6 +14,7 @@ loop = 0
 class Module:
 	def __init__(self, nm):
 		self.sendto = []
+		self.sendfrom = []
 		self.toSend = NOPULSE
 		self.name = nm	
 	#
@@ -26,7 +27,7 @@ class Module:
 	# only the Conjuction module will require this
 	#
 	def input(self, frommod):
-		pass
+		self.sendfrom.append(frommod)
 	#
 	# the send method will count high/low pulses and add to q
 	#
@@ -89,7 +90,7 @@ class FlipFlop(Module):
 
 class Conjunction(Module):
 	def __init__(self, nm):
-		self.cares = []
+		self.sendfrom = []
 		self.rcvd = {}
 		self.debug = False
 		super().__init__(nm)
@@ -97,7 +98,7 @@ class Conjunction(Module):
 	# this module keeps track of who sends pulses to it
 	#
 	def input(self, frommod):
-		self.cares.append(frommod)
+		self.sendfrom.append(frommod)
 		#print(self.name, " adding ", frommod.name)
 		self.rcvd[frommod] = LOW
 
@@ -113,14 +114,14 @@ class Conjunction(Module):
 		self.rcvd[fm] = ptype
 		# print("inpulse - from ", fm, " pulse; ", PTYPE[ptype])
 		tosend = LOW
-		for m in self.cares:
+		for m in self.sendfrom:
 			if False: print(self.name, " checking ", fm, " for what it sent: ", self.rcvd[m])
 			if self.rcvd[m] == LOW:
 				tosend = HIGH
 		self.toSend = tosend
 
 	def origstate(self):
-		for m in self.cares:
+		for m in self.sendfrom:
 			if m.lastSent == HIGH:
 				return False
 		return True
@@ -178,6 +179,27 @@ for line in open(infile, 'r'):
 		if inp: modules[tnm].input(modules[nm].name)
 		
 bm = modules["broadcaster"]
+
+## who talks to 'rx' ?
+## if it is a Conjunction (which it is)
+## need to find all the inputs to the Conjuction
+##
+rx = modules['rx']
+
+m = rx.sendfrom[0]	# module connect to rx
+
+inlist = []
+for a in modules:
+	mods = modules[a]
+	if len(mods.sendto) > 0 and m == mods.sendto[0]:
+		inlist.append(a)
+		#print(a)
+	
+loops = []
+for a in inlist:
+	loops.append([modules[a], 0])
+
+
 jz = modules["jz"]
 jzloop = 0
 ft = modules["ft"]
@@ -187,14 +209,16 @@ ngloop = 0
 sv = modules["sv"]
 svloop = 0
 kmstate = False
+done = False
 for i in range(100000000):
+	if done: break
 	lowPulsesSent += 1
 	bm.inpulse("button", LOW)
 	slist = []
 	bm.activate(slist)
 	#print("    low pulse: ", lowPulsesSent, "  high pulses: ", highPulsesSent)
 	loop += 1
-	while slist:
+	while not done and slist:
 		frm, modnm, ptype = slist.pop(0)
 			
 		##
@@ -203,27 +227,15 @@ for i in range(100000000):
 		if False: print(loop, ":: ", frm, STYPE[ptype], modnm)
 		tomod = modules[modnm]
 		tomod.inpulse(frm, ptype)
-		if svloop == 0 and sv.toSend == HIGH: 
-			svloop = loop
-			#print(sv.name, " loop is ", loop, flush=True)
-		if ngloop == 0 and ng.toSend == HIGH: 
-			ngloop = loop
-			#print(ng.name, " loop is ", loop, flush=True)
-		if ftloop == 0 and ft.toSend == HIGH: 
-			ftloop = loop
-			#print(ft.name, " loop is ", loop, flush=True)
-		if jzloop == 0 and jz.toSend == HIGH: 
-			jzloop = loop
-			#print(jz.name, " loop is ", loop, flush=True)
-		if ftloop > 0 and jzloop > 0 and svloop > 0 and ngloop > 0:
-			print("Part2 - rm to go low at button press: ", ftloop * jzloop * svloop * ngloop)
-			exit(1)
-		##
-		## get from each oject the obj,pulse to send out 
-		##
-			#if m[2] == NOPULSE: continue
-			#if m[0] == 'b':
-			#	print("b Sending to ", m[1].name, " ", PTYPE[m[2]])
+		for a in loops:
+			if a[1] == 0 and a[0].toSend == HIGH:
+				a[1] = loop
+
+		done = True
+		for a in loops:
+			if a[1] == 0:
+				done = False
+
 		tomod.activate(slist)
 			
 		##
@@ -233,4 +245,8 @@ for i in range(100000000):
 		print("Part 1: low * high pulses after 1000 button presses: ", lowPulsesSent * highPulsesSent)
 
 
+prod = 1
+for a in loops:
+	prod *= a[1]
 
+print("Part 2: Number of button presses to set rm to HIGH: ", prod)
