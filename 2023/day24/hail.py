@@ -22,7 +22,7 @@ z = []
 dx = []
 dy = []
 dz = []
-for line in open("test.txt"):
+for line in open("data.txt"):
 	ax,ay,az,adx,ady,adz = process(line)
 	hail.append((ady/adx, ay-ax*(ady/adx), ax, adx))
 	x.append(ax)
@@ -31,17 +31,6 @@ for line in open("test.txt"):
 	dx.append(adx)
 	dy.append(ady)
 	dz.append(adz)
-	
-print("x: ", min(x), " - ", max(x), "  dx: ", min(dx), " - ", max(dx))
-print("y: ", min(y), " - ", max(y), "  dy: ", min(dy), " - ", max(dy))
-print("z: ", min(z), " - ", max(z), "  dz: ", min(dz), " - ", max(dz))
-
-if 1 in dx:
-	print("x has a 0 velocity")
-if 1 in dy:
-	print("y has a 0 velocity")
-if 1 in dz:
-	print("z has a 0 velocity")
 
 def intersect(h, l):
 	b1 = h[1]
@@ -65,23 +54,22 @@ def is_whole(f, eps):
 count = 0
 for i in range(len(hail)-1):
 	for j in range(i+1, len(hail)):
-		gx, gy, tf = intersect(hail[i], hail[j])
+		p1x, p1y, tf = intersect(hail[i], hail[j])
 		if tf:
 			x0 = hail[i][2]
 			dx0 = hail[i][3]
 			x1 = hail[j][2]
 			dx1 = hail[j][3]
-			t0 = (gx - x0) / dx0
-			t1 = (gx - x1) / dx1
-			#
-			# did intersection happen when t < 0 ?
-			#
-			if t0 > 0 and t1 > 0 and is_whole(t0, 0.0001) and is_whole(t1, 0.0001):
-				print(i, " intersects ", j, " at time ", t0, t1)
-				t = int(t0)
-
-			
+			t0 = (p1x - x0) / dx0
+			t1 = (p1x - x1) / dx1
+			if t1 < 0 or t0 <0:
+				pass
+				#print(i, " intersects ", j, " in the past")
+			else:
+				if (XMIN <= p1x) and (p1x <= XMAX) and (YMIN <= p1y) and (p1y <= YMAX):
+					count += 1
 print("Part 1: there are ", count, " pairs of hailstones that intersect in the future")
+
 
 #
 # Let P and V be 3-vectors such that, P is the position of the rock thrown at time t=0,
@@ -144,78 +132,103 @@ def compcoeffs(x, y, dx, dy, i, j):
 	
 	#print(x, y, dx, dy, i, j)
 	#print(x[i] * dy[i], dx[i] * y[i],  x[j] * dy[j], dx[j] * y[j])
-	print(a,b,c,d,r)
+	#print(a,b,c,d,r)
 	#print()
 	return a, b, c, d, r
+
+def solve4x4(m, b):
+	n = len(m[0])
+	a = np.zeros((n,n+1), dtype = np.float128)
+	for i in range(n):
+		a[i][n] = b[i]
+		for j in range(n):
+			a[i][j] = m[i][j]
+			
+	x = np.zeros(n, dtype = np.float128)
+# Applying Gauss Elimination
+	for i in range(n):
+		if a[i][i] == 0.0:
+			print(a)
+			exit(1)
+			
+		for j in range(i+1, n):
+			ratio = a[j][i]/a[i][i]
+			
+			for k in range(n+1):
+				a[j][k] = a[j][k] - ratio * a[i][k]
+
+	# Back Substitution
+	x[n-1] = a[n-1][n]/a[n-1][n-1]
+
+	for i in range(n-2,-1,-1):
+		x[i] = a[i][n]
+		
+		for j in range(i+1,n):
+			x[i] = x[i] - a[i][j]*x[j]
+		
+		x[i] = x[i]/a[i][i]
+	return x
+
+# a = np.zeros(4)
+# b = np.zeros(4)
+# c = np.zeros(4)
+# d = np.zeros(4)
+
+def solvehail(x, y, dx, dy):
+	i = 0
+	m = np.zeros([4,4], dtype=np.float128)
+	r = np.zeros(4, dtype=np.float128)
+	for (si, sj) in [(0,1), (2,3), (1,2), (3, 4)]:
+		a, b, c, d, rhs = compcoeffs(x, y, dx, dy, si, sj)
+		m[i][0] = a
+		m[i][1] = b
+		m[i][2] = c	
+		m[i][3] = d
+
+		r[i] = rhs
+		i += 1
+
+	#print(m)
+	rb = np.array(r, dtype=np.float128)
+	#print("rb:", rb)
+	#rx = np.linalg.solve(m, rb)
+	#print("Solution: x, y, xdot, ydot: ", rx)
+	rx = solve4x4(m, rb)
+	#print("Solution: x, y, xdot, ydot: ", rx)
+	return rx
 	
-m = np.zeros([4,4])
+rx = solvehail(x, y, dx, dy)
+# print("Solution: x, y, xdot, ydot: ", int(rx[0]), int(rx[1]), int(rx[2]), int(rx[3]), rx)
+xsol = int(round(rx[0]))
+xdot = int(round(rx[2]))
+ysol = int(round(rx[1]))
+ydot = int(round(rx[3]))
+# rx = solvehail(x, z, dx, dz)
+# print("Solution: x, z, xdot, zdot: ", int(rx[0]), int(rx[1]), int(rx[2]), int(rx[3]), rx)
 
-a = np.zeros(4)
-b = np.zeros(4)
-c = np.zeros(4)
-d = np.zeros(4)
-r = np.zeros(4)
+rx = solvehail(z, y, dz, dy)
+# print("Solution: z, y, zdot, ydot: ", int(rx[0]), int(rx[1]), int(rx[2]), int(rx[3]), rx)
+zsol = int(round(rx[0]))
+zdot = int(round(rx[2]))
 
-i = 0
-for (si, sj) in [(0,1), (0,2), (1,2), (3, 4)]:
-	a, b, c, d, rhs = compcoeffs(x, y, dx, dy, si, sj)
-	m[i][0] = a
-	m[i][1] = b
-	m[i][2] = c	
-	m[i][3] = d
+# print("Part 2: the x,y,z coordinates of the thrown stone at t=0", xsol, ysol, zsol)
+# print("Part 2: the x,y,z velocities of the thrown stone at t=0", xdot, ydot, zdot)
+# print("Part 2: sum of the x,y,z coordinates of the thrown stone at t=0", int(xsol), int(ysol), int(zsol))
 
-	r[i] = rhs
-	i += 1
+print("Part 2: sum of the x,y,z coordinates of the thrown stone at t=0", int(xsol) + int(ysol) + int(zsol))
 
-rb = np.array(r) #.reshape((4, 1))
-print("rb:", rb)
-soln = np.array((24,13,-3,1)).reshape((4, 1))
+# NOTE: 722976491652739 is too low
+#       722976491652737
+#       722976491652740
+# rounding error is getting us
+# the velocity is being computed 'perfectly': -125, 25, 272
+# we will see what time t1 is such that this velocity yiels a point 'close' to xsol, ysol, zsol
+#
+#tx = ( x[10] - xsol )  / ( xdot - dx[10])
+#print(tx)
+#ty = ( y[10] - ysol )  / ( ydot - dy[10])
+#print(ty)
+#tz = ( z[10] - zsol )  / ( zdot - dz[10])
+#print(tz)
 
-
-yy = np.matmul(m, soln)
-print("M * soln: ", yy)
-
-xx = np.linalg.solve(m, rb)
-print("x soln.: ", xx)
-
-print("M*x: ", np.matmul(m, xx))
-print("M*soln: ", np.matmul(m, soln))
-
-def test():
-	print("Top of test()")
-	v = np.array([3, -3, 1])
-	print("v.out()", v)
-	v2 = np.array([4, 9, 2])
-	print("v2.out()", v2)
-	v3 = cross(v, v2)
-	print("v3.out()", v3)
-	print("v3.dot(v2): ", v3.dot(v2))
-	print("v3.dot(v): ", v3.dot(v))
-	m = np.zeros((6,6))
-	for i in range(6):
-		for j in range(6):
-			m[i][j] = random.random()
-	
-	print("Matrix M", m)
-	MI = np.linalg.inv(m)
-	print("Matrix M inverse", MI)
-	mm = np.matmul(MI, m)
-	print("Matrix M inverse * M (should be I)", mm)
-	
-	A = np.array([[1, 9, 2, 1, 1],
-				 [10, 1, 2, 1, 1],
-				 [1, 0, 5, 1, 1],
-				 [2, 1, 1, 2, 9],
-				 [2, 1, 2, 13, 2]])
-	b = np.array([170, 180, 140, 180, 350]).reshape((5, 1))
-	x = np.linalg.solve(A, b)
-	print(x)
-	
-	M = np.zeros((5,5))
-	for i in range(5):
-		for j in range(5):
-			M[i][j] = A[i][j]
-	x = np.linalg.solve(A, b)
-	print(x)
-	
-test()
+#print(tx, ty, tz)
