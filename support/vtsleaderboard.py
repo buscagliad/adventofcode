@@ -21,12 +21,13 @@ SESSION_ID = os.environ.get('SESSION_ID')
 # Simply create secrets.py with these values defined.
 # See README for more detailed directions on how to fill these variables.
 if not all([LEADERBOARD_ID, SESSION_ID]):
-	from secrets import LEADERBOARD_ID, SESSION_ID
+	from secrets import LEADERBOARD_ID, SESSION_ID, AOC_YEAR
 
 # You should not need to change this URL
 LEADERBOARD_URL = "https://adventofcode.com/{}/leaderboard/private/view/{}".format(
-		datetime.datetime.today().year,
+		AOC_YEAR,
 		LEADERBOARD_ID)
+
 
 
 def printMembers(members):
@@ -154,7 +155,7 @@ def main():
 		cookies={"session": SESSION_ID}
 	)
 	if r.status_code != requests.codes.ok:  # pylint: disable=no-member
-		print("Error retrieving leaderboard")
+		print("Error retrieving leaderboard", LEADERBOARD_URL)
 		sys.exit(1)
 
 	# get members from json
