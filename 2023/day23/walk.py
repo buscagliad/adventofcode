@@ -24,48 +24,59 @@ def connected(a, b):
   return False
 
 class Node:
-  def __init__(self, start, stop, steps):
+  def __init__(self, start, stop, steps, endNode = False):
     self.connected = []
     self.start = start
     self.stop = stop
     self.steps = steps
     self.nodemin = steps
     self.nodemax = steps
-    self.index = -1
+    self.visited = False
+    self.dist = 0
+    self.endNode = endNode
     
+  def search(self):
+      if self.endNode: return self.dist + self.steps
+      for c in self.connected:
+          if not c.visited:
+              c.visited = True
+              s = self.dist + c.steps
+              if s > c.dist: c.dist = s
+              return c.search()
+       print("SHOULD NEVER GET HERE")
+       exit(1)
   def PrintTree(self):
     print(self.start, self.stop, self.steps)
     if not self.connected: return
     for c in self.connected:
       c.PrintTree()
 
-  def insert(self, start, stop, steps):
+  def insert(self, start, stop, steps, endNode = False):
     print("INSERT:: Comparing ", self.stop, " to ", start)
     if connected(self.stop, start):
         print("APPENDING::  ", start, " to ", self.stop)
-        self.connected.append(Node(start, stop, steps))
-        self.index = 0
+        self.connected.append(Node(start, stop, steps, endNode))
         return True
     # Compare the new value with the parent node
     if not self.connected:
       return False
     tv = False
     for c in self.connected:
-      tv = tv or c.insert(start, stop, steps)
+      tv = tv or c.insert(start, stop, steps, endNode)
     return tv
 
-  def sum(self):
+  def sum(self, s = 0):
     global pathMin
     global pathMax
-    s = self.steps
+    s += self.steps
     print("sum-", s)
     if self.connected:
       for c in self.connected:
-        ss = s + c.sum()
-        if ss > self.nodemax:
-          self.nodemax = ss
-        elif ss < self.nodemin:
-          self.nodemin = ss
+        s = c.sum(s)
+        if s > self.nodemax:
+          self.nodemax = s
+        elif s < self.nodemin:
+          self.nodemin = s
     return s
 
 def process(line):
@@ -194,7 +205,9 @@ while not done:
   for i, p in enumerate(paths):
     if used[i] == 1: continue
     print("Looking to insert: ", p[0], p[1], p[2])
-    if tr.insert(p[0], p[1], p[2]): 
+    last = (p[1] == (gridRow-1,gridCol-2))
+    if (last) : print("LAST")
+    if tr.insert(p[0], p[1], p[2], last): 
       used[i] = 1
       print("Inserted: ", p[0], p[1], p[2], " total: ", sum(used))
       found = True
@@ -205,6 +218,7 @@ tr.PrintTree()
 
 print(tr.sum())
 print(tr.nodemin, tr.nodemax)
+print(tr.search())
 
 # for p in paths:
   # print(p)
@@ -215,7 +229,7 @@ print(tr.nodemin, tr.nodemax)
     # print()
   # print()
 
-	
+    
 for i, p in enumerate(paths):
   if used[i] == 1: continue
   print("NOT able to insert: ", p[0], p[1], p[2])
