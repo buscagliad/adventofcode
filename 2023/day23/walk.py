@@ -2,38 +2,117 @@ import numpy as np
 import heapq as heap
 import copy
 from collections import defaultdict
+from collections import deque
 
+graph_id = 0
+
+def hash_it(i, j):
+    return 100 * j + i
+    
 class Graph:
-    def __init__(self, directed = True):
+    def __init__(self, directed = False):
         self.vertices=[]
         self.edges=defaultdict()
-        self.vertNames=defaultdict()
+        self.vertIDs=[]
         self.directed = directed
+        self.id = []
         self.debug = False
     def __str__(self):
         self.printGraph()
     def addedge(self, vertA, vertB, dist):
+        global graph_id
         if not vertA in self.vertices:
             self.vertices.append(vertA)
+            self.vertIDs.append(graph_id)
+            graph_id += 1
         if not vertB in self.vertices:
             self.vertices.append(vertB)
+            self.vertIDs.append(graph_id)
+            graph_id += 1
         self.edges[vertA, vertB] = dist
-        if not self.directed:
-            self.edges[vertB, vertA] = dist
-    def  print(self):
-        for v1 in self.vertices:
-            for v2 in self.vertices:
+#        if not self.directed:
+#            self.edges[vertB, vertA] = dist
+
+    def negate(self):   # negate all edges
+       for i1, v1 in enumerate(self.vertices):
+            for i2, v2 in enumerate(self.vertices):
                 if v1 == v2: continue
                 if (v1,v2) in self.edges:
-                    print(v1, " --> ", v2, " : ", self.edges[(v1,v2)])
+                    self.edges[(v1,v2)] *= -1
+
+    # if a vertex has two in and two out, add the 
+    # return edge as well
+    def part2(self):
+        counter = [0] * len(self.vertices)
+        for i1, v1 in enumerate(self.vertices):
+            for i2, v2 in enumerate(self.vertices):
+                if v1 == v2: continue
+                if (v1,v2) in self.edges:
+                    counter[i1] += 1
+                    counter[i2] += 1
+        for i1, v1 in enumerate(self.vertices):
+#            if counter[i1] < 4: continue
+            for i2, v2 in enumerate(self.vertices):
+                if v1 == v2: continue
+                if (v1,v2) in self.edges:
+                    if (v2,v1) not in self.edges:
+                        if counter[i2] >= 3 and counter[i1] >= 3:
+                            if counter[i1] == 3 and counter[i2] == 3: continue
+                            self.edges[(v2,v1)] = self.edges[(v1,v2)]
+
+
+    def merge(self):
+        elist = []
+        for u in self.vertices:
+            for v in self.vertices:
+                if (u, v) in self.edges:
+                    elist.append((self.edges[(u,v)], u, v))
+        elist.sort()
+        print("******************************")
+        for e in elist:
+            print(e)
+        print("******************************")
+        for i, e in enumerate(elist):
+            if i >= len(elist) - 1: break 
+            if e[0] == elist[i+1][0]:
+            #if elist.count(e) > 1:
+                print("e: ", e, "  e+1: ", elist[i+1])
+                    
+    def edgelist(self, start, end):
+        elist = []
+        for i, u in enumerate(self.vertices):
+            for j, v in enumerate(self.vertices):
+                if (u, v) in self.edges:
+                    si = str(i)
+                    sj = str(j)
+                    if u == start: si = "S"
+                    if v == end: sj = "E"
+                    elist.append((si, sj))
+        return elist
+
+    def  print(self, edges = True):
+        for i1, v1 in enumerate(self.vertices):
+            for i2, v2 in enumerate(self.vertices):
+                if v1 == v2: continue
+                if (v1,v2) in self.edges:
+                    if (edges):
+                        print(v1, "[", self.vertIDs[i1],"] --> ", 
+                              v2, "[", self.vertIDs[i2],"] : ", self.edges[(v1,v2)])
+                    else:
+                        print("(", i1, ",", i2, ",", self.edges[(v1,v2)], "),")
+   
+    def isAvert(self, pt):
+        return pt in self.vertices
+
     def getmindistance(self, start, stop):
-        if not start in self.vertices:
+        if not self.isAvert(start):
             print("ERROR - Starting point ", start, " is not a vertex")
             return -1
-        if not stop in self.vertices:
+        if not self.isAvert(stop):
             print("ERROR - End point ", stop, " is not a vertex")
             return -1
         visited = [False] * len(self.vertices)
+        
         # don't have an Inf for integers - going to assume 1 trillion is large enough
         distance = defaultdict()
         q = []
@@ -54,35 +133,73 @@ class Graph:
                     if (self.debug) : print("***", current, " -> ", adjNode, " == ", newDist)
                     heap.heappush(q, adjNode)
         return distance[stop]
-                
+
+    def getVertID(self, pt):
+        for i, vpt in enumerate(self.vertices):
+            if vpt == pt: return i
+        return -1
+
     def getmaxdistance(self, start, stop):
-        if not start in self.vertices:
+        start_id = self.getVertID(start)
+        stop_id = self.getVertID(stop)
+        
+        maxdist = 0
+        if start_id < 0:
             print("ERROR - Starting point ", start, " is not a vertex")
             return -1
-        if not stop in self.vertices:
+        if stop_id < 0:
             print("ERROR - End point ", stop, " is not a vertex")
             return -1
-        visited = [False] * len(self.vertices)
-        distance = defaultdict()
-        q = []
-        for v in self.vertices:
-            distance[v] = 0
-            heap.heappush(q, v)
-        distance[start] = 0
-        while q:
-            current = q.pop()
-            if (self.debug) : print(current, " ", distance[current])
-            visited.append(current)
-            for adjNode in self.vertices:
-                #if adjNode in visited: continue
-                if not (current, adjNode) in self.edges: continue
-                newDist = distance[current] + self.edges[current, adjNode]
-                if distance[adjNode] < newDist:
-                    distance[adjNode] = newDist
-                    if (self.debug) : print("***", current, " -> ", adjNode, " == ", newDist)
-                    heap.heappush(q, adjNode)
-        return distance[stop]  
+        edges = np.zeros((len(self.vertices),len(self.vertices)), dtype = int)
+        for i, n in enumerate(self.vertices):
+            for j, m in enumerate(self.vertices):
+                if (n,m) in self.edges:
+                    edges[i][j] = self.edges[(n,m)]
+
+        if self.debug: print(edges)
+        vis = [False] * len(self.vertices)
         
+        #q = deque()
+        use_heap = False
+        q = []
+        dist = 0
+        vis = [False] * len(self.vertices)
+           #heap.heappush(q, (i, visc))
+        #for j in range(len(self.vertices)):
+        v = copy.deepcopy(vis)
+        v[start_id] = True
+        if (use_heap):
+            heap.heappush(q, (start_id, v, 0))
+        else:
+            q.append((start_id, v, 0))
+        self.debug = False
+        while q:
+            if use_heap:
+                current, visited, curdist = heap.heappop(q)
+            else:
+                current, visited, curdist = q.pop()  
+            if current == stop_id:
+                if maxdist < curdist:
+                    if (self.debug): print("XXXX - maxDist: ", maxdist, "  newDist: ", curdist, len(q))
+                    maxdist = curdist
+            else:
+                if (self.debug) : print("Current index: ", current, " ", curdist)
+                for i, adjNode in enumerate(self.vertices):
+                    if i == current : continue
+                    if visited[i] : continue
+                    edge = edges[current][i]
+                    if edge == 0: continue
+                    if (self.debug) : print(i, adjNode)
+                    newDist = curdist + edges[current][i]
+                    if (self.debug) : print("***", current, " -> ", adjNode, " == ", newDist)
+                    v = copy.deepcopy(visited)
+                    v[i] = True
+                    if use_heap:
+                        heap.heappush(q, (i, v, newDist))
+                    else:
+                        q.append((i, v, newDist))
+        return maxdist
+
 grid = np.zeros([200,200], dtype = int)
 gridCol = 0
 gridRow = 0
@@ -98,114 +215,8 @@ DOWN = 1
 LEFT = 2
 UP = 3
 NOOP = 4
-'''
-def connected(a, b):
-    if a == b: return True
-    return False
-
-class Node:
-    def __init__(self, start, stop, steps, endNode = False):
-        self.connected = []
-        self.visited = []
-        self.start = start
-        self.stop = stop
-        self.hash = start[0] + 100 * start[1] + 10000 * stop[0] + 1000000 * stop[1]
-        self.steps = steps
-        self.nodemin = steps
-        self.nodemax = steps
-        self.dist = steps
-        self.endNode = endNode
-
-    def __eq__(self, other):
-        return (self.hash == other.hash)
-
-    def __ne__(self, other):
-        return not (self == other)
-
-    def __lt__(self, other):
-        return (self.hash < other.hash)
-
-    def __gt__(self, other):
-        return (self.hash > other.hash)
-
-    def __le__(self, other):
-        return (self < other) or (self == other)
-
-    def __ge__(self, other):
-        return (self > other) or (self == other)
-        
-    def getqueue(self, q):
-        if not self in q:
-            print("GETQ: ", self.start, self.stop, self.steps)
-            q.append(self)
-        if not self.connected: return
-        for a in self.connected:
-            a.getqueue(q)
 
 
-    def search(self):
-        visited = set()
-        q = []
-        nodeCosts = defaultdict(lambda: 0)
-        startingNode = self
-        heap.heappush(q, (0, startingNode))
-        #self.getqueue(q)
-        nodeCosts[startingNode.hash] = self.steps
-
-        while q:
-            total, s = heap.heappop(q)
-            visited.add(s.hash)
-            if s.stop == (gridRow-1, gridCol-2):
-                return total
-            for adjNode in s.connected:
-            #print (adjNode.start, adjNode.stop, adjNode.steps, " --> ", nodeCosts[adjNode.hash])
-                if adjNode.hash in visited: continue
-                sm = nodeCosts[s.hash] + adjNode.steps + 1
-                if nodeCosts[adjNode.hash] < sm :
-                    nodeCosts[adjNode.hash] = sm
-                    print("Appending ", adjNode.hash, adjNode.start, adjNode.stop, 
-                        adjNode.steps, " --> ", sm)
-                    heap.heappush(q, (sm, adjNode))
-
-        # This hike contains 94 steps. (The other possible hikes you 
-        # could have taken were 90, 86, 82, 82, and 74 steps long.)
-
-
-    def PrintTree(self):
-        print(self.start, self.stop, self.steps, " --> ", self.dist)
-        if not self.connected: return
-        for c in self.connected:
-            c.PrintTree()
-
-    def insert(self, start, stop, steps, endNode = False):
-        #print("INSERT:: Comparing ", self.stop, " to ", start)
-        if connected(self.stop, start):
-            #print("APPENDING::  ", start, " to ", self.stop)
-            self.connected.append(Node(start, stop, steps, endNode))
-            self.visited.append(False)
-            return True
-        # Compare the new value with the parent node
-        if not self.connected:
-            return False
-        tv = False
-        for c in self.connected:
-            tv = tv or c.insert(start, stop, steps, endNode)
-        return tv
-
-    def sum(self, s = 0):
-        global pathMin
-        global pathMax
-        s += self.steps
-        print("sum-", s)
-        if self.connected:
-            for c in self.connected:
-                s = c.sum(s)
-                if s > self.nodemax:
-                    self.nodemax = s
-                elif s < self.nodemin:
-                    self.nodemin = s
-        return s
-'''
 def process(line):
     global gridRow
     global gridCol
@@ -227,13 +238,7 @@ def process(line):
         j += 1
     gridRow += 1
 
-'''
-def getVal(g, s, d):
-    i = s[0] + DIRlist[d][0]
-    j = s[1] + DIRlist[d][1]
-    #print("getval: ", i, j,"  v: ",grid[i][j])
-    return g[i][j]
-'''
+
 def nextSteps(c, d):
     steps = []
     endpath = False
@@ -261,20 +266,16 @@ def moveStep(s, d):
     if j < 0 or j >= gridCol: return
     return (i,j)
 
-seen = set()
-paths = []
-def getTree(start, d):
-    global seen
-
+def getTree(start, d, directed = True):
+    seen = set()
+    g = Graph(directed)
     starters = [[start, d]]
     finalStep = (gridRow-1, gridCol-2)
     trueStart = True
-  #if (start,d) in seen: return
     while starters:
         start, d = starters.pop()
         npt = (start[0] + DIRlist[d][0], start[1] + DIRlist[d][1])
         if not trueStart and not d == grid[npt]:
-            #print("Rejected")
             continue
         trueStart = False
         curStep = start
@@ -286,82 +287,97 @@ def getTree(start, d):
     
         while not done:
             endpath, s = nextSteps(curStep, d)
-            #print("Next step: ", s)
             if len(s) == 0: break
             steps += 1
             if steps == 1: endpath = False
             curStep = s[0][0]
             d = s[0][1]
-            #print("nextSteps: ", endpath, curStep)
             if curStep == finalStep:
                 if not ((start, s[0][0])) in seen:
-                    paths.append([start, s[0][0], steps])
+                    g.addedge(start, s[0][0], steps)
                     seen.add((start, s[0][0]))
                 done = True
             if endpath:
                 a, b = nextSteps(curStep, d)
                 if not ((start, b[0][0])) in seen:
-                    paths.append([start, b[0][0], steps])
+                    g.addedge(start, b[0][0], steps+1)
                     seen.add((start, b[0][0]))
-                #print("End of path: ", s, "  a: ", a, "  b: ", b)
                 for n in [RIGHT, DOWN, LEFT, UP]:
                     if n == (b[0][1] + 2) % 4: continue ## cannot reverse direction
                     starters.append([b[0][0], n])
-                    #print("Pushed on queue Next: ", b[0][0], n, DIRname[n])
                 done = True
-
-
-for line in open('data.txt', 'r'):
-    process(line)
-
-getTree((0,1), DOWN)
-
-'''
-tr = Node(paths[0][0], paths[0][1], paths[0][2])
-used = [0]*len(paths)
-used[0] = 1
-done = False
-for p in paths:
-    print(p[0], p[1], p[2])
-
-
-while not done:
-    found = False
-    for i, p in enumerate(paths):
-        if used[i] == 1: continue
-        #print("Looking to insert: ", p[0], p[1], p[2])
-        last = (p[1] == (gridRow-1,gridCol-2))
-        #if (last) : print("LAST")
-        if tr.insert(p[0], p[1], p[2], last): 
-            used[i] = 1
-            #print("Inserted: ", p[0], p[1], p[2], " total: ", sum(used))
-            found = True
-            break
-    done = (sum(used) == len(paths)) or (not found)
-'''
-endPoint = (gridRow-1,gridCol-2)
-
-def getGraph(p):
-    g = Graph()
-    for p in paths:
-        if p[1] == endPoint: one = 0
-        else: one = 1
-        g.addedge(p[0],p[1],p[2]+one)
     return g
 
-g = getGraph(paths)
-
-# print(verts)
-# print(edges)
-# print(tr.sum())
-# print(tr.nodemin, tr.nodemax)
-# print(tr.search())
-#tr.PrintTree()
-
-print("Get min distance: ", g.getmindistance((0, 1), endPoint))
-print("Get max distance: ", g.getmaxdistance((0, 1), endPoint))
-
+def getGraph(filename, directed):
+    global gridRow
+    global gridCol    
+    gridRow = 0
+    gridCol = 0
     
-# for i, p in enumerate(paths):
-  # if used[i] == 1: continue
-  # print("NOT able to insert: ", p[0], p[1], p[2])
+    for line in open(filename, 'r'):
+        process(line)
+    ng = getTree((0,1), DOWN, directed)
+    return ng
+
+
+
+ng = getGraph("data.txt", True)
+endPoint = (gridRow-1,gridCol-2)
+
+print("Part 1: Longest walk is ", ng.getmaxdistance((0, 1), endPoint))
+
+xg = getGraph("data.txt", True)
+endPoint = (gridRow-1,gridCol-2)
+xg.part2()
+
+print("Part 2: Longest walk is ", xg.getmaxdistance((0, 1), endPoint))
+
+'''
+xg = getGraph("data.txt", True)
+endPoint = (gridRow-1,gridCol-2)
+xg.part2()
+print("Part2; Get max distance: ", xg.getmaxdistance((0, 1), endPoint))
+# 5010 is too low
+# 6484 is too low - i entered the wrong number
+
+#xg.negate()
+#xg.print()
+#xg.merge()
+#xg.debug = True
+#
+# test.txt - should be 154
+#
+#print("Get plus max distance: ", xg.getmindistance((0, 1), endPoint))
+
+
+import networkx as nx
+import matplotlib.pyplot as plt
+
+G = nx.DiGraph()
+edge_vec = xg.edgelist((0,1), endPoint)
+new_ev = []
+
+G.add_edges_from(edge_vec)
+
+#val_map = {'A': 1.0,
+#           'D': 0.5714285714285714,
+#           'H': 0.0}
+
+#values = [val_map.get(node, 0.25) for node in G.nodes()]
+
+# Specify the edges you want here
+# red_edges = [('A', 'C'), ('E', 'C')]
+# edge_colours = ['black' if not edge in red_edges else 'red'
+#                for edge in G.edges()]
+# black_edges = [edge for edge in G.edges()] # if edge not in red_edges]
+
+# Need to create a layout when doing
+# separate calls to draw nodes and edges
+pos = nx.spring_layout(G)
+nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'),  node_size = 500)
+nx.draw_networkx_labels(G, pos)
+nx.draw_networkx_edges(G, pos, arrows=True)
+#nx.draw_networkx_edges(G, pos, edgelist=black_edges, arrows=False)
+plt.show()
+
+'''
