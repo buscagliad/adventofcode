@@ -58,7 +58,7 @@ def karger(n, edges):
     #return sum(find(parents, i) != find(parents, j) for (i, j) in edges)
     return redges
 
-def getminpath(filename):
+def getminpath(filename, val):
     lines = list(fileinput.input(filename))
     n = len(lines)
     edges = set()
@@ -73,6 +73,8 @@ def getminpath(filename):
         if len(kk) < mincut:
             mincut = len(kk)
             minpath = kk
+        if mincut == val:
+            break
     return minpath
 
 
@@ -123,7 +125,7 @@ def aoc(filename):
                 mat[j][i] = 1
         f.write("\n")
     f.close()
-    edgelist = getminpath(tmpfile)
+    edgelist = getminpath(tmpfile, 3)
     
     #
     # remove the edges fou
