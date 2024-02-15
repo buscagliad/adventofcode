@@ -103,10 +103,16 @@ def getState(s, destination_floor, obj1, obj2):
         ns[destination_floor][obj2] = 1
     return True, ns
 
+def getFloorObjs(f):
+    fo = []
+    for i, a in enumerate(f):
+        if a > 0: fo.append(i)
+    return fo
+
 def setStates(s):
     retStates = []
     current_floor = s[0][1]
-    for obj1 in s[current_floor]:
+    for obj1 in getFloorObjs(s[current_floor]):
         for destination_floor in range(current_floor - 1, 0, -1):  # going down
             good, ns = getState(s, destination_floor, obj1, None)
             if good:
@@ -121,7 +127,7 @@ def setStates(s):
             else:
                 break   # if not a good floor, fail
 
-    for obj1, obj2 in combinations(s[current_floor], 2):
+    for obj1, obj2 in combinations(getFloorObjs(s[current_floor]), 2):
         for destination_floor in range(current_floor - 1, 0, -1):  # going down
             good, ns = getState(s, destination_floor, obj1, obj2)
             if good:
@@ -155,6 +161,7 @@ def hashState(f):
         for d in f[floor]:
             if d == 0: hs += '0'
             else: hs += '1'
+    return hs
 
 first = setStates(Floors)   # initial set of moves
 #print(first)
@@ -173,14 +180,16 @@ while states:
     count += 1
     f = states.pop()
     # pState(f)
-    if len(f[4]) == NumObjs:
+    if sum(f[4]) == NumObjs:
         print("minSteps: ", minSteps)
         if f[0][0] < minSteps:
             minSteps = f[0][0]
+            print(h, "  Steps: ", f[0][0], "  Total: ", sum(sum(f[1:])))
     else:
         add_states = setStates(f)
         for f in add_states:
             h = hashState(f)
+            #print(h, "  Steps: ", f[0][0], "  Total: ", sum(sum(f[1:])))
             if not h in mem:
                 mem[h] = f[0][0]
                 states.append(f)
@@ -188,6 +197,6 @@ while states:
                 if mem[h] > f[0][0]:
                     mem[h] = f[0][0]
                     states.append(f)
-    print(len(states))
+    #print(len(states))
 print(minSteps)
                     
