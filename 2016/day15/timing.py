@@ -24,7 +24,7 @@ while not part1 or not part2:
     T += 1
     a = D(T)
     if a == SOLN:
-        # print("Solution: ", T)
+        print("Solution: ", T)
         if not part1:
             print("Part 1: time to press the button: ", T) 
             part1 = True
