@@ -1,0 +1,1 @@
+Part 1 - Product of separated graphs:  572000
