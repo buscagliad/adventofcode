@@ -15,12 +15,27 @@ def process(line):
 for line in open("data.txt"):
     process(line)
 
-danger = 0
-for i in range(nscan):
-    if scanner[i] == 0: continue
-    k = (scanner[i] - 1) * 2
-    if i % k == 0:
-        danger += i * scanner[i]
+def getdanger (offset):    
+    danger = 0
+    tf = False
+    for i in range(nscan):
+        if scanner[i] == 0: continue
+        k = (scanner[i] - 1) * 2
+        if (offset + i) % k == 0:
+            tf = True
+            danger += i * scanner[i]
+    return tf, danger
 
-print(danger)
-    
+_, dgr = getdanger(0)
+print("Part 1: severity of this layout is: ", dgr)
+
+
+tf = True
+wait = 2
+
+while tf:
+    tf, dgr = getdanger(wait)
+    #print(tf, wait, dgr)
+    if tf: wait += 4
+
+print("Part 2: wait this long to get through unscathed: ", wait)
