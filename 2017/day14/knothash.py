@@ -1,3 +1,5 @@
+import numpy as np
+
 def knot_hash(input_string):
     # Step 1: Convert input string to list of ASCII codes
     lengths = [ord(char) for char in input_string.strip()]
@@ -35,12 +37,56 @@ def knot_hash(input_string):
 
     return knot_hash
 
-# Test with provided examples
-print(knot_hash(""))  # Expected: a2582a3a0e66e6e86e3812dcb672a272
-print(knot_hash("AoC 2017"))  # Expected: 33efeb34ea91902bb2f59c9920caa6cd
-print(knot_hash("1,2,3"))  # Expected: 3efbe78a8d82f29979031a4aa0b16a9d
-print(knot_hash("1,2,4"))  # Expected: 63960835bcdc130f0b66d7ff4f6a5a8e
+bitcount = {}
+bitcount['0'] = [0,0,0,0]
+bitcount['1'] = [0,0,0,1]
+bitcount['2'] = [0,0,1,0]
+bitcount['3'] = [0,0,1,1]
+bitcount['4'] = [0,1,0,0]
+bitcount['5'] = [0,1,0,1]
+bitcount['6'] = [0,1,1,0]
+bitcount['7'] = [0,1,1,1]
+bitcount['8'] = [1,0,0,0]
+bitcount['9'] = [1,0,0,1]
+bitcount['a'] = [1,0,1,0]
+bitcount['b'] = [1,0,1,1]
+bitcount['c'] = [1,1,0,0]
+bitcount['d'] = [1,1,0,1]
+bitcount['e'] = [1,1,1,0]
+bitcount['f'] = [1,1,1,1]
 
-# Puzzle input
-puzzle_input = "212,254,178,237,2,0,1,54,167,92,117,125,255,61,159,164"
-print(knot_hash(puzzle_input))  # Solve for puzzle input
+grid = np.zeros((128,128), dtype=int)
+
+def getbitcount(s):
+    global grid
+    for row in range(128):
+        col = 0
+        news = s + "-" + str(row)
+        knot = knot_hash(news)
+        for k in knot:
+            for i, b in enumerate(bitcount[k]):
+                grid[row][col+i] = b
+            col += 4
+
+def gridsum():
+    gs = 0
+    row = 0
+    for row in range(128):
+        sg = sum(grid[row])
+        gs += sg
+        #print(row, sg)
+        row += 1
+    return gs
+
+   
+#print(gridsum())
+#exit(1)
+s = "hxtvlmkl"
+getbitcount(s)
+def print8x8():
+    for i in range(8):
+        for j in range(8):
+            if grid[i][j] == 0: print('.', end="")
+            else: print('#', end="")
+        print()
+print("Part 1: Knot has for ", s, " is ", knot_hash(s), " bit count is: ", gridsum())
