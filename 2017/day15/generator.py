@@ -20,4 +20,21 @@ for i in range(40000000):
     if genA & 0xffff == genB & 0xffff: 
         cnt += 1
 
-print(cnt)
+print("Part 1: number of pairs: ", cnt)
+
+def gnext2(last, mult, div):
+    rv = 15
+    last = (last * mult) % modnum
+    while last & div > 0:
+        last = (last * mult) % modnum
+    return last
+
+cnt = 0
+genA = 679
+genB = 771
+for i in range(5000000):
+    genA = gnext2(genA, factorA, 3)
+    genB = gnext2(genB, factorB, 7)
+    if genA & 0xffff == genB & 0xffff: 
+        cnt += 1
+print("Part 2: number of judges pairs: ", cnt)
