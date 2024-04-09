@@ -88,30 +88,36 @@ class Coord:
     def out(self):
         print(" p: ", self.p, "  v: ", self.v, "  a: ", self.a, "  dist: ", self.dist())
     def moven(self, n):
+        self.n = n
         self.v = self.v0 + n * self.a
-        self.p = self.p0 + self.v + self.a * (n * n - n) // 2
-        
-        
+        self.p = self.p0 + self.v0 * n + self.a * (n * n + n) // 2
+    def collides(self, other):
+        dp = self.p0 - other.p0
+        dv = self.v0 - other.v0
+        da = self.a0 - other.a0
+        bsqr = (2 * dv + da) ^ 2
+        if bsqr % 4 != 0 return False
+        bsqr = bsqr // 4
+        rad = bsqr - 2 * da * dp
+        # if rad is not a perfect square return False
 
-c = Coord(2, 4, 3)
-c2 = Coord(2, 4, 3)
-for n in range(10):
-    c.move()
-    print(n, end="")
-    c.out()
-c2.moven(10)
-c2.out()
-exit(1)
 
 class Particle:
     def __init__(self, x, y, z, vx, vy, vz, ax, ay, az):
         self.x = Coord(x, vx, ax)
         self.y = Coord(y, vy, ay)
         self.z = Coord(z, vz, az)
+        self.collided = False
     def move(self):
         self.x.move()
         self.y.move()
         self.z.move()
+    def moven(self, n):
+        self.x.moven(n)
+        self.y.moven(n)
+        self.z.moven(n)
+    def remove(self):
+        self.collided = True
     def dist(self):
         return self.x.dist() + self.y.dist() + self.z.dist()
 
@@ -136,28 +142,19 @@ def process(line):
 for line in open('data.txt'):
     process(line)
 
+#
+# assume after 100000 moves, the closest to origin
+# will remain closest to origin
+#
 d = []
-best_index = -1
-times = 0
-delta = 100
-for _ in range(10, 20000, delta):
-    for i in range(delta):
-        for p in Particles:
-            p.move()
-        d.clear()
-        for p in Particles:
-            d.append(p.dist())
-        bi = d.index(min(d))
-        print(_, bi)
-        if bi != best_index:
-            best_index = bi
-            times = 1
-        else:
-            best_index = bi
-            times += 1
-        if times > 4:
-            break
+N = 100000
+for p in Particles:
+    p.moven(N)
+    d.append(p.dist())
+            
+best_index = d.index(min(d))
+
         
-print("Part 1: particle closes to origin is: ", best_index)
+print("Part 1: particle closest to origin is: ", best_index)
 
 
