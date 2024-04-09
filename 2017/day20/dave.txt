@@ -1,0 +1,11 @@
+0 p:  9   v:  7   a:  3   dist:  9
+1 p:  19   v:  10   a:  3   dist:  19
+2 p:  32   v:  13   a:  3   dist:  32
+3 p:  48   v:  16   a:  3   dist:  48
+4 p:  67   v:  19   a:  3   dist:  67
+5 p:  89   v:  22   a:  3   dist:  89
+6 p:  114   v:  25   a:  3   dist:  114
+7 p:  142   v:  28   a:  3   dist:  142
+8 p:  173   v:  31   a:  3   dist:  173
+9 p:  207   v:  34   a:  3   dist:  207
+ p:  171   v:  34   a:  3   dist:  171
