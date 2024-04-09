@@ -70,6 +70,13 @@ How many particles are left after all collisions are resolved?
 
 
 '''
+import math
+
+def isasqr(a: int):
+    b = int(math.sqrt(float(a)))
+    if b*b == a: return b
+    return 0
+
 class Coord:
     def __init__(self, p, v, a):
         self.p = p
@@ -95,12 +102,42 @@ class Coord:
         dp = self.p0 - other.p0
         dv = self.v0 - other.v0
         da = self.a0 - other.a0
-        bsqr = (2 * dv + da) ^ 2
-        if bsqr % 4 != 0 return False
-        bsqr = bsqr // 4
-        rad = bsqr - 2 * da * dp
-        # if rad is not a perfect square return False
+        if dp == 0 and dv == 0 and da == 0:
+            print("same")
+            return False, 0
+        if dv == 0 and da == 0:
+            print("Bogus")
+            return False, 0
+            
+        #
+        # if da == 0 n is 2 dp / (2 dv + da)
+        #
+        if (da == 0):
+            k = (2 * dp) % (2 * dv + da)
+            if k == 0:
+                return True, (2 * dp) // (2 * dv + da)
+            else:
+                return False, 0
+        #
+        # (da) n^2 + (2 * dv + da) n + 2 * dp = 0
+        a = da
+        b = 2 * dv + da
+        c = 2 * dp
+        rad = b * b - 4 * a * c
+        if rad < 0 : return False, 0
+        radsqrt = isasqr(rad)
 
+        # if rad is not a perfect square return False
+        if radsqrt == 0: return False, 0
+        d1 = -b + radsqrt
+        d2 = -b - radsqrt
+        if d1 > 0:
+            if d1 % (2 * a) == 0:
+                return True, d1//(2 * a)
+        if d2 > 0:
+            if d2 % (2 * a) == 0:
+                return True, d2//(2 * a)
+        return False, 0
 
 class Particle:
     def __init__(self, x, y, z, vx, vy, vz, ax, ay, az):
@@ -120,6 +157,18 @@ class Particle:
         self.collided = True
     def dist(self):
         return self.x.dist() + self.y.dist() + self.z.dist()
+    def collides(self, other):
+        tx, nx = self.x.collides(other.x)
+        if not tx: return False, 0
+        ty, ny = self.y.collides(other.y)
+        if not ty: return False, 0
+        if not ny == nx: return False, 0
+        tz, nz = self.z.collides(other.z)
+        if not tz: return False, 0
+        if not nz == ny: return False, 0
+        return True, nz
+        
+       
 
 def crack(w):
 
@@ -157,4 +206,8 @@ best_index = d.index(min(d))
         
 print("Part 1: particle closest to origin is: ", best_index)
 
-
+for i, p in enumerate(Particles):
+    for j, q in enumerate(Particles[i+1:]):
+        t, n = p.collides(q)
+        if t:
+            print(i, i+j+1)
