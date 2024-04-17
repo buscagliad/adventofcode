@@ -78,7 +78,7 @@ def isasqr(a: int):
     return 0
 
 class Coord:
-    def __init__(self, p, v, a):
+    def __init__(self, p, v, a, debug = False):
         self.p = p
         self.v = v
         self.a = a
@@ -86,6 +86,7 @@ class Coord:
         self.p0 = p
         self.v0 = v
         self.a0 = a
+        self.debug = debug
     def move(self):
         self.v += self.a
         self.p += self.v
@@ -102,6 +103,7 @@ class Coord:
         dp = self.p0 - other.p0
         dv = self.v0 - other.v0
         da = self.a0 - other.a0
+        if self.debug: print("dp: ", dp, "  dv: ", dv, "  da: ", da)
         if dp == 0 and dv == 0 and da == 0:
             return True, 0
         if dv == 0 and da == 0:
@@ -111,6 +113,7 @@ class Coord:
         # if da == 0 n is 2 dp / (2 dv + da)
         #
         if (da == 0):
+            if self.debug: print("da == 0")
             k = (2 * dp) % (2 * dv + da)
             if k == 0:
                 return True, (2 * dp) // (2 * dv + da)
@@ -122,28 +125,49 @@ class Coord:
         b = 2 * dv + da
         c = 2 * dp
         rad = b * b - 4 * a * c
+        if self.debug: print(a, b, c, rad)
         if rad < 0 : return False, 0
-        radsqrt = isasqr(rad)
+        elif rad > 0:
+            radsqrt = isasqr(rad)
 
-        # if rad is not a perfect square return False
-        if radsqrt == 0: return False, 0
+            # if rad is not a perfect square return False
+            if radsqrt == 0: return False, 0
+        else:
+            radsqrt = 0
         d1 = -b + radsqrt
         d2 = -b - radsqrt
-        if d1 > 0:
+        res = None
+        if self.debug: print("--- d1, d2, (2 * a)", d1, d2, (2 * a))
+        if d1 == 0 or d2 == 0: return True, 0
+        if d1 * a  > 0:
+            if self.debug: print("A:  d1, 2*a, d1 % (2 * a)", d1, 2*a, d1 % (2 * a))
             if d1 % (2 * a) == 0:
-                return True, d1//(2 * a)
-        if d2 > 0:
+                res = d1//(2 * a)
+        if d2 * a > 0:
+            if self.debug: print("B:  d2, 2*a, d2 % (2 * a)", d2, 2*a, d2 % (2 * a))
             if d2 % (2 * a) == 0:
-                return True, d2//(2 * a)
+                v = d2//(2 * a)
+                if not res:
+                    res = v
+                else:
+                    if v < res: res = v
+        if res:
+            return True, res
         return False, 0
 
 class Particle:
-    def __init__(self, x, y, z, vx, vy, vz, ax, ay, az, nm):
+    def __init__(self, x, y, z, vx, vy, vz, ax, ay, az, nm, debug = False):
         self.x = Coord(x, vx, ax)
         self.y = Coord(y, vy, ay)
         self.z = Coord(z, vz, az)
-        self.collided = False
+        self.collided = 0
         self.name = nm
+        self.debug = debug
+    def equal(self, other):
+        if ( self.x.p == other.x.p and
+             self.y.p == other.y.p and
+             self.z.p == other.z.p) : return True
+        return False
     def move(self):
         self.x.move()
         self.y.move()
@@ -152,24 +176,28 @@ class Particle:
         self.x.moven(n)
         self.y.moven(n)
         self.z.moven(n)
-    def remove(self):
-        self.collided = True
     def dist(self):
         return self.x.dist() + self.y.dist() + self.z.dist()
     def collides(self, other):
         tx, nx = self.x.collides(other.x)
+        if (self.debug): print(">>>>>> x: ", tx, nx)
         if not tx: return False, 0
         ty, ny = self.y.collides(other.y)
+        if (self.debug): print(">>>>>> y: ", ty, ny)
         if not ty: return False, 0
         if not ny == nx: return False, 0
         tz, nz = self.z.collides(other.z)
+        if (self.debug): print(">>>>>> z: ", tz, nz)
         if not tz: return False, 0
         if not nz == ny: return False, 0
-        self.collided = True
-        other.collided = True
+
+        if other.collided:
+            print("OUCH!! ", self.name, other.name)
+        self.collided = nz
+        other.collided = nz
         return True, nz
     def out(self):
-        print(self.name, "(", self.x.p0, ",", self.y.v0, ", ", self.z.a0, ")   at ", 
+        print(self.name, "(", self.x.p0, ",", self.y.p0, ", ", self.z.p0, ")   at ", 
             self.x.n, "  Pos:  ", self.x.p, self.y.p, self.z.p)
         
         
@@ -202,30 +230,69 @@ for line in open('data.txt'):
 # assume after 100000 moves, the closest to origin
 # will remain closest to origin
 #
-d = []
-N = 100000
-for p in Particles:
-    p.moven(N)
-    d.append(p.dist())
-            
-best_index = d.index(min(d))
+def part1():
+    d = []
+    N = 100000
+    for p in Particles:
+        p.moven(N)
+        d.append(p.dist())
+                
+    best_index = d.index(min(d))
+    return best_index
 
         
-print("Part 1: particle closest to origin is: ", best_index)
+#print("Part 1: particle closest to origin is: ", part1())
+
+def commutative():
+    p = Particles[492]
+    q = Particles[496]
+    t, n = p.collides(q)
+    print(t, n)
+    p.moven(n)
+    p.out()
+    q.moven(n)
+    q.out()
+    t, n = q.collides(p)
+    print(t, n)
+    p.moven(n)
+    p.out()
+    q.moven(n)
+    q.out()
+    exit(1)
+
+    commutative()
+    exit()
 
 for i, p in enumerate(Particles):
-    for j, q in enumerate(Particles[i+1:]):
+    for j, q in enumerate(Particles):
+        if i <= j: continue
+        #print("Comparing ", p.name, " with ", q.name)
         t, n = p.collides(q)
         if t:
-            #print(i, i+j+1, n)
+            print("FOUND: ", i+1, j+1, n)
+            tt, nn = q.collides(p)
+            if not tt:
+                print("PROBLEM: i,j: ", i+1, j+1)
+                q.out()
+                p.out()
             p.moven(n)
             q.moven(n)
-            #p.out()
+            if not p.equal(q):
+                print("ERROR")
+                p.out()
+                q.out()
+            # else:
+                # print("GOOD")
+                # p.out()
+                # q.out()            #p.out()
             #q.out()
-            print()
+            #print()
 count = 0
 for p in Particles:
+    #p.out()
     if not p.collided: count += 1
 
 print("Part 2: number of non-colliding particles: ", count)
 # 863 is too high
+# 746 is too high
+# 507 is too high
