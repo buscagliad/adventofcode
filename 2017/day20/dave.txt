@@ -1,1 +1,0 @@
-Part 1: particle closest to origin is:  300

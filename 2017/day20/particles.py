@@ -103,10 +103,8 @@ class Coord:
         dv = self.v0 - other.v0
         da = self.a0 - other.a0
         if dp == 0 and dv == 0 and da == 0:
-            print("same")
-            return False, 0
+            return True, 0
         if dv == 0 and da == 0:
-            print("Bogus")
             return False, 0
             
         #
@@ -140,11 +138,12 @@ class Coord:
         return False, 0
 
 class Particle:
-    def __init__(self, x, y, z, vx, vy, vz, ax, ay, az):
+    def __init__(self, x, y, z, vx, vy, vz, ax, ay, az, nm):
         self.x = Coord(x, vx, ax)
         self.y = Coord(y, vy, ay)
         self.z = Coord(z, vz, az)
         self.collided = False
+        self.name = nm
     def move(self):
         self.x.move()
         self.y.move()
@@ -166,7 +165,13 @@ class Particle:
         tz, nz = self.z.collides(other.z)
         if not tz: return False, 0
         if not nz == ny: return False, 0
+        self.collided = True
+        other.collided = True
         return True, nz
+    def out(self):
+        print(self.name, "(", self.x.p0, ",", self.y.v0, ", ", self.z.a0, ")   at ", 
+            self.x.n, "  Pos:  ", self.x.p, self.y.p, self.z.p)
+        
         
        
 
@@ -178,7 +183,7 @@ def crack(w):
     
 Particles=[]
 
-def process(line):
+def process(line, nm):
     global Particles
     w = line.split()
     #
@@ -186,10 +191,12 @@ def process(line):
     x, y, z = crack(w[0])
     vx, vy, vz = crack(w[1])
     ax, ay, az = crack(w[2])
-    Particles.append(Particle(x, y, z, vx, vy, vz, ax, ay, az))
+    Particles.append(Particle(x, y, z, vx, vy, vz, ax, ay, az, nm))
 
+k = 0
 for line in open('data.txt'):
-    process(line)
+    process(line, k + 1)
+    k += 1
 
 #
 # assume after 100000 moves, the closest to origin
@@ -210,4 +217,15 @@ for i, p in enumerate(Particles):
     for j, q in enumerate(Particles[i+1:]):
         t, n = p.collides(q)
         if t:
-            print(i, i+j+1)
+            #print(i, i+j+1, n)
+            p.moven(n)
+            q.moven(n)
+            #p.out()
+            #q.out()
+            print()
+count = 0
+for p in Particles:
+    if not p.collided: count += 1
+
+print("Part 2: number of non-colliding particles: ", count)
+# 863 is too high
