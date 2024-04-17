@@ -193,9 +193,8 @@ class Particle:
 
         if other.collided:
             print("OUCH!! ", self.name, other.name)
+    def remove(self, nz):
         self.collided = nz
-        other.collided = nz
-        return True, nz
     def out(self):
         print(self.name, "(", self.x.p0, ",", self.y.p0, ", ", self.z.p0, ")   at ", 
             self.x.n, "  Pos:  ", self.x.p, self.y.p, self.z.p)
@@ -263,32 +262,46 @@ def commutative():
     commutative()
     exit()
 
-for i, p in enumerate(Particles):
-    for j, q in enumerate(Particles):
-        if i <= j: continue
-        #print("Comparing ", p.name, " with ", q.name)
-        t, n = p.collides(q)
-        if t:
-            print("FOUND: ", i+1, j+1, n)
-            tt, nn = q.collides(p)
-            if not tt:
-                print("PROBLEM: i,j: ", i+1, j+1)
-                q.out()
-                p.out()
-            p.moven(n)
-            q.moven(n)
-            if not p.equal(q):
-                print("ERROR")
-                p.out()
-                q.out()
-            # else:
-                # print("GOOD")
-                # p.out()
-                # q.out()            #p.out()
-            #q.out()
-            #print()
+def part2():
+    for i, p in enumerate(Particles):
+        for j, q in enumerate(Particles):
+            if i <= j: continue
+            #print("Comparing ", p.name, " with ", q.name)
+            t, n = p.collides(q)
+            if t:
+                print("FOUND: ", i+1, j+1, n)
+                tt, nn = q.collides(p)
+                if not tt:
+                    print("PROBLEM: i,j: ", i+1, j+1)
+                    q.out()
+                    p.out()
+                p.moven(n)
+                q.moven(n)
+                if not p.equal(q):
+                    print("ERROR")
+                    p.out()
+                    q.out()
+                # else:
+                    # print("GOOD")
+                    # p.out()
+                    # q.out()            #p.out()
+                #q.out()
+                #print()
 count = 0
-for p in Particles:
+#
+# Need to find out why the above only comes up with 507 - meaning
+# there are 5 more collisions when we do it brute force
+#
+for n in range(1, 100):
+    for p in Particles: p.move()
+    for i, p in enumerate(Particles):
+        for j, q in enumerate(Particles):
+            if j <= i : continue
+            if p.equal(q):
+                p.remove(n)
+                q.remove(n)
+                        
+for p in Particles: 
     #p.out()
     if not p.collided: count += 1
 
