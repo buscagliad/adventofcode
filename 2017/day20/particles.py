@@ -193,6 +193,7 @@ class Particle:
 
         if other.collided:
             print("OUCH!! ", self.name, other.name)
+        return True, nz
     def remove(self, nz):
         self.collided = nz
     def out(self):
@@ -292,20 +293,34 @@ count = 0
 # Need to find out why the above only comes up with 507 - meaning
 # there are 5 more collisions when we do it brute force
 #
-for n in range(1, 100):
+pairs={}
+for n in range(1, 50):
     for p in Particles: p.move()
     for i, p in enumerate(Particles):
+        #if p.collided : continue
         for j, q in enumerate(Particles):
             if j <= i : continue
+            #if q.collided : continue
             if p.equal(q):
+                print("Found two intersections at time: ", n, " Particles: ", i+1, j+1)
                 p.remove(n)
                 q.remove(n)
-                        
-for p in Particles: 
-    #p.out()
+                pairs[(i, j)] = n
+
+count = 0
+for p in Particles:
     if not p.collided: count += 1
 
 print("Part 2: number of non-colliding particles: ", count)
 # 863 is too high
 # 746 is too high
 # 507 is too high
+#print(pairs)
+def part2():
+    for (i,j) in pairs:
+        #print(i, j, pairs[(i,j)]) 
+        #p.out()
+        t, n = Particles[j].collides(Particles[i])
+        if n != pairs[(i,j)]:
+            print("Error at indexes: ", i, j, " found ", n, "  should be ", pairs[(i,j)])
+
