@@ -72,13 +72,15 @@ How many particles are left after all collisions are resolved?
 '''
 import math
 
+DEBUG=True
+
 def isasqr(a: int):
     b = int(math.sqrt(float(a)))
     if b*b == a: return b
     return 0
 
 class Coord:
-    def __init__(self, p, v, a, debug = False):
+    def __init__(self, p, v, a, debug = DEBUG):
         self.p = p
         self.v = v
         self.a = a
@@ -103,7 +105,7 @@ class Coord:
         dp = self.p0 - other.p0
         dv = self.v0 - other.v0
         da = self.a0 - other.a0
-        if self.debug: print("dp: ", dp, "  dv: ", dv, "  da: ", da)
+        if self.debug: print("Coord::collides  dp: ", dp, "  dv: ", dv, "  da: ", da)
         if dp == 0 and dv == 0 and da == 0:
             return True, 0
         if dv == 0 and da == 0:
@@ -113,10 +115,10 @@ class Coord:
         # if da == 0 n is 2 dp / (2 dv + da)
         #
         if (da == 0):
-            if self.debug: print("da == 0")
-            k = (2 * dp) % (2 * dv + da)
+            if self.debug: print("Coord::collides  da == 0")
+            k = dp % dv
             if k == 0:
-                return True, (2 * dp) // (2 * dv + da)
+                return True, -(dp//dv)
             else:
                 return False, 0
         #
@@ -125,7 +127,7 @@ class Coord:
         b = 2 * dv + da
         c = 2 * dp
         rad = b * b - 4 * a * c
-        if self.debug: print(a, b, c, rad)
+        if self.debug: print("Coord::collides  --- a, b, c, rad::", a, b, c, rad)
         if rad < 0 : return False, 0
         elif rad > 0:
             radsqrt = isasqr(rad)
@@ -137,14 +139,14 @@ class Coord:
         d1 = -b + radsqrt
         d2 = -b - radsqrt
         res = None
-        if self.debug: print("--- d1, d2, (2 * a)", d1, d2, (2 * a))
+        if self.debug: print("Coord::collides  --- d1, d2, (2 * a)", d1, d2, (2 * a))
         if d1 == 0 or d2 == 0: return True, 0
         if d1 * a  > 0:
-            if self.debug: print("A:  d1, 2*a, d1 % (2 * a)", d1, 2*a, d1 % (2 * a))
+            if self.debug: print("Coord::collides  A:  d1, 2*a, d1 % (2 * a)", d1, 2*a, d1 % (2 * a))
             if d1 % (2 * a) == 0:
                 res = d1//(2 * a)
         if d2 * a > 0:
-            if self.debug: print("B:  d2, 2*a, d2 % (2 * a)", d2, 2*a, d2 % (2 * a))
+            if self.debug: print("Coord::collides  B:  d2, 2*a, d2 % (2 * a)", d2, 2*a, d2 % (2 * a))
             if d2 % (2 * a) == 0:
                 v = d2//(2 * a)
                 if not res:
@@ -156,7 +158,7 @@ class Coord:
         return False, 0
 
 class Particle:
-    def __init__(self, x, y, z, vx, vy, vz, ax, ay, az, nm, debug = False):
+    def __init__(self, x, y, z, vx, vy, vz, ax, ay, az, nm, debug = DEBUG):
         self.x = Coord(x, vx, ax)
         self.y = Coord(y, vy, ay)
         self.z = Coord(z, vz, az)
@@ -180,19 +182,32 @@ class Particle:
         return self.x.dist() + self.y.dist() + self.z.dist()
     def collides(self, other):
         tx, nx = self.x.collides(other.x)
-        if (self.debug): print(">>>>>> x: ", tx, nx)
-        if not tx: return False, 0
+        if (self.debug): print("Particle::collides >> x: ", tx, nx)
+        if not tx: 
+            if (self.debug): 
+                print("Particle::collides     No X solution found")
+            return False, 0
         ty, ny = self.y.collides(other.y)
-        if (self.debug): print(">>>>>> y: ", ty, ny)
-        if not ty: return False, 0
-        if not ny == nx: return False, 0
+        if (self.debug): print("Particle::collides >> y: ", ty, ny)
+        if not ty: 
+            if self.debug: 
+                if (self.debug): 
+                    print("Particle::collides     No Y solution found")
+            return False, 0
+        if not ny == nx: 
+            if self.debug: 
+                print("Particle::collides  nx != ny", nx, ny)
+            return False, 0
         tz, nz = self.z.collides(other.z)
-        if (self.debug): print(">>>>>> z: ", tz, nz)
-        if not tz: return False, 0
-        if not nz == ny: return False, 0
-
-        if other.collided:
-            print("OUCH!! ", self.name, other.name)
+        if (self.debug): print("Particle::collides  z: ", tz, nz)
+        if not tz: 
+            if (self.debug): 
+                print("Particle::collides     No Z solution found")
+            return False, 0
+        if not nz == ny: 
+            if self.debug: 
+                print("Particle::collides  nz != ny", nz, ny)
+            return False, 0
         return True, nz
     def remove(self, nz):
         self.collided = nz
@@ -241,19 +256,19 @@ def part1():
     return best_index
 
         
-#print("Part 1: particle closest to origin is: ", part1())
+print("Part 1: particle closest to origin is: ", part1())
 
 def commutative():
-    p = Particles[492]
-    q = Particles[496]
+    p = Particles[97]
+    q = Particles[99]
     t, n = p.collides(q)
-    print(t, n)
+    print("COMMUTATIVE:: p.q   t, n: ", t, n)
     p.moven(n)
     p.out()
     q.moven(n)
     q.out()
     t, n = q.collides(p)
-    print(t, n)
+    print("COMMUTATIVE:: q.p   t, n: ", t, n)
     p.moven(n)
     p.out()
     q.moven(n)
@@ -261,7 +276,6 @@ def commutative():
     exit(1)
 
     commutative()
-    exit()
 
 def part2():
     for i, p in enumerate(Particles):
@@ -295,14 +309,14 @@ count = 0
 #
 pairs={}
 for n in range(1, 50):
-    for p in Particles: p.move()
+    for p in Particles: p.moven(n)
     for i, p in enumerate(Particles):
         #if p.collided : continue
         for j, q in enumerate(Particles):
             if j <= i : continue
             #if q.collided : continue
             if p.equal(q):
-                print("Found two intersections at time: ", n, " Particles: ", i+1, j+1)
+                #print("Found two intersections at time: ", n, " Particles: ", i+1, j+1)
                 p.remove(n)
                 q.remove(n)
                 pairs[(i, j)] = n
@@ -324,3 +338,4 @@ def part2():
         if n != pairs[(i,j)]:
             print("Error at indexes: ", i, j, " found ", n, "  should be ", pairs[(i,j)])
 
+#part2()
