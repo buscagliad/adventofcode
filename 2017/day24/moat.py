@@ -42,20 +42,135 @@ Of these bridges, the strongest one is 0/1--10/1--9/10; it has a strength of 0+1
 
 What is the strength of the strongest bridge you can make with the components you have available?
 
+Your puzzle answer was 2006.
+--- Part Two ---
+
+The bridge you've built isn't long enough; you can't jump the rest of the way.
+
+In the example above, there are two longest bridges:
+
+    0/2--2/2--2/3--3/4
+    0/2--2/2--2/3--3/5
+
+Of them, the one which uses the 3/5 component is stronger; its strength is 0+2 + 2+2 + 2+3 + 3+5 = 19.
+
+What is the strength of the longest bridge you can make? If you can make multiple bridges of the longest length, pick the strongest one.
+
+Your puzzle answer was 1994.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
 '''
+import copy
 
-class Component:
-    def __init__(self, line):
-        w = line.split('/')
-        self.port1 = int(w[0])
-        self.port2 = int(w[1])
+comps = []
 
+def process(line):
+    global comps
+    w = line.strip().split('/')
+    #print(w)
+    p1 = int(w[0])
+    p2 = int(w[1])
+    comps.append((p1,p2))
 
+def init(fn):
+    global comps
+    comps.clear()
+    for line in open(fn):
+        process(line)
 
-maxbridge = 0
-index = 0
-Done = False
-while not Done:
-    first, index = getz(index)
-    while build(first)
+def find(n, k): # find next component at or after k with the value n
+    for i, (a, b) in enumerate(comps[k:]):
+        if a == n or b == n:
+            return k + i, a + b
+    return -1, -1
+
+def findx(tf, key):
+    global comps
+    z = []
+    for i, a in enumerate(comps):
+        if tf[i]: continue
+        
+        if key == a[0] or key == a[1]:
+            z.append(i)
+    return z
+            
     
+
+#for i, p in enumerate(comps):
+#    print(i, p, sum(p))
+    
+def test1():
+    for n in range(5):
+        i = 0
+        ix = 0
+        print("n = ", n)
+        while ix >= 0:
+            ix, s = find(n, ix)
+            if ix >= 0:
+                print(ix, comps[ix], s)
+            else:
+                break
+            ix += 1
+
+def total(n):
+    return sum(comps[n])
+
+def getlist(n):
+    i = 0
+    ix = 0
+    l = []
+    while ix >= 0:
+        ix, s = find(n, ix)
+        if ix >= 0:
+            l.append(ix)
+        else:
+            break
+        ix += 1
+    return l
+
+maxtotal = 0
+longlength = 0
+longstrength = 0
+
+def grow(tf, total, n):
+    global maxtotal, longstrength, longlength
+    g = findx(tf, n)
+    if len(g) == 0:
+        if total > maxtotal: maxtotal = total
+        length = sum(tf)
+        if length > longlength:
+            longlength = length
+            longstrength = total
+        elif length == longlength:
+            if total > longstrength:
+                longstrength = total
+
+    else:
+        for i in g:
+            ntf = copy.deepcopy(tf)
+            ntf[i] = True
+            if n == comps[i][0]:
+                nn = comps[i][1]
+            elif n == comps[i][1]:
+                nn = comps[i][0]
+            else:
+                print("ERROR in grow")
+                exit(1)
+            grow(ntf, total + sum(comps[i]), nn)
+
+         
+init('data.txt')
+   
+start = []
+    
+for i in getlist(0):
+    tf = [False] * len(comps)
+    tf[i] = True
+    start.append([tf, sum(comps[i]), max(comps[i])])
+
+for t in start:
+    #print(t)
+    grow(t[0], t[1], t[2])
+    
+print("Part 1: strongest bridge is: ", maxtotal)
+print("Part 2: longest strongest bridge is: ", longlength, " in length, and strength: ", longstrength)
