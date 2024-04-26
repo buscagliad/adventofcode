@@ -43,3 +43,19 @@ Of these bridges, the strongest one is 0/1--10/1--9/10; it has a strength of 0+1
 What is the strength of the strongest bridge you can make with the components you have available?
 
 '''
+
+class Component:
+    def __init__(self, line):
+        w = line.split('/')
+        self.port1 = int(w[0])
+        self.port2 = int(w[1])
+
+
+
+maxbridge = 0
+index = 0
+Done = False
+while not Done:
+    first, index = getz(index)
+    while build(first)
+    
