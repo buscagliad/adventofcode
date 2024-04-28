@@ -62,3 +62,98 @@ The CPU can confirm that the Turing machine is working by taking a diagnostic ch
 Recreate the Turing machine and save the computer! What is the diagnostic checksum it produces once it's working again?
 
 '''
+
+states={}
+#         ((zero action),                     (one action))
+# {'B'} = ((writeValue, movement, nextState), (writeValue, movement, nextState))
+
+
+currentState = ' '
+currentPosition = 0
+currentRules = {}
+numDiags = 0
+gridSpace = {}
+
+gridSpace[0] = 0
+
+def count():
+    global gridSpace
+    s = 0
+    for g in gridSpace.items():
+        #print(g)
+        s += g[1]
+    return s
+
+lineno = -1
+for line in open('data.txt'):
+    
+    lineno += 1
+    #print(line)
+    if lineno == 0:
+        currentState = line[15]
+    elif lineno == 1:
+        w = line.split()
+        numDiags = int(w[5])
+    elif lineno == 2:
+        continue
+    else:
+        match (lineno - 3) % 10:
+            case 0:
+                thisstate = line[9]
+                
+            case 1 | 5:
+                pass    # ignore this is for zero action
+                
+            case 2:
+                if '1' in line:
+                    z0value = 1
+                else:
+                    z0value = 0
+                    
+            case 6:
+                if '1' in line:
+                    z1value = 1
+                else:
+                    z1value = 0
+                    
+            case 3:
+                if 'left' in line:
+                    z0move = -1
+                else:
+                    z0move = 1
+                    
+            case 7:
+                if 'left' in line:
+                    z1move = -1
+                else:
+                    z1move = 1
+                    
+            case 4:  # 26
+                z0state = line[26]
+                
+            case 8:
+                z1state = line[26]
+                
+            case 9:
+                currentRules[thisstate] = ((z0value, z0move, z0state),(z1value, z1move, z1state))
+            
+
+#print(currentRules)
+# {'B'} = ((writeValue, movement, nextState), (writeValue, movement, nextState))
+
+for i in range(numDiags):
+    (zero, one) = currentRules[currentState]
+    if currentPosition in gridSpace:
+        v = gridSpace[currentPosition]
+    else:
+        v = 0
+    if v == 0:
+        gridSpace[currentPosition] = zero[0]
+        currentPosition += zero[1]
+        currentState = zero[2]
+    else:
+        gridSpace[currentPosition] = one[0]
+        currentPosition += one[1]
+        currentState = one[2]
+
+print("Part 1: diagnostic checksum after ", numDiags, "is: ", count())
