@@ -1,31 +1,19 @@
-import sys
-def printf(format, *args):
-    sys.stdout.write(format % args)
-
-
-ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-orders = []
-
 steps = {}
 
 stlbls = set()
-stafter = set()
 after = {}
 
 
 
 def readem(f):
-    global orders
     global steps
-    global stlbls, stafter
+    global stlbls
     for line in open(f):
         w = line.split()
         fi = w[1]
         af = w[7]
         stlbls.add(fi)
         stlbls.add(af)
-        stafter.add(af)
         if not af in after:
             after[af] = []
         after[af].append(fi)
@@ -42,7 +30,6 @@ NUMWORKERS = 5
 readem('data.txt')
 if STATUS: print("AFTER:", after)
 if STATUS: print("STEPS:", stlbls)
-if STATUS: print("STEPS AFTER:", stafter)
 #exit(1)
 
 #
@@ -60,7 +47,7 @@ workertimes = [0] * NUMWORKERS
 n = 0
 for s in steps:
     if n >= len(workers): break
-    if s in stafter: continue
+    if s in after: continue
     workers[n] = s
     workertimes[n] = ord(s) - ord('A') + ADDON
     n += 1
@@ -144,9 +131,6 @@ while not done:
 if DEBUG: print("COMPLETE: ", stepscompleted, flush = True)
 if DEBUG: print("  -- ordered: ", sorted(stepscompleted))
 
-part1 = ""
-for s in stepscompleted:
-    part1 += s
 
 print("Part 2: time to complete all steps is: ", curtime)
 
