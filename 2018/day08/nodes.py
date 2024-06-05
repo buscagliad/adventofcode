@@ -1,9 +1,9 @@
 import sys
 sys.setrecursionlimit(10000)
 
-fname = 'test.txt'
+fname = 'data.txt'
 nlist = []
-DEBUG = True
+DEBUG = False
 
 for line in open(fname):
     w = line.strip().split()
@@ -11,41 +11,89 @@ for line in open(fname):
         nlist.append(int(a))
 
 if 1 or DEBUG: print("Sum is: ", sum(nlist))
+def sumzero(nl):
+    done = False
+    zsum = 0
+    i = 0
+    while i < len(nl):
+        if nl[i] == 0:
+            m = nl[i+1]
+            for t in range(i+2,i+2+m):
+                zsum += nl[t]
 
+        i += 1
+    print("Zero sum is: ", zsum)
+sumzero(nlist)
+        
 psum = 0
+zcount = 0
 
-def parseY(nl):
-    global psum
+def zset(a, n):
+    if a[n] == -1:
+        print("zset: ", n)
+    else:
+        a[n] = -1
+
+def zer(a, n, m):
+    for i in range(n, m):
+        zset(a, i)
+
+def parseY(nl, sn, en):
+    global psum, zcount
     if DEBUG: print(nl, psum)
-    if len(nl) < 2:
-        if 1 or DEBUG: print("WHAT it is zero?", nl)
+    if en - sn < 2:
+        print("WHAT it is zero?", nl[sn:en+1])
+        zer(nl, sn, en+1)
         return 0
-    cn = nl[0]
-    mn = nl[1]
+    cn = nl[sn]
+    mn = nl[sn+1]
+    zer(nl, sn, sn+2)
+    len_nl = en - sn + 1
     if cn == 0:
-        s = 2
-        e = 2 + mn
+        zcount += 1
+        s = sn + 2
+        e = sn + 2 + mn
         ns = sum(nl[s:e])
         if DEBUG: print("ZERO: ", nl[s:e], "  children: ", cn, 
             "  meta #: ", mn, "   Sum: ", ns, "   RetSum: ", psum)
         psum += ns
-        if (len(nl) - e) < 2:
-            print("Problem A: ", nl)
-        if (e < len(nl)): parseX(nl[e:])
+        if len_nl < 2:
+            print("Problem A: ", nl[sn:en+1])
+        zer(nl, s, e)
+        parseY(nl, e, en)
         #sm = parse(nl[e:])
     else:
-        e = len(nl)
-        s = e - mn
+        e = en + 1
+        s = en - mn + 1
         ns = sum(nl[s:e])
+        zer(nl, s, e)
         psum += ns
         if DEBUG: print("NONO: ", nl[s:e], "  children: ", cn, 
             "  meta #: ", mn, "   Sum: ", ns, "   RetSum: ", psum)
         if (s - 2) < 2:
             print("Problem A: ", nl)
-        parseX(nl[2:s])
-    return psum
+        parseY(nl, sn + 2, s - 1)
+    return psum    
 
-zcount = 0
+def active(l):
+    cnt = 0
+    for x in l:
+        if x >= 0: cnt += 1
+    print("active: ", cnt)
+    return cnt
+
+while active(nlist) > 0:
+    s = -1
+    e = -1
+    for i, x in enumerate(nlist):
+        if x >= 0:
+            if s == -1: s = i
+            e = i
+    print(s, e)
+    parseY(nlist, s, e)
+        
+    
+
 def parseX(nl):
     global psum, zcount
     if DEBUG: print(nl, psum)
@@ -68,40 +116,25 @@ def parseX(nl):
         #sm = parse(nl[e:])
     else:
         e = len(nl)
-        s = e - mn
+        s = e - mn - 1
         ns = sum(nl[s:e])
         psum += ns
         if DEBUG: print("NONO: ", nl[s:e], "  children: ", cn, 
             "  meta #: ", mn, "   Sum: ", ns, "   RetSum: ", psum)
         if (s - 2) < 2:
             print("Problem A: ", nl)
-        parseX(nl[2:s])
+        parseX(nl[2:s+1])
     return psum    
 cn = nlist[0]
 mn = nlist[1]
 
 
-def sumzero(nl):
-    done = False
-    zsum = 0
-    while len(nl):
-        i = 0
-        for key in range(0, 12):
-            if i >= len(nl): break
-            if nl[i] == key:
-                mc = nl[i+1]
-                s = i + 2
-                e = s + mc
-                q = sum(nl[s:e])
-                print(nl[i:e], q)
-                zsum += q
-                nl = nl[:i] + nl[e:]
-            else:
-                i += 1
-    print("Zero sum is: ", zsum)
-        
+
 # 38777 is too low
-print("Part 1: sum of metadata entries is: ", parseX(nlist), zcount)
+# 926 zeroes
+#print("Part 1: sum of metadata entries is: ", parseY(nlist, 0, len(nlist)-1), zcount)
+print("Part 1: sum of metadata entries is: ", psum, zcount)
+
 
 #sumzero(nlist)
 '''
@@ -139,6 +172,6 @@ class Node:
         
         return s
             
-n = Node(nlist)
+#n = Node(nlist)
     
         
