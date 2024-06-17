@@ -2,36 +2,61 @@ class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
+        self.prev = None
 
 
 class CircularLinkedList:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.current = None
+        self.first = None
         self.count = 0
 
     def clear(self):
-        self.head = None
-        self.tail = None
+        self.current = None
         self.count = 0
 
     def is_empty(self):
-        return self.head is None
+        return self.current is None
 
     def add_element(self, data):
         new_node = Node(data)
 
         # If the list is empty, make the new node the head and point to itself
         if self.is_empty():
-            self.head = new_node
-            self.tail = new_node
-            new_node.next = self.head
+            new_node.next = new_node
+            new_node.prev = new_node
+            self.first = new_node
         else:
             # Traverse to the last node and update its 'next' to the new node
-            self.tail.next = new_node
-            self.tail = new_node
-            new_node.next = self.head
+            scurr = self.current
+            snext = self.current.next
+            sprev = self.current.prev
+            
+            new_node.next = self.current.next
+            new_node.prev = self.current
+
+            self.current.next = new_node
+            self.current.next.prev = new_node
+
         self.count += 1
+        self.current = new_node
+    #
+    # inserts element with value (value) inc steps to the 'right'
+    # NOTE: self.current is pointing to the 'previous' element
+    # NOTE: if inc < 0 traverse in opposite direction (.prev)
+    def insert_element(self, value, inc):
+        if inc <= 0: return
+            
+        new_node = Node(value)
+        # If the list is empty, make the new node the head and point to itself
+        if inc > 0:
+            for i in range(inc):
+                self.current = self.current.next
+            # Traverse to the last node and update its 'next' to the new node
+        elif inc < 0:
+            for i in range(-inc):
+                self.current = self.current.prev
+        self.add_element(value)
 
     def remove_element(self, key):
         if self.is_empty():
@@ -123,17 +148,24 @@ class CircularLinkedList:
             el = el.next
         return el
 
-    def display_list(self):
+    def display_list(self, Arrows = True):
         if self.is_empty():
             print("List is empty.")
             return
-
-        current_node = self.head
+        start = self.first
+        current_node = start
         while True:
-            print(current_node.data, end=" -> ")
+            if Arrows:
+                print(current_node.data, end=" -> ")
+            else:
+                if current_node == self.current:
+                    print("(", current_node.data, end=") ")
+                else:
+                    print(current_node.data, end=" ")
             current_node = current_node.next
 
-            # If we reach the head again, break the loop
-            if current_node == self.head:
+            # If we reach the where we started, break the loop
+            if current_node == start:
                 break
-        print(" (head)")
+        if Arrows: print(" (head)")
+        else: print()
