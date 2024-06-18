@@ -61,6 +61,10 @@ So, in this example, the value of the root node is 66.
 
 What is the value of the root node?
 
+Your puzzle answer was 22793.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
 '''
 import sys
 sys.setrecursionlimit(10000)
@@ -79,6 +83,7 @@ if DEBUG: print("Sum is: ", sum(nlist), "   length is: ", len(nlist))
 depth = 0
 
 nodename = 'A'
+
 class Node:
     def __init__(self, nchilds, nmetas, txt):
         global nodename
@@ -127,6 +132,7 @@ class Node:
                 c.out()
         for i in self.meta:
             print(i, end = " ")
+
         
 topnode = None
 def parseZ(nl, ix, tnode):
@@ -170,7 +176,7 @@ def parseZ(nl, ix, tnode):
     return k
     
 k = parseZ(nlist, 0, topnode)
-# Part 1: sum of metadata entries is:  45162 -- too low
+
 # Part 1: sum of metadata entries is:  45210 -- correct
 print("Part 1: sum of metadata entries is: ", topnode.sum())
 print("Part 2: value of root node is: ", topnode.value())
