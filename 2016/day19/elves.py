@@ -131,12 +131,12 @@ for n in range(1, N+1):
     part1.add_element(n)
 
 
-el = part1.head
+el = part1.current
 while  part1.count > 1:
     el = part1.remove_next(el)
     #print(part1.count)
 
-print(f"Part 1: with {N} elves the one who gets all of the presents is: ", part1.head.data)
+print(f"Part 1: with {N} elves the one who gets all of the presents is: ", part1.current.data)
 
 
 #

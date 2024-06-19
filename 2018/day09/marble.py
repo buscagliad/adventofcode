@@ -36,6 +36,7 @@ For example, suppose there are 9 players. After the marble with value 0 is place
 [2]  0 16  8 17  4 18  9 19  2(20)10  5 11  1 12  6 13  3 14  7 15 
 [3]  0 16  8 17  4 18  9 19  2 20 10(21) 5 11  1 12  6 13  3 14  7 15 
 [4]  0 16  8 17  4 18  9 19  2 20 10 21  5(22)11  1 12  6 13  3 14  7 15 
+
 [5]  0 16  8 17  4 18(19) 2 20 10 21  5 22 11  1 12  6 13  3 14  7 15 
 [6]  0 16  8 17  4 18 19  2(24)20 10 21  5 22 11  1 12  6 13  3 14  7 15 
 [7]  0 16  8 17  4 18 19  2 24 20(25)10 21  5 22 11  1 12  6 13  3 14  7 15
@@ -52,7 +53,17 @@ Here are a few more examples:
 
 What is the winning Elf's score?
 
+Your puzzle answer was 416424.
 
+--- Part Two ---
+
+Amused by the speed of your answer, the Elves are curious:
+
+What would the new winning Elf's score be if the number of the last marble were 100 times larger?
+
+Your puzzle answer was 3498287922.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
 
 '''
 # 413 players; last marble is worth 71082 points
@@ -71,7 +82,8 @@ class Game:
         self.clist.add_element(0)
         self.nextmarble = 1
         self.player = 0
-    def play(self, num = 1):
+    def play(self, num = None):
+        if not num: num = self.lastmarble
         for i in range(num):
             self.player += 1
             if self.player > self.numplayers:
@@ -79,6 +91,13 @@ class Game:
             #
             # if next marble is a multiple of 23, don't insert, add to players
             # score, remove -7 away marble and add that value to his score
+            # First, the current player keeps the marble they would have placed, 
+            # adding it to their score. In addition, the marble 7 marbles 
+            # counter-clockwise from the current marble is removed from the 
+            # circle and also added to the current player's score. The marble 
+            # located immediately clockwise of the marble that was removed 
+            # becomes the new current marble.
+
             if self.nextmarble % 23 == 0:
                 v = self.clist.remove_from_current(-7)
                 self.scores[self.player] += self.nextmarble + v
@@ -89,10 +108,26 @@ class Game:
         print("[", self.player, end = " ] ")
         self.clist.display_list(False)
 
-        
-g = Game(9, 25)
+def test():
+    for p, h, ans in ([9, 25, 32], [10, 1618, 8317], 
+        [13, 7999, 146373],
+        [17, 1104, 2764],
+        [21, 6111, 54718],
+        [30, 5807, 37305]):
+        g = Game(p, h)
+        g.play()
+        print(p, " players; last marble is worth", h, " points:  high score is ", 
+            max(g.scores), ans)
 
-for i in range(25):
-    g.play()
-    g.show()
+p = 413
+h = 71082
+g = Game(p, h)
+g.play()
+print("Part 1: ", p, " players; last marble is worth", h, " points:  high score is ", 
+            max(g.scores))
 
+h = 100*h
+g = Game(p, h)
+g.play()
+print("Part 2: ", p, " players; last marble is worth", h, " points:  high score is ", 
+            max(g.scores))
