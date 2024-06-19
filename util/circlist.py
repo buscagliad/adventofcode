@@ -26,28 +26,60 @@ class CircularLinkedList:
             new_node.next = new_node
             new_node.prev = new_node
             self.first = new_node
+        # elif self.count == 1:
+            # # 
+            # scurr = self.current
+            
+            # new_node.next = scurr
+            # new_node.prev = scurr
+            
         else:
             # Traverse to the last node and update its 'next' to the new node
             scurr = self.current
             snext = self.current.next
-            sprev = self.current.prev
             
-            new_node.next = self.current.next
-            new_node.prev = self.current
-
-            self.current.next = new_node
-            self.current.next.prev = new_node
+            new_node.next = snext
+            new_node.prev = scurr
+            
+            snext.prev = new_node
+            scurr.next = new_node
 
         self.count += 1
         self.current = new_node
+
+    #
+    # removes the element at 'inc' steps away from the 
+    # current pointer, then points to the 'next' element
+    # after this element is removed, and returns the value
+    # of the removed element
+    #
+    def remove_from_current(self, inc):
+        # If the list is empty, make the new node the head and point to itself
+        # print("inc: ", inc, " c->data: ", self.current.data)
+        if inc > 0:
+            for i in range(inc):
+                self.current = self.current.next
+            # Traverse to the last node and update its 'next' to the new node
+        elif inc < 0:
+            for i in range(-inc):
+                self.current = self.current.prev
+                #print("i: ", i, " c->data: ", self.current.data)
+        value = self.current.data
+        N = self.current.next
+        P = self.current.prev
+        N.prev = P
+        P.next = N
+        self.current = N
+        # print("inc: ", inc, " c->data: ", self.current.data)
+        return value
+
     #
     # inserts element with value (value) inc steps to the 'right'
     # NOTE: self.current is pointing to the 'previous' element
     # NOTE: if inc < 0 traverse in opposite direction (.prev)
     def insert_element(self, value, inc):
-        if inc <= 0: return
             
-        new_node = Node(value)
+        # new_node = Node(value)
         # If the list is empty, make the new node the head and point to itself
         if inc > 0:
             for i in range(inc):
@@ -63,7 +95,7 @@ class CircularLinkedList:
             print("List is empty. Cannot remove element.")
             return
 
-        current_node = self.head
+        current_node = self.current
         prev_node = None
 
         # Search for the key to remove
@@ -73,15 +105,15 @@ class CircularLinkedList:
                     prev_node.next = current_node.next
                 else:
                     # If the head is the key, update the head
-                    last_node = self.head
-                    while last_node.next != self.head:
+                    last_node = self.current
+                    while last_node.next != self.current:
                         last_node = last_node.next
                     last_node.next = current_node.next
-                    self.head = current_node.next
+                    self.current = current_node.next
 
                 # If there's only one element, set head to None
-                if self.head == current_node.next:
-                    self.head = None
+                if self.current == current_node.next:
+                    self.current = None
 
                 #print(f"Element {key} removed from the list.")
                 self.count -= 1
@@ -91,7 +123,7 @@ class CircularLinkedList:
             current_node = current_node.next
 
             # If we reach the head again, the key is not in the list
-            if current_node == self.head:
+            if current_node == self.current:
                 print(f"Element {key} not found in the list.")
                 break
 
@@ -104,8 +136,8 @@ class CircularLinkedList:
         remove_node = this_node.next
         key = remove_node.data
         
-        if remove_node == self.head:
-            self.head = self.head.next
+        if remove_node == self.current:
+            self.current = self.current.next
 
         # remove element (next_node)
         
@@ -130,8 +162,8 @@ class CircularLinkedList:
         remove_node = remove_node.next
         key = remove_node.data
         
-        if remove_node == self.head:
-            self.head = self.head.next
+        if remove_node == self.current:
+            self.current = self.current.next
 
         # remove element (next_node)
         
@@ -143,7 +175,7 @@ class CircularLinkedList:
 
     def random(self):
         n = random.randint(1, self.count)
-        el = self.head
+        el = self.current
         for i in range(n):
             el = el.next
         return el
@@ -154,7 +186,9 @@ class CircularLinkedList:
             return
         start = self.first
         current_node = start
-        while True:
+        n = 0
+        while n < self.count:
+            n += 1
             if Arrows:
                 print(current_node.data, end=" -> ")
             else:
@@ -163,6 +197,7 @@ class CircularLinkedList:
                 else:
                     print(current_node.data, end=" ")
             current_node = current_node.next
+            #current_node = current_node.prev
 
             # If we reach the where we started, break the loop
             if current_node == start:

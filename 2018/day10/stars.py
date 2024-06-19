@@ -144,4 +144,104 @@ After 3 seconds, the message appeared briefly: HI. Of course, your message will 
 
 What message will eventually appear in the sky?
 
+Your puzzle answer was HKJFAKAF.
+
+--- Part Two ---
+
+Good thing you didn't have to wait, because that would have taken a long time - much longer than the 3 seconds in the example above.
+
+Impressed by your sub-hour communication capabilities, the Elves are curious: exactly how many seconds would they have needed to wait for that message to appear?
+
+Your puzzle answer was 10888.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+
 '''
+
+numstars = 0
+xpos = [0]*1000
+ypos = [0]*1000
+xvel = [0]*1000
+yvel = [0]*1000
+filename = 'data.txt'
+numsecs = 0
+
+for line in open(filename):
+    xs = line.find('<') + 1
+    xe = line.find(',', xs)
+    ys = line.find(' ', xe) + 1
+    ye = line.find('>', ys)
+    dxs = line.find('<', ye) + 1
+    dxe = line.find(',', dxs) 
+    dys = line.find(' ', dxe) + 1
+    dye = line.find('>', dys) 
+    
+    x = int(line[xs:xe])
+    y = int(line[ys:ye])
+    dx = int(line[dxs:dxe])
+    dy = int(line[dys:dye])
+    i = numstars
+    xpos[i] = x
+    ypos[i] = y
+    xvel[i] = dx
+    yvel[i] = dy
+    numstars += 1
+
+def measure():
+    global xpos, ypos, xvel, yvel
+    xr = max(xpos) - min(xpos)
+    yr = max(ypos) - min(ypos)
+    return xr, yr
+    
+def move():
+    global xpos, ypos, xvel, yvel, numstars, numsecs
+    numsecs += 1
+    for i in range(numstars):
+        xpos[i] += xvel[i]
+        ypos[i] += yvel[i]
+        
+def moveback():
+    global xpos, ypos, xvel, yvel, numstars, numsecs
+    numsecs -= 1
+    for i in range(numstars):
+        xpos[i] -= xvel[i]
+        ypos[i] -= yvel[i]
+
+import numpy as np
+
+def draw():
+    minx = min(xpos[:numstars])
+    maxx = max(xpos[:numstars])
+    miny = min(ypos[:numstars])
+    maxy = max(ypos[:numstars])
+    lenx = maxx-minx+1
+    leny = maxy-miny+1
+    word = np.zeros([lenx, leny], dtype=int)
+    for i in range(numstars):
+        word[xpos[i]-minx,ypos[i]-miny] = 1
+    for j in range(leny):
+        for i in range(lenx):
+            if word[i][j] == 0: print(" ", end = "")
+            else: print("#", end = "")
+        print()
+    print()
+
+last_delta_x, _ = measure()
+move()
+this_delta_x, _ = measure()
+while this_delta_x < last_delta_x:
+    move()
+    last_delta_x = this_delta_x
+    dxa, dya = measure()
+    this_delta_x = dxa
+    #draw()
+   
+
+moveback()
+
+print("Part 1:  Message is: ")
+draw()
+
+print("Part 2: Number of seconds: ", numsecs)
+
