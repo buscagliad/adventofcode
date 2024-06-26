@@ -285,6 +285,10 @@ class Cart:
         self.x += self.dir[0]
         self.y += self.dir[1]
         self.dir = self.changedir()
+        spot =  grid[self.x][self.y]
+        if spot == 0:
+            print("Cart: ", self.ID, " is at ", self.x+1, self.y+1, " :: ", spot, gtext[self.y][self.x], "  dir: ", self.dir)
+            #exit(1)
     def changedir(self):
         gv = grid[self.x][self.y]
         cdur = self.dir
@@ -371,13 +375,13 @@ while True:
             collision = cl.collision(cr)
             if collision:
                 if not part1:
-                    print("Part1: at second: ", second, " first collision at ", cl.x, ",", cl.y, " :: ", gtext[cl.x][cl.y])
+                    print("Part1: at second: ", second, " first collision at ", cl.x, ",", cl.y, " :: ", gtext[cl.y][cl.x])
                     part1 = True
                 cl.remove()
                 cr.remove()
                 for c in carts:
                     if c.removed(): continue
-                    print("At second: ", second, "Cart: ", c.ID, " is at ", c.x, c.y, " :: ", gtext[c.x][c.y])
+                    print("At second: ", second, "Cart: ", c.ID, " is at ", c.x, c.y, " :: ", gtext[c.y][c.x])
 for c in carts:
     if c.active:
         print("Part2: position of last cart at second ", second, " is ", c.x,",",c.y)
