@@ -235,6 +235,9 @@ STRAIGHT = 1
 RIGHT = 2
 
 DEBUG = False
+
+second = 0
+
 #
 # turn will take the Left/Straight/Right value
 # and return the next direction and the state of the next turn (LEFT/STRAIGHT/RIGHT)
@@ -272,22 +275,37 @@ class Cart:
             case _ : print("ERROR in Cart init: c = ", c)
         # print("Cart at (", self.x, ",", self.y, ")  with dir: ", self.dir, " c: ", c)
     def remove(self):
-        print("Removing Cart: ", self.ID, " at ", self.x, self.y)
+        # print("Removing Cart: ", self.ID, " at ", self.x, self.y)
         self.active = False
     def removed(self):
         return not self.active
     def out(self):
-        print("Cart at (", self.x, ",", self.y, ")  with dir: ", self.dir)
+        global gtext, grid
+        print("Cart at (", self.x, ",", self.y, ")  with dir: ", self.dir, "  gtext: ", gtext[self.y][self.x], "   grid: ", grid[self.x][self.y] )
     def move(self):
+        global second
         if not self.active: return
         if not self.dir:
-            print(self.x, self.y)
+            print("ERROR _ ", elf.x, self.y)
+        spot =  grid[self.x][self.y]
+        #
+        # check if current char makes sense for the direction
+        #
+        if 1 or self.ID == 11: 
+            if self.dir[0] == 0:    # moving in north/south direction
+                if gtext[self.y][self.x] == '-':
+                    print("XXX ERROR Cart: ", self.ID, " is at ", second, "[", self.x, self.y, "] :: ", 
+                        spot, gtext[self.y][self.x], "  dir: ", self.dir)
+            else:
+                if gtext[self.y][self.x] == '|':
+                    print("ZZZ ERROR Cart: ", self.ID, " is at ", second, "[", self.x, self.y, "] :: ", 
+                        spot, gtext[self.y][self.x], "  dir: ", self.dir)
         self.x += self.dir[0]
         self.y += self.dir[1]
         self.dir = self.changedir()
         spot =  grid[self.x][self.y]
-        if spot == 0:
-            print("Cart: ", self.ID, " is at ", self.x+1, self.y+1, " :: ", spot, gtext[self.y][self.x], "  dir: ", self.dir)
+        if spot == 0   or  grid[self.y][self.x] == ' ':
+            print("YYY Cart: ", self.ID, " is at ", self.x+1, self.y+1, " :: ", spot, gtext[self.y][self.x], "  dir: ", self.dir)
             #exit(1)
     def changedir(self):
         gv = grid[self.x][self.y]
@@ -358,7 +376,6 @@ process('data.txt')
 done = False
 part1 = False
 acount = len(carts)
-second = 0
 while True:
     acount = 0
     for c in carts:
@@ -366,22 +383,26 @@ while True:
     if acount == 1: break
     second += 1
     for c in carts:
-         c.move()
-    for i, cl in enumerate(carts):
-        if cl.removed(): continue
-        for j, cr in enumerate(carts):
-            if cr.removed(): continue
-            if j <= i: continue
-            collision = cl.collision(cr)
-            if collision:
-                if not part1:
-                    print("Part1: at second: ", second, " first collision at ", cl.x, ",", cl.y, " :: ", gtext[cl.y][cl.x])
-                    part1 = True
-                cl.remove()
-                cr.remove()
-                for c in carts:
-                    if c.removed(): continue
-                    print("At second: ", second, "Cart: ", c.ID, " is at ", c.x, c.y, " :: ", gtext[c.y][c.x])
+        c.move()
+        for i, cl in enumerate(carts):
+            if cl.removed(): continue
+            for j, cr in enumerate(carts):
+                if cr.removed(): continue
+                if j <= i: continue
+                collision = cl.collision(cr)
+                if collision:
+                    if not part1:
+                        print("Part1: at second: ", second, " first collision at ", cl.x, ",", cl.y, " :: ", gtext[cl.y][cl.x])
+                        part1 = True
+                    cl.remove()
+                    cr.remove()
+                    #for c in carts:
+                        #if c.removed(): continue
+                        #print("At second: ", second, "Cart: ", c.ID, " is at ", c.x, c.y, " :: ", gtext[c.y][c.x])
 for c in carts:
     if c.active:
         print("Part2: position of last cart at second ", second, " is ", c.x,",",c.y)
+# 98, 125 is not correct
+# 98, 126 is not correct
+# 44, 87 is correct (why????)
+
