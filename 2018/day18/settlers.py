@@ -187,7 +187,7 @@ def init(fname):
         row += 1
     return row-1
 
-N = init("test.txt")
+N = init("data.txt")
 for i, p in enumerate(acres):
     if i >= N: break
     print(p[:N])
