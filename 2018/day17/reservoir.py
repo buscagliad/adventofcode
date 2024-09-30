@@ -176,6 +176,7 @@ WALL = -1
 SAND = 0
 PATH = 1    # water travelled through this spot
 WATER = 2
+FLOW = 3
 
 drops = [(500,0)]
 
@@ -184,13 +185,13 @@ FLOATS = 1
 CONTAINS = 2
 CONTAINEDBY = 3
 
-def fillline(lx, rx, y):
+def fillline(lx, rx, y, FILLOBJ = WATER):
     global arr
     for x in range(lx, rx+1):
         if arr[x][y] == WALL:
             #print("fillline::  OH shit x/y: ", x, y, "  arr[x][y]: ", arr[x][y], " lx/rx: ", lx, rx)
             continue
-        arr[x][y] = WATER
+        arr[x][y] = FILLOBJ
         
 def getnum(s):
     rv = 0
@@ -354,18 +355,20 @@ class Box():
                             rx = tb.leftX - 1
                         if inx > tb.rightX:
                             lx = tb.rightX + 1
+                    mark = WATER
+                    if y == topY: mark = WATER
                     if y <= tb.bottomY and y >= tb.topY:
-                        fillline(lx, tb.leftX - 1, y)
-                        fillline(tb.rightX + 1, rx, y)
+                        fillline(lx, tb.leftX - 1, y, mark)
+                        fillline(tb.rightX + 1, rx, y, mark)
                     else:
-                        fillline(lx, rx, y)
+                        fillline(lx, rx, y, mark)
                 if inx < tb.leftX:
                     lx = self.leftX - 1
                     rx = tb.leftX - 1
                 if inx > tb.rightX:
                     rx = self.rightX + 1
                     lx = tb.rightX + 1
-                fillline(lx, rx, topY-1)
+                fillline(lx, rx, topY-1, FLOW)
                 #
                 # return the left or right spill depending on which side the
                 # water entered
@@ -381,7 +384,9 @@ class Box():
                 for y in range(topY, botY):
                     lx = self.leftX+1
                     rx = self.rightX-1
+                    mark = WATER
                     if y == topY:
+                        mark = FLOW
                         if self.leftY > topY:
                             lx = self.leftX - 1
                             if DEBUG: print("LEFT SPILL ", lx, self.leftspill)
@@ -390,7 +395,7 @@ class Box():
                             rx = self.rightX + 1
                             if DEBUG: print("RIGHT SPILL ", rx, self.rightspill)
                             spills.append(self.rightspill)
-                    fillline(lx, rx, y)
+                    fillline(lx, rx, y, mark)
                 return spills
             elif self.containType == CONTAINS:
                 if DEBUG: print(" fill the contained box, then fill the container box")
@@ -398,7 +403,9 @@ class Box():
                 for y in range(topY, botY):
                     lx = self.leftX + 1
                     rx = self.rightX
+                    mark = WATER
                     if y == topY:
+                        mark = FLOW
                         if self.leftY > topY:
                             lx = self.leftX - 1
                             if DEBUG: print("LEFT SPILL ", lx)
@@ -407,7 +414,7 @@ class Box():
                             rx = self.rightX + 1
                             if DEBUG: print("RIGHT SPILL ", rx)
                             spills.append(self.rightspill)
-                    fillline(lx, rx, y)
+                    fillline(lx, rx, y, mark)
                     if not self.cBox.open:
                         self.cBox.clear(arr)
                 return spills
@@ -420,14 +427,16 @@ class Box():
                 for y in range(cytop, cybot):
                     lx = self.cBox.leftX + 1
                     rx = self.cBox.rightX
+                    mark = WATER
                     if y == cytop:
+                        mark = FLOW
                         if self.cBox.leftY > cytop:
                             lx = self.cBox.leftX - 1
                             spills.append(self.cBox.leftspill)
                         if self.cBox.rightY > cytop:
                             rx = self.cBox.rightX + 1
                             spills.append(self.cBox.rightspill)
-                    fillline(lx, rx, y)
+                    fillline(lx, rx, y, mark)
 
                 return spills
                 
@@ -570,7 +579,7 @@ def getBox(n):
 def downbox(arr, drops, x, y):
     if DEBUG: print("Down Box at ", x, y)
     while y <= maxy and arr[x][y] != WALL:
-        arr[x][y] = WATER
+        arr[x][y] = FLOW
         if DEBUG: print("WATER set at ", x, y)
         y += 1
     if arr[x][y] != WALL:
@@ -602,11 +611,13 @@ def downbox(arr, drops, x, y):
 ## counts number of water entries in the array
 ##
 def countwater(arr):
-    cnt = 0
+    wcount = 0
+    fcount = 0
     for y in range(miny, maxy+1):
         for x in range(minx, maxx+1):
-            if arr[x][y] == WATER: cnt += 1
-    return cnt
+            if arr[x][y] == WATER: wcount += 1
+            elif arr[x][y] == FLOW: fcount += 1
+    return wcount, fcount
 ##
 ## output entire array
 ##
@@ -633,11 +644,11 @@ def printarr(arr, lx, rx, uy, ly):
         print("%4d " % y, end = "")
         for x in range(lx, rx+1):
             d = arr[x][y]
-            if x == 500 and y == 0: print("+ ", end="")
-            elif d == WALL: print("# ", end="")
-            elif d == SAND: print("  ", end="")
-            elif d == WATER: print("+ ", end="")
-            else: print("$ ", end="")
+            if x == 500 and y == 0: print("+", end="")
+            elif d == WALL: print("#", end="")
+            elif d == SAND: print(" ", end="")
+            elif d == WATER: print("~", end="")
+            else: print("|", end="")
         print()
     print()
 
@@ -759,32 +770,18 @@ while drops:
         else:
             for s in spills:
                 drops.append(s)
-    if DEBUG: printarr(arr, minx, maxx, 0, maxy)
+
+if DEBUG: printarr(arr, minx, maxx, 0, maxy)
     
 
-
-print("Part 1: number of cells that passed water is ", countwater(arr))
+# 30380 is correct
+wcount, fcount = countwater(arr)
+print("Part 1: number of cells that passed water is ", wcount + fcount)
 
 ##
 ## part 2; just count the waters in the lowest part of each box
 ##
-count = 0
-for b in boxes:
-    # b.cBox contains this box, if it is floating
-    # then count the waters above the top of its container
-    if b.containType == CONTAINEDBY:
-        cbox = b.cBox
-        if cbox.containType == FLOATS:
-            botY = max(cbox.leftY, cbox.rightY)  # top edge of container cube
-            for y in range(max(b.leftY, b.rightY), botY):
-                for x in range(b.leftX + 1, b.rightX):
-                    if arr[x][y] == WATER: count += 1
-    else:
-        boty = max(b.leftY, b.rightY)  # lowest top edge of box
-        for y in range(max(b.leftY, b.rightY), b.bottomY):
-            for x in range(b.leftX + 1, b.rightX):
-                if arr[x][y] == WATER: count += 1
 
 # 14475 is too low
 # 24969 is too low
-print("Part 2: number of cells hold water ", count)
+print("Part 2: number of cells hold water ", wcount)
