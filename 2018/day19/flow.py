@@ -75,6 +75,15 @@ class RegSet:
         self.ip = 0
         s = st.strip().split()
         self.ip = int(s[1])
+    def __getitem__(self, key):
+        if key < 0 or key > len(self.reg):
+            print("__getitem__ error - ", key)
+            return -1
+        return self.reg[key]
+    def __setitem__(self, key, value):
+        if key < 0 or key > len(self.reg):
+            print("__setitem__ error - ", key, value)
+        self.reg[key] =  value
     def getip(self):
         return self.reg[self.ip]
     def setip(self, ip):
@@ -143,10 +152,10 @@ ops = []
 n = 0
 start = True
 
-for l in open('test.txt'):
+for l in open('data.txt'):
     if start:
         start = False
-        regs = RegSet(l)
+        Regs = RegSet(l)
     else:
         ops.append(Ops(l))
 
@@ -161,12 +170,15 @@ if DEBUG:
 
 def doop(op):
     global Regs
-    oc = op.op
+    oc_text = op.op
+    oc = op.opv
     A = op.A
     B = op.B
     C = op.C
-    if DEBUG: print(opcode, A, B, C, " :: Regs: ", Regs)
-        
+    if DEBUG: 
+        print(oc_text, A, B, C, " :: Regs: ", end = "")
+        Regs.out()
+            
         
         # Addition:
         # 
@@ -277,27 +289,34 @@ def doop(op):
 
 
 def step (ip):
-    global ops, regs
+    global ops, Regs
     """ Function doc """
     #ip = regs.getip()
-    regs.setip(ip)
+    Regs.setip(ip)
     doop(ops[ip])
-    ip = regs.getip()
+    ip = Regs.getip()
     ip += 1
-    regs.out()
     return ip
   
-print("Part 1: ", regs.get(0), " examples support 3 or more op codes")
-
-
-
 #
 # Clean up PosMap
 #
 Done = False
-for cmd in ops:
-    cmd.out()
+def dumpops():
+    for cmd in ops:
+        cmd.out()
 ip = 0
 while ip >=0 and ip < len(ops):
     ip = step(ip)
-print("Part 2: register 0 contains the value: ", regs.get(0))
+# 256 is too low    
+print("Part 1: Register ", Regs.ip, " value: ", Regs.getip())
+
+print("Part 2: register 0 contains the value: ", Regs[0])
+
+'''
+ip=0 [0, 0, 0, 0, 0, 0] seti 5 0 1 [0, 5, 0, 0, 0, 0]
+ip=1 [1, 5, 0, 0, 0, 0] seti 6 0 2 [1, 5, 6, 0, 0, 0]
+ip=2 [2, 5, 6, 0, 0, 0] addi 0 1 0 [3, 5, 6, 0, 0, 0]
+ip=4 [4, 5, 6, 0, 0, 0] setr 1 0 0 [5, 5, 6, 0, 0, 0]
+ip=6 [6, 5, 6, 0, 0, 0] seti 9 0 5 [6, 5, 6, 0, 0, 9]
+'''
