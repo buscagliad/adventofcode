@@ -47,3 +47,239 @@ In detail, when running this program, the following events occur:
 What value is left in register 0 when the background process halts?
 
 '''
+import numpy as np
+
+ADDR = 0
+ADDI = 1
+MULR = 2
+MULI = 3
+BANR = 4
+BANI = 5
+BORR = 6
+BORI = 7
+SETR = 8
+SETI = 9
+GTIR = 10
+GTRI = 11
+GTRR = 12
+EQIR = 13
+EQRI = 14
+EQRR = 15
+
+DEBUG = False
+DEBUG1 = False
+
+class RegSet:
+    def __init__(self, st):
+        self.reg = [0, 0, 0, 0, 0, 0]
+        self.ip = 0
+    def setip(self, line):
+        s = line.strip().split()
+        r = int(s[1])
+        self.ip = r
+    def get(self, r):
+        return self.reg[r]
+    def set(self, r, v):
+        self.reg[r] = v
+    def inc(self, r):
+        self.reg[r] += 1
+    def out(self, txt):
+        print(txt, self.reg)
+
+class Ops:
+    def __init__(self, st):
+        # mulr 2 2 2
+        oc = st.strip().split()
+        self.op = oc[0]
+        self.A = int(oc[1])
+        self.B = int(oc[2])
+        self.C = int(oc[3])
+        
+        match self.op:
+            case "addr":
+                self.opv = ADDR
+            case "addi":
+                self.opv = ADDI
+            case "mulr":
+                self.opv = MULR
+            case "muli":
+                self.opv = MULI
+            case "banr":
+                self.opv = BANR
+            case "bani":
+                self.opv = BANI
+            case "borr":
+                self.opv = BORR
+            case "bori":
+                self.opv = BORI
+            case "setr":
+                self.opv = SETR
+            case "seti":
+                self.opv = SETI
+            case "gtir":
+                self.opv = GTIR
+            case "gtri":
+                self.opv = GTRI
+            case "gtrr":
+                self.opv = GTRR
+            case "eqir":
+                self.opv = EQIR
+            case "eqri":
+                self.opv = EQRI
+            case "eqrr":
+                self.opv = EQRR
+            case _:
+                print("ERROR - unkown value ", self.op)
+                exit(1)
+
+    def out(self):
+        print(self.op, "(", self.opv, ") :: ", self.A, self.B, self.C)
+
+
+ops = []
+
+n = 0
+start = True
+
+for l in open('data.txt'):
+    if start:
+        start = False
+        regs = RegSet(l)
+    else:
+        ops.append(Ops(l))
+
+if DEBUG:
+
+    for o in ops:
+        o.out()
+
+
+
+
+
+def doop(oc, A, B, C):
+    global Regs
+    if DEBUG: print(opcode, A, B, C, " :: Regs: ", Regs)
+        
+        
+        # Addition:
+        # 
+        #    addr (add register) stores into register C the result of adding register A and register B.
+        #    addi (add immediate) stores into register C the result of adding register A and value B.
+    if oc == ADDR:
+        Regs[C] = Regs[A] + Regs[B]
+        if DEBUG1: print("ADDR: ", Regs[C], " = ", Regs[A], " + ", Regs[B])
+    elif oc == ADDI:
+        Regs[C] = Regs[A] + B
+        if DEBUG1: print("ADDI: ", Regs[C], " = ", Regs[A], " + ", B)
+
+
+        # Multiplication:
+        # 
+        #     mulr (multiply register) stores into register C the result of multiplying register A and register B.
+        #     muli (multiply immediate) stores into register C the result of multiplying register A and value B.
+
+
+    elif oc == MULR:
+        Regs[C] = Regs[A] * Regs[B]
+        if DEBUG1: print("MULR: ", Regs[C], " = ", Regs[A], " * ", Regs[B])
+    elif oc == MULI:
+        Regs[C] = Regs[A] * B
+        if DEBUG1: print("MULI: ", Regs[C], " = ", Regs[A], " * ", B)
+
+
+
+        # Bitwise AND:
+        # 
+        #     banr (bitwise AND register) stores into register C the result of the bitwise AND of register A and register B.
+        #     bani (bitwise AND immediate) stores into register C the result of the bitwise AND of register A and value B.
+
+
+    elif oc == BANR:
+        Regs[C] = Regs[A] & Regs[B]
+        if DEBUG1: print("BANR: ", Regs[C], " = ", Regs[A], " & ", Regs[B])
+    elif oc == BANI:
+        Regs[C] = Regs[A] & B
+        if DEBUG1: print("BANI: ", Regs[C], " = ", Regs[A], " & ", B)
+
+
+        # Bitwise OR:
+        # 
+        #     borr (bitwise OR register) stores into register C the result of the bitwise OR of register A and register B.
+        #     bori (bitwise OR immediate) stores into register C the result of the bitwise OR of register A and value B.
+
+
+    elif oc == BORR:
+        Regs[C] = Regs[A] | Regs[B]
+        if DEBUG1: print("BORR: ", Regs[C], " = ", Regs[A], " | ", Regs[B])
+    elif oc == BORI:
+        Regs[C] = Regs[A] | B
+        if DEBUG1: print("BORI: ", Regs[C], " = ", Regs[A], " | ", B)
+
+
+        # Assignment:
+        # 
+        #     setr (set register) copies the contents of register A into register C. (Input B is ignored.)
+        #     seti (set immediate) stores value A into register C. (Input B is ignored.)
+
+    elif oc == SETR:
+        Regs[C] = Regs[A]
+        if DEBUG1: print("SETR: ", Regs[C], " = ", Regs[A])
+    elif oc == SETI:
+        Regs[C] = A
+        if DEBUG1: print("SETI: ", Regs[C], " = ", A)
+
+        # Greater-than testing:
+        # 
+        #     gtir (greater-than immediate/register) sets register C to 1 if value A is greater than register B. Otherwise, register C is set to 0.
+        #     gtri (greater-than register/immediate) sets register C to 1 if register A is greater than value B. Otherwise, register C is set to 0.
+        #     gtrr (greater-than register/register) sets register C to 1 if register A is greater than register B. Otherwise, register C is set to 0.
+
+    elif oc == GTIR:
+        if A > Regs[B]: Regs[C] = 1
+        else: Regs[C] = 0
+        if DEBUG1: print("GTIR: ", Regs[C], " = ", A, " > ", Regs[B])
+    elif oc == GTRI:
+        if Regs[A] > B: Regs[C] = 1
+        else: Regs[C] = 0
+        if DEBUG1: print("GTRI: ", Regs[C], " = ", Regs[A], " > ", B)
+    elif oc == GTRR:
+        if Regs[A] > Regs[B]: Regs[C] = 1
+        else: Regs[C] = 0
+        if DEBUG1: print("GTRR: ", Regs[C], " = ", Regs[A], " > ", Regs[B])
+
+        # Equality testing:
+        # 
+        #     eqir (equal immediate/register) sets register C to 1 if value A is equal to register B. Otherwise, register C is set to 0.
+        #     eqri (equal register/immediate) sets register C to 1 if register A is equal to value B. Otherwise, register C is set to 0.
+        #     eqrr (equal register/register) sets register C to 1 if register A is equal to register B. Otherwise, register C is set to 0.
+
+
+    elif oc == EQIR:
+        if A == Regs[B]: Regs[C] = 1
+        else: Regs[C] = 0
+        if DEBUG1: print("EQIR: ", Regs[C], " = ", A, " == ", Regs[B])
+    elif oc == EQRI:
+        if Regs[A] == B: Regs[C] = 1
+        else: Regs[C] = 0
+        if DEBUG1: print("EQRI: ", Regs[C], " = ", Regs[A], " == ", B)
+    elif oc == EQRR:
+        if Regs[A] == Regs[B]: Regs[C] = 1
+        else: Regs[C] = 0
+        if DEBUG1: print("EQRR: ", Regs[C], " = ", Regs[A], " == ", Regs[B])
+    if DEBUG: print(opcode, A, B, C, " :: Regs: ", Regs)
+
+
+
+  
+print("Part 1: ", regs.get(0), " examples support 3 or more op codes")
+
+
+
+#
+# Clean up PosMap
+#
+Done = False
+for cmd in ops:
+    cmd.out()
+print("Part 2: register 0 contains the value: ", regs.get(0))
