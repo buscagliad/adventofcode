@@ -73,18 +73,20 @@ class RegSet:
     def __init__(self, st):
         self.reg = [0, 0, 0, 0, 0, 0]
         self.ip = 0
-    def setip(self, line):
-        s = line.strip().split()
-        r = int(s[1])
-        self.ip = r
+        s = st.strip().split()
+        self.ip = int(s[1])
+    def getip(self):
+        return self.reg[self.ip]
+    def setip(self, ip):
+        self.reg[self.ip] = ip
     def get(self, r):
         return self.reg[r]
     def set(self, r, v):
         self.reg[r] = v
     def inc(self, r):
         self.reg[r] += 1
-    def out(self, txt):
-        print(txt, self.reg)
+    def out(self):
+        print("ip =", self.ip, self.reg)
 
 class Ops:
     def __init__(self, st):
@@ -141,7 +143,7 @@ ops = []
 n = 0
 start = True
 
-for l in open('data.txt'):
+for l in open('test.txt'):
     if start:
         start = False
         regs = RegSet(l)
@@ -157,8 +159,12 @@ if DEBUG:
 
 
 
-def doop(oc, A, B, C):
+def doop(op):
     global Regs
+    oc = op.op
+    A = op.A
+    B = op.B
+    C = op.C
     if DEBUG: print(opcode, A, B, C, " :: Regs: ", Regs)
         
         
@@ -270,7 +276,16 @@ def doop(oc, A, B, C):
     if DEBUG: print(opcode, A, B, C, " :: Regs: ", Regs)
 
 
-
+def step (ip):
+    global ops, regs
+    """ Function doc """
+    #ip = regs.getip()
+    regs.setip(ip)
+    doop(ops[ip])
+    ip = regs.getip()
+    ip += 1
+    regs.out()
+    return ip
   
 print("Part 1: ", regs.get(0), " examples support 3 or more op codes")
 
@@ -282,4 +297,7 @@ print("Part 1: ", regs.get(0), " examples support 3 or more op codes")
 Done = False
 for cmd in ops:
     cmd.out()
+ip = 0
+while ip >=0 and ip < len(ops):
+    ip = step(ip)
 print("Part 2: register 0 contains the value: ", regs.get(0))
