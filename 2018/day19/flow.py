@@ -94,6 +94,9 @@ class RegSet:
         self.reg[r] = v
     def inc(self, r):
         self.reg[r] += 1
+    def clear(self):
+        for i in range(len(self.reg)):
+            self.reg[i] = 0
     def out(self):
         print("ip =", self.ip, self.reg)
 
@@ -305,14 +308,18 @@ Done = False
 def dumpops():
     for cmd in ops:
         cmd.out()
-ip = 0
-while ip >=0 and ip < len(ops):
-    ip = step(ip)
-# 256 is too low    
-print("Part 1: Register ", Regs.ip, " value: ", Regs.getip())
 
-print("Part 2: register 0 contains the value: ", Regs[0])
+def run():
+    ip = 0
+    global ops, Regs
+    while ip >=0 and ip < len(ops):
+        ip = step(ip)
+        Regs.out()
 
+print("Part 1: register 0 contains the value: ", Regs[0])
+Regs.clear()
+#Regs[0] = 1
+Regs.out()
 '''
 ip=0 [0, 0, 0, 0, 0, 0] seti 5 0 1 [0, 5, 0, 0, 0, 0]
 ip=1 [1, 5, 0, 0, 0, 0] seti 6 0 2 [1, 5, 6, 0, 0, 0]
@@ -320,3 +327,4 @@ ip=2 [2, 5, 6, 0, 0, 0] addi 0 1 0 [3, 5, 6, 0, 0, 0]
 ip=4 [4, 5, 6, 0, 0, 0] setr 1 0 0 [5, 5, 6, 0, 0, 0]
 ip=6 [6, 5, 6, 0, 0, 0] seti 9 0 5 [6, 5, 6, 0, 0, 9]
 '''
+run()
