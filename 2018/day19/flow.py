@@ -97,8 +97,14 @@ class RegSet:
     def clear(self):
         for i in range(len(self.reg)):
             self.reg[i] = 0
-    def out(self):
-        print("ip =", self.ip, self.reg)
+    def out(self, full=True):
+        if full:
+            print("ip =", self.ip, self.reg)
+        else:
+            print(self.reg[0], end="")
+            for i in range(1, len(self.reg)):
+                print(",",self.reg[i], end="")
+                if (i + 1 == len(self.reg)): print()
 
 class Ops:
     def __init__(self, st):
@@ -314,12 +320,12 @@ def run():
     global ops, Regs
     while ip >=0 and ip < len(ops):
         ip = step(ip)
-        Regs.out()
+        Regs.out(False)
+        if ip == 34: return
 
 print("Part 1: register 0 contains the value: ", Regs[0])
 Regs.clear()
-#Regs[0] = 1
-Regs.out()
+Regs[0] = 0
 '''
 ip=0 [0, 0, 0, 0, 0, 0] seti 5 0 1 [0, 5, 0, 0, 0, 0]
 ip=1 [1, 5, 0, 0, 0, 0] seti 6 0 2 [1, 5, 6, 0, 0, 0]
@@ -328,3 +334,4 @@ ip=4 [4, 5, 6, 0, 0, 0] setr 1 0 0 [5, 5, 6, 0, 0, 0]
 ip=6 [6, 5, 6, 0, 0, 0] seti 9 0 5 [6, 5, 6, 0, 0, 9]
 '''
 run()
+Regs.out()
