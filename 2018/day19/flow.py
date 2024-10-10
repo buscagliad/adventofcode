@@ -326,6 +326,9 @@ def run():
 print("Part 1: register 0 contains the value: ", Regs[0])
 Regs.clear()
 Regs[0] = 0
+print("Part 1: register 0 contains the value: ", Regs[0])
+Regs.clear()
+#Regs[0] = 1
 '''
 ip=0 [0, 0, 0, 0, 0, 0] seti 5 0 1 [0, 5, 0, 0, 0, 0]
 ip=1 [1, 5, 0, 0, 0, 0] seti 6 0 2 [1, 5, 6, 0, 0, 0]
