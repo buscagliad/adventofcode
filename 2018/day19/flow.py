@@ -320,21 +320,10 @@ def run():
     global ops, Regs
     while ip >=0 and ip < len(ops):
         ip = step(ip)
-        Regs.out(False)
+        if DEBUG: Regs.out(False)
         if ip == 34: return
 
-print("Part 1: register 0 contains the value: ", Regs[0])
-Regs.clear()
-Regs[0] = 0
-print("Part 1: register 0 contains the value: ", Regs[0])
-Regs.clear()
-#Regs[0] = 1
-'''
-ip=0 [0, 0, 0, 0, 0, 0] seti 5 0 1 [0, 5, 0, 0, 0, 0]
-ip=1 [1, 5, 0, 0, 0, 0] seti 6 0 2 [1, 5, 6, 0, 0, 0]
-ip=2 [2, 5, 6, 0, 0, 0] addi 0 1 0 [3, 5, 6, 0, 0, 0]
-ip=4 [4, 5, 6, 0, 0, 0] setr 1 0 0 [5, 5, 6, 0, 0, 0]
-ip=6 [6, 5, 6, 0, 0, 0] seti 9 0 5 [6, 5, 6, 0, 0, 9]
-'''
 run()
-Regs.out()
+print("Part 1: register 0 contains the value: ", Regs[0])
+Regs.clear()
+
