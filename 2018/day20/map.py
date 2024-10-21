@@ -139,6 +139,20 @@ Furthest room requires passing 31 doors
 What is the largest number of doors you would be required to pass through to reach a room? That is, find the room for which the shortest path from your starting location to that room would require passing through the most doors; what is the fewest doors you can pass through to reach it?
 
 
+
+Your puzzle answer was 4432.
+--- Part Two ---
+
+Okay, so the facility is big.
+
+How many rooms have a shortest path from your current location that pass through at least 1000 doors?
+
+Your puzzle answer was 8681.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+
+
 '''
 
 import numpy as np
@@ -150,6 +164,7 @@ curx = MAXD//2
 cury = MAXD//2
 
 grid = np.zeros((MAXD,MAXD), dtype = int)
+doors = np.zeros((MAXD,MAXD), dtype = int)
 ulx = MAXD//2
 uly = MAXD//2
 lrx = MAXD//2
@@ -167,20 +182,24 @@ MARKS=[' ', '#', '.', '|', '-', 'X']
 
 def fill():
     global grid, ulx, uly, lrx, lry
-    for x in range(ulx - 1, lrx + 2):
-        for y in range(uly - 1, lry + 2):
+    ulx -= 1
+    uly -= 1
+    lrx += 1
+    lry += 1
+    for x in range(ulx , lrx + 1):
+        for y in range(uly, lry + 1):
             if grid[x][y] == 0: grid[x][y] = WALL
 
-
-def mapit(mp, ix, iy, sn):
-    global grid, ulx, uly, lrx, lry
+    
+def mapit(mp, ix, iy, sn, ndoors):
+    global grid, ulx, uly, lrx, lry, doors
     ox = ix
     oy = iy
-    queue = [(ix,iy,sn)]
-    (x,y,n) = queue.pop()
-    print("mapit: ", x, y, n, mp[sn:])
+    odoors = ndoors
+    (x,y,n) = (ix,iy,sn)
+    #print("mapit: ", x, y, n, mp[sn:])
     while True:
-    
+        #print(mp[n], end="", sep="")
         dx = 0
         dy = 0
         if mp[n] == '$':
@@ -190,21 +209,19 @@ def mapit(mp, ix, iy, sn):
             n += 1
             continue
         elif mp[n] == '(':
-            #mapit(mp, x, y, n+1)
-            ox = x
-            oy = y
             n += 1
-            queue.append((ox, oy, n))
+            x, y, n, ndoors = mapit(mp, x, y, n, ndoors)
             continue
         elif mp[n] == ')':
+            #print("x/y: ", x, y)
             n += 1
-            continue
+            return ox, oy, n, ndoors
         elif mp[n] == '|':
             #mapit(mp, ox, oy, n+1)
             x = ox
             y = oy
+            ndoors = odoors
             n += 1
-            #queue.append((ox, oy, n))
             continue
         elif mp[n] == 'N':
             dy = -1
@@ -214,13 +231,18 @@ def mapit(mp, ix, iy, sn):
             dx = 1
         elif mp[n] == 'S':
             dy = 1
+        ndoors += 1
         x += dx
         y += dy
         grid[x][y] = DOOR
         x += dx
         y += dy
         grid[x][y] = ROOM
-
+        if doors[x][y] == 0:
+            doors[x][y] = ndoors
+        elif doors[x][y] > ndoors:
+            doors[x][y] = ndoors
+            
         ulx = min(x, ulx)
         uly = min(y, uly)
         lrx = max(x, lrx)
@@ -230,8 +252,9 @@ def mapit(mp, ix, iy, sn):
 
 def outmap():
     last = 0
-    for y in range(MAXD):
-        for x in range(MAXD):
+    grid[centerX][centerY] = CUR_LOC
+    for y in range(uly, lry+1):
+        for x in range(ulx, lrx+1):
             cur = grid[x][y]
             if cur == EMPTY: continue
             mark = ' '
@@ -250,11 +273,28 @@ def outmap():
 test1 = "^ENWWW(NEEE|SSE(EE|N))$"     
 test2 = "^ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN$"
 test3 = "^ESSWWN(E|NNENN(EESS(WNSE|)SSS|WWWSSSSE(SW|NNNE)))$"
+test4 = "^WSSEESWWWNW(S|NENNEEEENN(ESSSSW(NWSW|SSEN)|WSWWN(E|WWS(E|SS))))$"
 
-mapit(test3, 500, 500, 0)
+test = test4
+
+#mapit(test, 500, 500, 0, 0)
+for t in open("data.txt"):
+    mapit(t, 500, 500, 0, 0)
+#mapit(test, 500, 500, 0)
 
 fill()
 
-outmap()
+#outmap()
 
-print(ulx, uly, lrx, lry)
+part1 = 0
+part2 = 0
+for x in range(ulx, lrx):
+    for y in range(uly, lry):
+        dxy = doors[x][y]
+        if dxy > part1:
+            part1 = dxy
+        if dxy >= 1000:
+            part2 += 1
+#print(test)
+print("Part1:  largest number of doors to pass thru is: ", part1)
+print("Part2:  number of rooms requiring at least 1000 doors to pass: ", part2)
