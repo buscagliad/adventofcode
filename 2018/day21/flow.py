@@ -314,6 +314,7 @@ Done = False
 def dumpops():
     for cmd in ops:
         cmd.out()
+Regs.set(0, 5745417)
 
 def run():
     ip = 0
@@ -321,6 +322,10 @@ def run():
     while ip >=0 and ip < len(ops):
         ip = step(ip)
         if DEBUG: Regs.out(False)
+        if ip == 8 or ip == 10 or ip == 18:
+            Regs.out(False)
+            #print(flush=True)
+            #return
         if ip == 34: return
 
 run()
