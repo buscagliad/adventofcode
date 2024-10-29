@@ -322,7 +322,7 @@ def run():
     while ip >=0 and ip < len(ops):
         ip = step(ip)
         if DEBUG: Regs.out(False)
-        if ip == 8 or ip == 10 or ip == 18:
+        if ip == 13 or ip == 20 :
             Regs.out(False)
             #print(flush=True)
             #return
