@@ -1,50 +1,39 @@
 '''
 
---- Day 19: Go With The Flow ---
+--- Day 21: Chronal Conversion ---
 
-With the Elves well on their way constructing the North Pole base, you turn your attention back to understanding the inner workings of programming the device.
+You should have been watching where you were going, because as you wander the new North Pole base, you trip and fall into a very deep hole!
 
-You can't help but notice that the device's opcodes don't contain any flow control like jump instructions. The device's manual goes on to explain:
+Just kidding. You're falling through time again.
 
-"In programs where flow control is required, the instruction pointer can be bound to a register so that it can be manipulated directly. This way, setr/seti can function as absolute jumps, addr/addi can function as relative jumps, and other opcodes can cause truly fascinating effects."
+If you keep up your current pace, you should have resolved all of the temporal anomalies by the next time the device activates. Since you have very little interest in browsing history in 500-year increments for the rest of your life, you need to find a way to get back to your present time.
 
-This mechanism is achieved through a declaration like #ip 1, which would modify register 1 so that accesses to it let the program indirectly access the instruction pointer itself. To compensate for this kind of binding, there are now six registers (numbered 0 through 5); the five not bound to the instruction pointer behave as normal. Otherwise, the same rules apply as the last time you worked with this device.
+After a little research, you discover two important facts about the behavior of the device:
 
-When the instruction pointer is bound to a register, its value is written to that register just before each instruction is executed, and the value of that register is written back to the instruction pointer immediately after each instruction finishes execution. Afterward, move to the next instruction by adding one to the instruction pointer, even if the value in the instruction pointer was just updated by an instruction. (Because of this, instructions must effectively set the instruction pointer to the instruction before the one they want executed next.)
+First, you discover that the device is hard-wired to always send you back in time in 500-year increments. Changing this is probably not feasible.
 
-The instruction pointer is 0 during the first instruction, 1 during the second, and so on. If the instruction pointer ever causes the device to attempt to load an instruction outside the instructions defined in the program, the program instead immediately halts. The instruction pointer starts at 0.
+Second, you discover the activation system (your puzzle input) for the time travel module. Currently, it appears to run forever without halting.
 
-It turns out that this new information is already proving useful: the CPU in the device is not very powerful, and a background process is occupying most of its time. You dump the background process' declarations and instructions to a file (your puzzle input), making sure to use the names of the opcodes rather than the numbers.
+If you can cause the activation system to halt at a specific moment, maybe you can make the device send you so far back in time that you cause an integer underflow in time itself and wrap around back to your current time!
 
-For example, suppose you have the following program:
+The device executes the program as specified in manual section one and manual section two.
 
-#ip 0
-seti 5 0 1
-seti 6 0 2
-addi 0 1 0
-addr 1 2 3
-setr 1 0 0
-seti 8 0 4
-seti 9 0 5
+Your goal is to figure out how the program works and cause it to halt. You can only control register 0; every other register begins at 0 as usual.
 
-When executed, the following instructions are executed. Each line contains the value of the instruction pointer at the time the instruction started, the values of the six registers before executing the instructions (in square brackets), the instruction itself, and the values of the six registers after executing the instruction (also in square brackets).
+Because time travel is a dangerous activity, the activation system begins with a few instructions which verify that bitwise AND (via bani) does a numeric operation and not an operation as if the inputs were interpreted as strings. If the test fails, it enters an infinite loop re-running the test instead of allowing the program to execute normally. If the test passes, the program continues, and assumes that all other bitwise operations (banr, bori, and borr) also interpret their inputs as numbers. (Clearly, the Elves who wrote this system were worried that someone might introduce a bug while trying to emulate this system with a scripting language.)
 
-ip=0 [0, 0, 0, 0, 0, 0] seti 5 0 1 [0, 5, 0, 0, 0, 0]
-ip=1 [1, 5, 0, 0, 0, 0] seti 6 0 2 [1, 5, 6, 0, 0, 0]
-ip=2 [2, 5, 6, 0, 0, 0] addi 0 1 0 [3, 5, 6, 0, 0, 0]
-ip=4 [4, 5, 6, 0, 0, 0] setr 1 0 0 [5, 5, 6, 0, 0, 0]
-ip=6 [6, 5, 6, 0, 0, 0] seti 9 0 5 [6, 5, 6, 0, 0, 9]
+What is the lowest non-negative integer value for register 0 that causes the program to halt after executing the fewest instructions? (Executing the same instruction multiple times counts as multiple instructions executed.)
 
-In detail, when running this program, the following events occur:
+Your puzzle answer was 5745418.
+--- Part Two ---
 
-    The first line (#ip 0) indicates that the instruction pointer should be bound to register 0 in this program. This is not an instruction, and so the value of the instruction pointer does not change during the processing of this line.
-    The instruction pointer contains 0, and so the first instruction is executed (seti 5 0 1). It updates register 0 to the current instruction pointer value (0), sets register 1 to 5, sets the instruction pointer to the value of register 0 (which has no effect, as the instruction did not modify register 0), and then adds one to the instruction pointer.
-    The instruction pointer contains 1, and so the second instruction, seti 6 0 2, is executed. This is very similar to the instruction before it: 6 is stored in register 2, and the instruction pointer is left with the value 2.
-    The instruction pointer is 2, which points at the instruction addi 0 1 0. This is like a relative jump: the value of the instruction pointer, 2, is loaded into register 0. Then, addi finds the result of adding the value in register 0 and the value 1, storing the result, 3, back in register 0. Register 0 is then copied back to the instruction pointer, which will cause it to end up 1 larger than it would have otherwise and skip the next instruction (addr 1 2 3) entirely. Finally, 1 is added to the instruction pointer.
-    The instruction pointer is 4, so the instruction setr 1 0 0 is run. This is like an absolute jump: it copies the value contained in register 1, 5, into register 0, which causes it to end up in the instruction pointer. The instruction pointer is then incremented, leaving it at 6.
-    The instruction pointer is 6, so the instruction seti 9 0 5 stores 9 into register 5. The instruction pointer is incremented, causing it to point outside the program, and so the program ends.
+In order to determine the timing window for your underflow exploit, you also need an upper bound:
 
-What value is left in register 0 when the background process halts?
+What is the lowest non-negative integer value for register 0 that causes the program to halt after executing the most instructions? (The program must actually halt; running forever does not count as halting.)
+
+Your puzzle answer was 5090905.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
 
 '''
 import numpy as np
@@ -68,6 +57,7 @@ EQRR = 15
 
 DEBUG = False
 DEBUG1 = False
+icount = 0
 
 class RegSet:
     def __init__(self, st):
@@ -101,8 +91,8 @@ class RegSet:
         if full:
             print("ip =", self.ip, self.reg)
         else:
-            print(self.reg[0], end="")
-            for i in range(1, len(self.reg)):
+            print(icount, end="")
+            for i in range(len(self.reg)):
                 print(",",self.reg[i], end="")
                 if (i + 1 == len(self.reg)): print()
 
@@ -178,12 +168,13 @@ if DEBUG:
 
 
 def doop(op):
-    global Regs
+    global Regs, icount
     oc_text = op.op
     oc = op.opv
     A = op.A
     B = op.B
     C = op.C
+    icount += 1
     if DEBUG: 
         print(oc_text, A, B, C, " :: Regs: ", end = "")
         Regs.out()
@@ -314,21 +305,39 @@ Done = False
 def dumpops():
     for cmd in ops:
         cmd.out()
-Regs.set(0, 5745417)
 
-def run():
+pairs = []
+R4s = []
+
+def run(count = 25999999):
     ip = 0
+    
     global ops, Regs
-    while ip >=0 and ip < len(ops):
+    l = set()
+    while ip >=0 and ip < len(ops) and count > 0:
         ip = step(ip)
-        if DEBUG: Regs.out(False)
-        if ip == 13 or ip == 20 :
-            Regs.out(False)
-            #print(flush=True)
-            #return
+        if ip == 29:
+            R3 = Regs.reg[3]
+            R4 = Regs.reg[4]
+            #print(R3,R4,flush=True)
+            if len(pairs) == 0:
+                print("Part 1:  Value that takes least steps to reach: ", R4, flush=True)
+            # print(R3, R4)
+            addPair = True
+            if R4 in R4s:
+                addPair = False
+            
+            R4s.append(R4)
+                
+            if (R3,R4) in pairs:
+                print("Part 2:  Value that takes most steps to reach: ", lastR4, flush=True)
+                return
+            else:
+                if addPair:
+                    pairs.append((R3,R4))
+                    lastR4 = R4
+
         if ip == 34: return
 
 run()
-print("Part 1: register 0 contains the value: ", Regs[0])
-Regs.clear()
 
