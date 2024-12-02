@@ -75,57 +75,17 @@ Answer:
       *-----------------*
 '''
 
-import numpy as np
-from queue import PriorityQueue
-
-grid = np.zeros((1000,1000), dtype=int)
-
-class cube:
-    def __init__(self, x, dx, y, dy, z, dz):
-        self.corners = []
-        self.delta = [dx, dy, dz]
-        self.debug = False
-        self.maxn = 0
-        self.maxc = [x,y,z]
-        for i in [0, dx]:
-            for j in [0, dy]:
-                for k in [0, dz]:
-                    c = [x+i,y+j,z+k]
-                    n = compr(c[0], c[1], c[2])
-                    self.corners.append([c,n])
-                    if n > self.maxn:
-                        self.maxn = n
-                        self.maxc = c                    
-
-        if self.debug: 
-            print("**************************************************")
-            for c, n in self.corners:
-                print(c, n)
-
-    def __lt__(self, other):
-        return self.maxn < other.maxn
-
-
-    def split(self):
-        if self.debug: print("^^^^^^^^^^^^^^^^ SPLIT ^^^^^^^^^^^^^^^^^^^^^^")
-        sp = []
-        deltax = self.delta[0] // 4
-        deltay = self.delta[1] // 4
-        deltaz = self.delta[2] // 4
-        x = self.maxc[0]
-        for dx in [-deltax, 0, deltax]:
-            y = self.maxc[1]
-            for dy in [-deltay, 0, deltay]:
-                z = self.maxc[2]
-                for dz in [-deltaz, 0, deltaz]:
-                    sp.append(cube(x, dx, y, dy, z, dz))
-                    z += 2 * deltaz
-                y += 2 * deltay
-            x += 2 * deltax
-        return sorted(sp, key=lambda sp: sp.maxn, reverse=True)
-    def out(self):
-        print("N: ", self.maxn, "  (x,y,z): ",self.maxc, "  Dist: ", 
-            abs(self.maxc[0])+abs(self.maxc[1])+abs(self.maxc[2]))
+def bgrid(x1, x2, y1, y2, z1, z2):
+    dx = abs(x2 - x1) // 2
+    dy = abs(y2 - y1) // 2
+    dz = abs(z2 - z1) // 2
+    c = []
+    for x in [x1-dx, x1, x1+dx, x2, x2+dx]:
+        for y in [y1-dy, y1, y1+dy, y2, y2+dy]:
+            for z in [z1-dz, z1, z1+dz, z2, z2+dz]:
+                c.append([x,dx,y,dy,z,dz,compr(x,y,z),abs(x)+abs(y)+abs(z)])
+    c = sorted(c, key=lambda c:(1000-c[6],c[7]))   
+    return(c[0])          
 
 class nano:
     def __init__(self, x, y, z, r):
@@ -170,13 +130,10 @@ def compr(x, y, z, debug = False):
     if debug: print("at (", x, y, z, ") there are ", n, " bots, dist = ", abs(x)+abs(y)+abs(z));
     return n
 
-
-
-
 init("data.txt")
 
 maxs = 0
-cont = np.zeros(1000, dtype=int)
+#cont = np.zeros(1000, dtype=int)
 large = bots[0]
 small = bots[0]
 [xlow,xhigh] = [100000000000, -100000000000]
@@ -184,7 +141,7 @@ small = bots[0]
 [zlow,zhigh] = [100000000000, -100000000000]
 
 for ai, a in enumerate(bots):
-    cont[ai] = compr(a.x, a.y, a.z)
+    #cont[ai] = compr(a.x, a.y, a.z)
     if a.r > large.r: 
         large = a
     if a.r < small.r: 
@@ -201,58 +158,30 @@ n = 0
 for b in bots:
     if large.contains(b): n += 1
 print("Part 1: Number of nanobots in range of bot with strongest signal: ", n)
+# nx=25822178 
+# ny=51180968 
+# nz=51540158
+# xlow = nx - 25000000
+# xhigh = nx + 25000000
+# ylow = ny - 25000000
+# yhigh = ny + 25000000
+# zlow = nz - 25000000
+# zhigh = nz + 25000000
+# for _ in range(25):
+while True:
+    c = bgrid(xlow, xhigh, ylow, yhigh, zlow, zhigh)
+    #print(c)
+    xlow = c[0]
+    xhigh = c[0] + c[1]
 
+    ylow = c[2]
+    yhigh = c[2] + c[3]
 
-cubeq = PriorityQueue()
+    zlow = c[4]
+    zhigh = c[4] + c[5]
+    if c[1] <= 1 and c[3] <= 1 and c[5] <= 1: break
 
-# testcube = cube(0, 1000, 0, 1000, 0, 1000)
-# s = testcube.split()
-# for a in s:
-    # a.out()
-# exit(1)
-nx=25822178 
-ny=51180968 
-nz=51540158
-
-nanocube = cube(xlow, xhigh-xlow, ylow, yhigh-ylow, zlow, zhigh-zlow)
-nanocube.out()
-s = nanocube.split()
-s[0].out()
-print("first split: ", len(s))
-ss = s[0].split()
-ss[0].out()
-print("second split: ", len(ss))
-
-exit(1)
-
-for _ in range(10):
-    for a in s:
-        a.out()
-        cubeq.put((1000-a.maxn, a))
-
-# for x in [xlow, (xlow+xhigh)//2, xhigh]:
-    # for y in [ylow, (ylow+yhigh)//2, yhigh]:
-        # for z in [zlow, (zlow+zhigh)//2, zhigh]:
-            # n = compr(x, y, z, True)
-            # cubeq.put((1000-n, [x, y, z]))
-# N:  418   (x,y,z):  15180888 91142140 56993562   Dist:  163316590   dx,dy,dz:  200012026 138951534 103272101
-
-
-
-while not cubeq.empty():
-    c = cubeq.get()
-    c[1].out()
-    
-    s = c[1].split()
-    for a in s:
-        cubeq.put((1000-a.maxn, a))
-    #    cubeq.put((1000-a.n, [a.xl, a.yl, a.zl]))
-    #
-# refine answer above to one closes to 0,0,0
-#
-
-compr(nx, ny, nz, True)
-
+print("Part 2: manhattan distance of maximal (x,y,z) point: ", c[7])
 # 941 is too high
 # 859 is too high
 # at ( 23702519 52113511 52542838 ) there are  888  bots, dist =  128358868
