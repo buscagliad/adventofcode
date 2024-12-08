@@ -198,7 +198,7 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 '''
 import numpy as np
 import copy as cp
-grid = np.zeros([1000,1000], dtype = int)
+grid = np.zeros([130,130], dtype = int)
 ymax = 0
 xmax = 0
 
@@ -209,10 +209,6 @@ VISITED_RIGHT = 0x02
 VISITED_DOWN = 0x04
 VISITED_LEFT = 0x08
 VISITS=[VISITED_UP, VISITED_RIGHT, VISITED_DOWN, VISITED_LEFT]
-DIR_UP = 0
-DIR_RIGHT = 1
-DIR_DOWN = 2
-DIR_LEFT = 3
 
 WALL = 0x10
 GUARD = 0x20
@@ -225,11 +221,8 @@ DIR = [UP, RIGHT, DOWN, LEFT]
 DC = ['^', '>', 'v', '<']
 gdir = -1
 gpos = [0,0]
-GUARD_START_X = 0
-GUARD_START_Y = 0
-GUARD_DIR = 0
 
-blocks=[]
+wallCount = 0
 
 def pgrid():
     for y in range(ymax):
@@ -240,40 +233,34 @@ def pgrid():
             elif g == VISITED_RIGHT: c = '>'
             elif g == VISITED_DOWN: c = 'v'
             elif g == VISITED_LEFT: c = '<'
-            elif g == WALL: c = '#'
+            elif g == WALL: 
+                c = '#'
             elif g == GUARD: c = '*'
             print(c, end="")
         print()
-def isout():
-    global gpos
-    if gpos[0] < 0 or gpos[1] < 0: return True
-    if gpos[0] >= xmax or gpos[1] >= ymax: return True
-    return False
+
 
 def process(line):
     global grid, xmax, ymax, gdur, gpos, gdir
-    global GUARD_START_X, GUARD_START_Y, GUARD_DIR
+    global wallCount
 
     xmax = max(xmax, len(line.strip()))
     for i, a in enumerate(line.strip()):
         if a == '.': grid[i][ymax] = EMPTY
-        elif a == '#': grid[i][ymax] = WALL
+        elif a == '#': 
+            grid[i][ymax] = WALL
+            wallCount += 1
         else:   # ^v<>
             gdir = DC.index(a)
             gpos[0] = i
             gpos[1] = ymax
-            GUARD_START_X = i
-            GUARD_START_Y = ymax
-            GUARD_DIR = gdir
-            #print(gdir, gpos, a)
             grid[i][ymax] = VISITS[gdir]
+
     ymax += 1
 
 for line in open('data.txt'):
     process(line)
     
-saveg = cp.deepcopy(grid)
-
 def viscount():
     c = 0
     for i in range(xmax):
@@ -282,12 +269,11 @@ def viscount():
     return c
     
 
-def inc(p, a):
-    x = DIR[a][0]
-    y = DIR[a][1]
-    n=[p[0]+x, p[1]+y]
+def inc(x, y, a):
+    dx = DIR[a][0]
+    dy = DIR[a][1]
+    return x+dx, y+dy, dx, dy
     #print("INC", a, x, y, n)
-    return n
 
 def valid(x, y):
     if x < 0 or y < 0: return False
@@ -296,10 +282,9 @@ def valid(x, y):
 
 
 #
-def finddir(g, x, y, dx, dy, dirval):
-    # if x+dx == GUARD_START_X and y+dy == GUARD_START_Y: 
-   # print(x, dx, y, dy, "GUARD START", dirval)
-        # return False    
+def finddir(g, x, y, dirval):
+    dx = DIR[dirval][0]
+    dy = DIR[dirval][1]
     while valid(x,y):
         #
         # we get here if x,y is valid, then we hit a wall
@@ -325,39 +310,53 @@ def finddir(g, x, y, dx, dy, dirval):
     #print("RETURNING FALSE")
     return False
 
-#p2_count = 0
-while not isout():
-    npos = inc(gpos, gdir)
-    #print(npos)
-    if grid[npos[0]][npos[1]] == WALL:
-        gdir = (gdir + 1)% 4
-        #print("Turning at ", npos)
-        continue
-    gpos = npos
-    grid[gpos[0]][gpos[1]] |= VISITS[gdir]
-    pg = grid[gpos[0]][gpos[1]]
-    pr = False
-    nnpos = inc(gpos, gdir)
-    if nnpos == [GUARD_START_X, GUARD_START_Y]: 
-        print("HEY", nnpos)
-        continue
-
-print("Part 1: total positions visited: ", viscount())
 
 part2_count = 0
-gsx = GUARD_START_X + DIR[GUARD_DIR][0]
-gsy = GUARD_START_Y + DIR[GUARD_DIR][1]
-for x in range(xmax):
-    for y in range(ymax):
-        p2 = cp.deepcopy(saveg)
-        if p2[x][y] == WALL: continue
-        if x == GUARD_START_X and y == GUARD_START_Y: continue
-        p2[x][y] = WALL
-        if finddir(p2, gsx, gsy, DIR[GUARD_DIR][0], DIR[GUARD_DIR][1], GUARD_DIR): part2_count += 1
+x = gpos[0]
+y = gpos[1]
+blocks = set()
+while valid(x, y):
+    x, y, dx, dy = inc(x, y, gdir)
+    if not valid(x, y): break
+    #print(npos)
+    if grid[x][y] == WALL:
+        gdir = (gdir + 1)% 4
+        #print("Turning at ", npos)
+        x -= dx
+        y -= dy
+        grid[x][y] |= VISITS[gdir]
 
-print("Part 2: number of road blocks: ", part2_count, len(blocks))
-# 339 is too low
-# 471 is too low
-# 1665 is too high
-# 1664 is not correct
-# 1605 is not correct
+    grid[x][y] |= VISITS[gdir]
+    #pg = grid[gpos[0]][gpos[1]]
+    #pr = False
+    bx, by, dx, dy = inc(x, y, gdir) # bx,by is where the block is
+    ##
+    ## part 2 - use existing grid - turn right at x,y
+    ##
+    if not valid(bx, by):
+        #print("Not valid at ", bx, by)
+        continue
+    #
+    # Can't place a barrier where one already exists
+    #
+    if grid[bx][by] == WALL: 
+        continue
+    #
+    # have we been here before?
+    #
+    if grid[bx][by] > 0: 
+        continue
+    p2dir = (gdir + 1)% 4
+    p2 = cp.deepcopy(grid)
+    p2[bx][by] = WALL
+    if finddir(p2, x, y, p2dir): 
+        blocks.add((bx, by))
+        #else:
+           # print("Dup at ", bx, by)
+            
+#for b in blocks:
+ #   print(b[0], b[1], b[2], b[3])
+
+print("Part 1: total positions visited: (4663)", viscount())
+
+print("Part 2: number of road blocks: (1530)", len(blocks))
