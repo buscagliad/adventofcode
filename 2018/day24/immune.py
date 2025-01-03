@@ -197,30 +197,200 @@ You scan the reindeer's condition (your puzzle input); the white-bearded man loo
 # 7374 units each with 24948 hit points (weak to cold) with an attack that does 5 fire damage at initiative 13
 # 4821 units each with 26018 hit points with an attack that does 10 fire damage at initiative 15
 
+NONE = 0x00
+FIRE = 0x01
+RADIATION = 0x02
+SLASHING = 0x04
+COLD = 0x08
+BLUDGE = 0x10
+
+GTYPE = ""
+
+SELECT = 1
+ATTACK = 2
+mode = SELECT
+
+def getPower(dtype):
+    if dtype == "fire": return FIRE
+    elif dtype == "cold": return COLD
+    elif dtype == "bludgeoning": return BLUDGE
+    elif dtype == "slashing": return SLASHING
+    elif dtype == "radiation": return RADIATION
+    else:
+        print("getPower   Unknown dtype: ", dtype)
+        exit(1)
+def dt(dtype):
+    rv = ""
+    if dtype & FIRE: rv += "fire "
+    if dtype & COLD: rv +=  "cold "
+    if dtype & BLUDGE: rv +=  "bludgeoning "
+    if dtype & SLASHING: rv +=  "slashing "
+    if dtype & RADIATION: rv +=  "radiation " 
+    return rv
+
+def parse(l):
+    weak = NONE
+    immune = NONE
+    w = l.split()
+    setI = False
+    for a in w:
+        if a == "immune": 
+            setI = True
+            continue
+        if a == "weak": 
+            setI = False
+            continue
+        if 'fire' in a:
+            if setI: immune |= FIRE
+            else: weak |= FIRE
+        elif 'radiation' in a:
+            if setI: immune |= RADIATION
+            else: weak |= RADIATION
+        elif 'slash' in a:
+            if setI: immune |= SLASHING
+            else: weak |= SLASHING
+        elif 'bludg' in a:
+            if setI: immune |= BLUDGE
+            else: weak |= BLUDGE
+        elif 'cold' in a:
+            if setI: immune |= COLD
+            else: weak |= COLD
+    return immune, weak
+        
 
 class group:
     def __init__(self, line):
         self.units = 0
         self.hitpoints = 0
+        
+        self.immunity = NONE
+        self.damage = NONE
+        self.weak = NONE
+        
+        popen = line.find("(")
+        pclose = line.find(")")
+        if popen > -1:
+            imwk = line[popen+1:pclose]
+            nline = line[:popen] + line[pclose+1:]
+            self.immunity, self.weak = parse(imwk)
+        else:
+            nline = line
+        
+        w = nline.strip().split()
+        self.units = int(w[0])
+        self.hitpoints = int(w[4])
+        self.initiative = int(w[17])
+        
         ##
         ## damage
         ##
-        self.damage_slashing = 0
-        self.damage_radiation = 0
-        self.damage_fire = 0
+        self.damage = int(w[12])
+        self.damage_type = getPower(w[13])
+        self.id = GTYPE
+        self.power=self.damage*self.damage
+        self.attacks = None
+        self.attackPower = 0
+    def __lt__(self, other):
+        if mode == SELECT:
+            if ((self.power) > (other.power)): return True
+            if (self.power == other.power and
+                self.initiative > other.initiative): return True
+        if mode == ATTACK:
+            if self.initiative > other.initiative: return True
+        return False
+    def attackdamage(self, other):
+        odmg = self.damage * self.units
+        mult = 1
+        if self.damage_type & other.weak: mult = 2
+        if self.damage_type & other.immunity: mult = 0
+        return odmg * mult
+    def setattack(self, toAttack, toPower):
+        self.attacks = toAttack
+        self.attackPower = toPower
+    def attack(self):
+        damage = self.attackdamage(self.attacks)
+        nu0 = self.attacks.units
+        self.attacks.attacked(damage)
+        nu1 = self.attacks.units
+        print(self.id, " attacks ", self.attacks.id, " killing ", nu0 - nu1, " units.")
+    def attacked(self, damage):
+        k = damage // self.hitpoints
+        self.units -= k
+        if self.units < 0: self.units = 0
+    def out(self):
+        print(self.id, " ", self.units, " units ", self.hitpoints, " hit points ",  self.damage, dt(self.damage_type), "  power: ", self.power, "  initiative: ",self.initiative)
+        print("    weak: ", dt(self.weak), "   immune: ", dt(self.immunity))
+        if self.attacks:
+            print("    attacks: ", self.attacks.id, "  with power: ", self.attackPower)
+            kills = self.attackdamage(self.attacks)//self.attacks.hitpoints
+            print("  attack: ", self.attackdamage(self.attacks), "  hp: ", self.attacks.hitpoints, "   would kill ", kills, "units")
+
+
+ImmuneSystem = []
+Infection = []
+
+for l in open('test.txt'):
+    if (len(l) < 2): continue
+    if "Immune System" in l:
+        IS = True
+        n = 0
+        continue
+    if "Infection" in l:
+        IS = False
+        n = 0
+        continue
+    n += 1
+    if IS:
+        GTYPE = "ImmSys" + str(n)
+        ImmuneSystem.append(group(l))
+    else:
+        GTYPE = "Infect" + str(n)
+        Infection.append(group(l))
+
+'''
+print("Immune")
+for a in ImmuneSystem:
+    a.out()
+print("Infection")
+for a in Infection:
+    a.out()
+'''
+#
+# Order will contain each group in the order of the attack (after
+# sorting
+#
+N = []
+N.clear()
+for a in ImmuneSystem: N.append(a)
+for b in Infection: N.append(b)
+
+nimm = 2
+ninf = 2
+while nimm > 0 and ninf > 0:
+    print("******************************")
+    mode = SELECT
+    N.sort()
+    for a in N:
+        if a.units <= 0: continue
+        for b in N:
+            if a is b or a.id[0:2] == b.id[0:2]: continue
+            if b.units <= 0 : continue
+            if a.attackdamage(b) > a.attackPower:
+                a.attacks = b
+                a.attackPower = a.attackdamage(b)
+
+    mode = ATTACK
+    N.sort()
+    for n in N:
+        if n.units <= 0: continue
+        n.attack()
+    nimm = 0
+    ninf = 0
+    for n in N:
+        if n.id[0:3] == "Imm" and n.units > 0: 
+            nimm += n.units
+        elif n.id[0:3] == "Inf" and n.units > 0: ninf += n.units
+        if n.units > 0:
+            print(n.id, " has ", n.units, " units")
         
-        self.initiative = 0
-        
-        self.immunity_slashing = 1
-        self.immunity_radiation = 1
-        self.immunity_fire = 1
-        
-        self.weak_slashing = 1
-        self.weak_radiation = 1
-        self.weak_fire = 1
-        
-        w = line.strip().split()
-        
-        self.units = int(w[0])
-        self.hitpoints = int(w[4])
-        if w[7] == "(weak"
+print("Part 1: winning army has ", max(nimm,ninf), " units")
