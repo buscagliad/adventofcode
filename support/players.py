@@ -34,7 +34,6 @@ Roster[3690597] = ["Matthew Luckenbihl", "matthew.luckenbihl@vts-i.com"]
 Roster[3853633] = ["Sean Severson", "sean.severson@vts-i.com"]
 '''
 
-
 class Player:
     def __init__(self, idx, numstars, laststar):
         global roster
@@ -86,6 +85,21 @@ class Player:
         if (self.numstars == 0) : stm = ""
         print(f'{n:2d}  {self.name:30}  {self.numstars:3d}  {stm}')
 
+    def csvOut(self, csvFile, hdr=False):
+        if hdr:
+            csvFile.write("Stars,Entries,Name,Last Star,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25\n")
+        else:
+            if self.numstars == 0: return
+            csvFile.write("%d" %(self.numstars))
+            csvFile.write(",-1")    # Entries
+            csvFile.write(",%s"  %(self.name))
+            csvFile.write(",%s"  %(pltime(self.lastStarDate)))
+            for one,two in self.problems[1:]:
+                if two: day = 2
+                elif one: day = 1
+                else: day = 0
+                csvFile.write(",%d"  %(day))
+            csvFile.write("\n")
 
 class Roster:
     def __init__(self, fname):

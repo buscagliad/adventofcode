@@ -80,13 +80,13 @@ def playerList(members_json):
         tm = time.localtime(laststar)
         stm = time.strftime("%d %b %Y %H:%M:%S", tm)
         #print(" Number of stars: ", stars, " Last Star: ", stm);
-        #print(dayResults)
-        #for day in dayResults:
-            #print("3", " a: ", day, "  ", dayResults[day])
-            #for k in dayResults[day]:
-                #tm = time.localtime(dayResults[day][k]["get_star_ts"])
-                #stm = time.strftime("%d %b %Y %H:%M:%S", tm)
-                #print("k ", k, dayResults[day][k]["get_star_ts"], stm)
+        # print(dayResults)
+        # for day in dayResults:
+            # print("3", " a: ", day, "  ", dayResults[day])
+            # for k in dayResults[day]:
+                # tm = time.localtime(dayResults[day][k]["get_star_ts"])
+                # stm = time.strftime("%d %b %Y %H:%M:%S", tm)
+                # print("k ", k, dayResults[day][k]["get_star_ts"], stm)
 
         for day in dayResults:
             t1 = 0
@@ -100,43 +100,15 @@ def playerList(members_json):
     plist.sort(key=functools.cmp_to_key(pl.plcomp))
     return plist
 
-def outCSV(members_json):
+def outCSV(pList):
     """
     Handle member lists from AoC leaderboard
     """
-    # get member name, score and stars
-    members = [(m["name"],
-                m["local_score"],
-                m["stars"],
-                m["last_star_ts"],
-                m["completion_day_level"]
-                ) for m in members_json.values()]
-    for q in members:
-        print()
-        print("**************** ", q[0], " ************************")
-        print()
-        tm = time.localtime(q[3])
-        stm = time.strftime("%d %b %Y %H:%M:%S", tm)
-
-        print("Score: ", q[1], " Number of stars: ", q[2], " Last Star: ", stm);
-        for j in q[4]:
-            print("3", " j: ", j, "  ", q[4][j])
-            for k in q[4][j]:
-                tm = time.localtime(q[4][j][k]["get_star_ts"])
-                stm = time.strftime("%d %b %Y %H:%M:%S", tm)
-                print("k ", q[4][j][k]["get_star_ts"], stm)
-        print()
-        print()
-            #print(j)
-        #if not q[3]["3"] is None:
-        #   print(q[3]["3"])
-
-        #print(pretty_json)
-        #for g in m[3]:
-        #   print("Game ", g)
-        #   for d in g:
-        #       print("Day ", d)
-    
+    f = open("aoc.csv", "w")
+    pList[0].csvOut(f, True)
+    for p in pList:
+        p.csvOut(f)
+    f.close()
 
 def main():
     """
@@ -163,10 +135,10 @@ def main():
     # get members from json
     members = parseMembers(r.json()["members"])
     
-    
-    # output csv from JOSN
-    # outCSV(r.json()["members"])
     pList = playerList(r.json()["members"])
+    
+    # output csv from playerList
+    outCSV(pList)
     n = 0
     pList[0].simpleout(n)
     for p in pList:
