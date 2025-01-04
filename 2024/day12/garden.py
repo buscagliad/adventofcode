@@ -22,6 +22,18 @@ def process(line):
         grid[i][ymax] = h
     ymax += 1
 
+DELTAS = [(1,0),(-1,0),(0,1),(0,-1)]
+#
+# isboundary will determine if x+/-1 or y+/-1 is different from x,y
+# the delta is
+#
+def isboundary(grid, x, y):
+    g = grid[x][y]
+    for dx,dy in DELTAS:
+        if (grid[x][y] != grid[x+dx][y+dy]): return True
+    return False
+
+
 def valid(v, x, y):
     if x < 0 or y < 0: return False
     if x >= xmax or y >= ymax: return False
@@ -169,11 +181,52 @@ def countrectangles(bound, width, height):
             else: n += 1
     return n-1, cn
 
+visited = {}
+
+def isvalid(g, x, y, v):
+    global visited
+    if (x,y) in visited: return False
+    if grid[x][y] != v: return False
+    for nx, ny in [(x-1,y), (x+1, y), (x, y-1), (x, y+1)]:
+        visited[(x,y)] = 1
+        if grid[nx][ny] != v: return True
+    return False
+    
+
+def countperim(g, x, y):
+    global visited
+    v = g[x][y]
+    visited.clear()
+    visited[(x,y)] = 2
+    startx = x
+    starty = y
+    s = 0
+    q = [(x+1,y,1,0),(x-1,y,-1,0),(x,y-1,0,-1),(x,y+1,0,1)]
+    dx = 0
+    dy = 0
+    count = 0
+    while q:
+        x,y,ddx,ddy= q.pop()
+        if (startx, starty) == (x,y): break
+        if isvalid(g, x, y, v):
+            visited[(x,y)] = 1
+            for dx,dy in [(1,0),(-1,0),(0,1),(0,-1)]:
+                nx = x + dx
+                ny = y + dy
+                if (nx,ny) in visited: continue
+                if isvalid(g, nx, ny, v):
+                    q.append((nx,ny,dx,dy))
+                    if not dx == ddx or not dy == ddy:
+                        count += 1
+    print("VISITED: ", visited)
+    return count
+                    
 #
 # compute the number of linear sides of
 # the set s
 #
-def sides2(s):
+def sides2(s, debug = False):
+    print(s)
     if (len(s) == 1): return 4
     #
     # find upper left corner
@@ -202,11 +255,14 @@ def sides2(s):
         # print()
     n, cn = countrectangles(bound, width, height)
     rv = 4 + 2*n + 4*cn
-    print("Rectangles: ", n, cn, rv)
-    for y in range(height):
-        for x in range(width):
-            print(f"{bound[x][y]:4}", end="")
-        print()
+    if debug:
+        print("Rectangles: ", n, cn, rv)
+        for y in range(height):
+            for x in range(width):
+                print(f"{bound[x][y]:4}", end="")
+            print()
+    (x,y) = s.pop()
+    print("new counter: ", countperim(grid, x, y))
     return rv
 
 def getdeltas(dx, dy):
@@ -311,7 +367,50 @@ testSoln=[
     'A region of C plants with price 1 * 4 = 4.',
     'A region of E plants with price 13 * 8 = 104.',
 ]
+def mdist(p1, p2):
+    return abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
 
+# p2 - p1
+def mdiff(p1, p2):
+    return (p2[0]-p1[0],p2[1]-p1[1])
+
+def madd(p1, p2):
+    return (p2[0]+p1[0],p2[1]+p1[1])
+
+def getboundaries(s):
+    bset = set()
+    cur = (-1,-1)
+    dx = dy = 0
+    for p in s:
+        if isboundary(grid, p[0], p[1]):
+            if cur[0] == -1:
+                cur = p
+            else:
+                bset.add(p)
+                if mdist(cur, p):
+                    d = mdiff(cur, p)
+    #
+    # with the boundary set, count how many turns 
+    # made
+    #
+    turns = 4
+    while bset:
+        rb = None
+        for b in bset:
+            if mdist(b, cur) == 1:
+                newd = mdiff(b, cur)
+                if newd != d:
+                    turns += 1
+                    d = newd
+                    rb = b
+                    break
+        if rb:
+            bset.remove(rb)
+        else:
+            cur = b
+            bset.remove(b)
+    print("getboundaries: ", turns)
+    
 s = set()
 done = False
 part1 = 0
@@ -335,6 +434,7 @@ while not done:
         part1 += per1 * len(s)
         sds = sides2(s)
         part2 += sds * len(s)
+        getboundaries(s)
         print(sval, chr(grid[sval]), " Area: ", len(s), "  Sides: ", sds, " = ", len(s) * sds,"    Perim: ", per1, flush=True)
         print(ij,"-->", testSoln[ij])
         ij += 1
@@ -346,9 +446,6 @@ def match(grid, x1, y1, x2, y2):
         if grid[x1][y1] == grid[x2][y2]: return True
     return False
 
-def isboundary(grid, x, y):
-    if match(grid, x, y, x-1, y): return -1, 0
-    return 0,0
 #
 # returns perimeter, linear perimeter, and flag indicating it is contained by
 # another gardern (which means its linear perimeter should be doubled when
@@ -357,14 +454,26 @@ def isboundary(grid, x, y):
 def ptrack(grid, x, y):
     visited={}
     garden = grid[x][y]
-    path = queue((x,y,0,0,True,))
+    tf, dx, dy = isboundary(grid, x, y)
+    if not tf: 
+        print("ptrack error: ", x, y)
+        return
+    
+    # (x,y) the point to be visited
+    # (dx,dy) the direction of last travel (0,0) indicates next
+    # point is always in line
+    # True originally indicates the track is completely contained
+    path = queue((x,y,dx,dy,True,4))
     while path:
-        (x,y,p,lp,ext) = path.pop()
+        (x,y,dx,dy,ext,perim) = path.pop()
+        if not valid(x,y): continue
         if (x,y) in visited: continue
         visited.add((x,y))
-        for dx, dy in [(0,1),(0,-1),(1,0),(-1,0)]:
-            a = x + dx
-            b = y + dy
+        for nx, ny in [(0,1),(0,-1),(1,0),(-1,0)]:
+            a = x + nx
+            b = y + ny
+            if nx != dx or ny != dy: perim += 1
+            
             #if isboundary(grid, a, b, garden
         
     
