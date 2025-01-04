@@ -403,34 +403,28 @@ x = 0
 y = 1
 b=[-1]*4
 n = 0
+'''
+NOTE: I used trial and error to determine which of the z digits
+7, 13, 18 and 26 needed wires swapped.  I knew these were the
+problematic wires by looking at the error computed and noticed
+the errors were always a sum of 2^7, 2^13, 2^18 and 2^26
+'''
 setswaps('bjm', 'z07')
 setswaps('z13','hsw')
 setswaps('z18','skf')
 setswaps('nvr','wkr')
 '''
-setswaps('z26','nvr')
-'''
-'''
-y18 AND x18 -> z18
-y18 XOR x18 -> qjc
-bgt XOR qjc -> skf
-bgt AND qjc -> tgm
-jct OR gms -> bgt
-tgm OR skf -> rrq
+set A, B, C, D, E and F the wire names of the z bit in question
+Setting N below will select one of the wire swaps
+Coninue to increase N until that bit error is removed
 
-x26 XOR y26 -> nvr
-y26 AND x26 -> wkr
-frt OR nvr -> bpb
-qkf AND wkr -> frt
-qkf XOR wkr -> z26
-
-'''
 A='z26'
 B='nvr'
 C='wkr'
 D='bpb'
 E='frt'
 F='frt'
+'''
 
 '''
 z18
