@@ -103,7 +103,65 @@ def perim(s):
         if (x, y-1) not in s: p += 1
         if (x, y+1) not in s: p += 1
     return p
-
+#
+# s is a set of contiguous x,y parameters that form 
+# a contiguous garden.  if x,y in s, then at least 
+# one of x-1,y, x+1,y x,y-1 and x,y+1 are in s
+#
+def linperim(s):
+    p = 0
+    minx = 1000
+    maxx = 0
+    miny = 1000
+    maxy = 0
+    xset=set()
+    yset=set()
+    l = 0
+    for (x, y) in s:
+        minx = min(x, minx)
+        maxx = max(x, maxx)
+        miny = min(y, miny)
+        maxy = max(y, maxy)
+    started = False
+    xlist = set()
+    ylist = set()
+    for x in range(minx, maxx+1):
+        for y in range(miny, maxy+1):
+            if (x,y) in s:
+                yset.add((x,y))
+                if not started: 
+                    if not (x,y-1) in s:
+                        ylist.add((x,y))
+                        l += 1
+                started = True
+            else:
+                if started: 
+                    if (x,y-1) in s:
+                        ylist.add((x,y))
+                        l += 1
+                started = False
+    started = False
+    for y in range(miny, maxy+1):
+        for x in range(minx, maxx+1):
+            if (x,y) in s:
+                print('X', end="")
+                if not started:
+                     if not (x-1,y) in s: 
+                        xlist.add((x,y))
+                        l += 1
+                started = True
+            else:
+                if started: 
+                     if (x-1,y) in s: 
+                        xlist.add((x,y))
+                        l += 1
+                print(' ', end="")
+                started = False
+        print()
+    print("Linear perim: ", l)
+    print("Add list X: ", xlist, "  Y: ", ylist)
+    return l
+        
 def surrounded(s, x, y):
     p = 0
     if (x+1, y) in s: p += 1
@@ -411,6 +469,105 @@ def getboundaries(s):
             bset.remove(b)
     print("getboundaries: ", turns)
     
+
+def match(grid, x1, y1, x2, y2):
+    if valid(x1, y1) and valid(x2, y2):
+        if grid[x1][y1] == grid[x2][y2]: return True
+    return False
+
+#
+# returns perimeter, linear perimeter, and flag indicating it is contained by
+# another gardern (which means its linear perimeter should be doubled when
+# looking for fencing 
+# linear perimeter counts the number of turns
+#
+## edge till always be on the 'right' side of traversal
+## travel       delta     edge    delta
+## dir  dx  dy  index    ex  ey   index
+##  E   1   0     0      0    1     1
+##  S   0   1     1     -1    0     2
+##  W  -1   0     2      0   -1     3
+##  N   0  -1     3      1    0     0
+##
+##  if x,y,dx,dy is valid (x,y) is a member of garden
+##                        and x+ex, y+ey is NOT a member of garden
+##                        if e+ex, y+ey is NOT a match with the current edge
+##                        set internal to False (for good)
+##     jump to x+dx, y+dy, add perim
+##  else
+##     jump back to x-dy y-dy, turn right, add linperime
+def ptrack(grid, x, y):
+    deltas = ((1,0),(0,1),(-1,0),(0,-1))
+    visited={}
+    garden = grid[x][y]
+    start_index = -1
+    skip = True
+    print("*****  ptrack:  x,y: ", x, y, "  garden: ", grid[x][y])
+    #
+    # find proper starting direction and boundary garden
+    #
+    for i, (dx,dy) in enumerate(deltas):
+        if (grid[x][y] != grid[x+dx][y+dy]): 
+            boundary_garden = grid[x+dx][y+dy]
+            start_index = i
+    
+    if start_index < 0: 
+        print("ptrack error: ", x, y)
+        return 0, 0, False
+    # starting point:
+    start  = (x,y,start_index)
+    path = [(x, y, start_index, True, 1, 1)]
+    # (x,y) the point to be visited
+    # start_index (dx,dy) the direction of travel
+    # True originally indicates the track is completely contained
+    # path[3] is the total perimeter
+    # path[4] is the linear perimeter
+    while path:
+        (x,y,di,contained,perim,linperim) = path.pop()
+        print("   >>> ", x, y, di, contained, perim, linperim)
+        if not skip and (x,y,di) == start: 
+            return perim, linperim, contained
+        skip = False
+        # have we exited the garden?
+        dx, dy = deltas[di]
+        if not valid(x,y,di) or grid[x][y] != garden:
+            path.append((x-dx,y-dy,(di+1)%4,contained,perim,linperim+1))
+        else:
+            if (x,y,di) in visited: continue
+            visited.add((x,y,di))
+        nx = x+dx
+        ny = y+dy
+        ex,ey = deltas[(di+1)%4]
+        ex += nx
+        ey += ny
+        #
+        # if next grid point is in our garden 
+        # AND if the edge point is not in our garden 
+        # - the full perimeter is incremented but
+        # the linear perimeter is not
+        # ELSE the edge point is in our garden which means
+        # we'll turn and increment both total and linear perim
+        if grid[nx][ny] == garden:
+            if grid[ex][ey] != garden:
+                path.append((nx, ny, di, 
+                        (grid[ex][ey] == boundary_garden) and contained,
+                        perim + 1, linperim))
+            else:
+                path.append((nx, ny, (di+1)%4, 
+                        contained,
+                        perim + 1, linperim + 1))
+        #
+        # if next grid point is not in our garden we move back and rotate
+        # right the direction of the 'probe'  this would increate the linear
+        # permiteter, but not affect the overall perimeter
+        #
+        else:
+             path.append((x, y, (di+1)%4, 
+                    contained,              # i don't think containment is changed
+                    perim, linperim + 1))
+        
+
+        
 s = set()
 done = False
 part1 = 0
@@ -424,6 +581,7 @@ while not done:
     if x >= 0 and y >= 0:
         # get all points (s) that make up selected garden
         perset(s, grid[x][y], x, y)
+
         # mark each point in garden as having been selected
         for a in s:
             sval = a
@@ -432,51 +590,17 @@ while not done:
         #print(sval, len(s), sum(sum(selected)), flush = True) 
         per1 = perim(s)
         part1 += per1 * len(s)
-        sds = sides2(s)
+        sds = linperim(s)
         part2 += sds * len(s)
         getboundaries(s)
         print(sval, chr(grid[sval]), " Area: ", len(s), "  Sides: ", sds, " = ", len(s) * sds,"    Perim: ", per1, flush=True)
         print(ij,"-->", testSoln[ij])
         ij += 1
+        # p, lp, contained = ptrack(grid, x, y)
+        # print("Perim: ", p, "  linear perim: ", lp, "   contained: ", contained)
     else:
         done = True
 
-def match(grid, x1, y1, x2, y2):
-    if valid(x1, y1) and valid(x2, y2):
-        if grid[x1][y1] == grid[x2][y2]: return True
-    return False
-
-#
-# returns perimeter, linear perimeter, and flag indicating it is contained by
-# another gardern (which means its linear perimeter should be doubled when
-# looking for fencing 
-#
-def ptrack(grid, x, y):
-    visited={}
-    garden = grid[x][y]
-    tf, dx, dy = isboundary(grid, x, y)
-    if not tf: 
-        print("ptrack error: ", x, y)
-        return
-    
-    # (x,y) the point to be visited
-    # (dx,dy) the direction of last travel (0,0) indicates next
-    # point is always in line
-    # True originally indicates the track is completely contained
-    path = queue((x,y,dx,dy,True,4))
-    while path:
-        (x,y,dx,dy,ext,perim) = path.pop()
-        if not valid(x,y): continue
-        if (x,y) in visited: continue
-        visited.add((x,y))
-        for nx, ny in [(0,1),(0,-1),(1,0),(-1,0)]:
-            a = x + nx
-            b = y + ny
-            if nx != dx or ny != dy: perim += 1
-            
-            #if isboundary(grid, a, b, garden
-        
-    
 
 print("Part 1: total price of fencing is: ", part1)
 print("Part 2: total price of fencing is: ", part2)
