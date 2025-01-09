@@ -22,7 +22,14 @@ def process(line):
         grid[i][ymax] = h
     ymax += 1
 
-DELTAS = [(1,0),(-1,0),(0,1),(0,-1)]
+NORTH=0
+EAST=1
+SOUTH=2
+WEST=3
+
+DELTAS = [(0,-1),(1,0),(0,1),(-1,0)]
+deltax = [0,1,0,-1]
+deltay = [-1,0,1,0]
 #
 # isboundary will determine if x+/-1 or y+/-1 is different from x,y
 # the delta is
@@ -103,6 +110,35 @@ def perim(s):
         if (x, y-1) not in s: p += 1
         if (x, y+1) not in s: p += 1
     return p
+
+       
+
+def edge(nesw, x, y):
+    nx = x + DELTAS[nesw][0]
+    ny = y + DELTAS[nesw][1]
+    if nx < 0 or nx >= xmax: return True
+    if ny < 0 or ny >= ymax: return True
+    if grid[nx][ny] != grid[x][y]: return True
+    return False
+    
+def pset(s):
+    xx = yx = 0 
+    xn = yn = 1000
+    for x,y in s:
+        xx = max(x, xx)
+        yx = max(y, yx)
+        xn = min(x, xn)
+        yn = min(y, yn)
+    for y in range(yn, yx+1):
+        for x in range(xn, xx+1):
+            if (x,y) in s:
+                print(chr(grid[x][y]), end="")
+            else:
+                print(" ", end="")
+        print()
+    return xn, xx, yn, yx
+ 
+    
 #
 # s is a set of contiguous x,y parameters that form 
 # a contiguous garden.  if x,y in s, then at least 
@@ -110,18 +146,65 @@ def perim(s):
 #
 def linperim(s):
     p = 0
-    minx = 1000
-    maxx = 0
-    miny = 1000
-    maxy = 0
+
     xset=set()
     yset=set()
     l = 0
+    ##
+    ## find the starting point: 
+    ##
+    startx = starty = 1000
     for (x, y) in s:
-        minx = min(x, minx)
-        maxx = max(x, maxx)
-        miny = min(y, miny)
-        maxy = max(y, maxy)
+        if startx > x:
+            startx = x
+            starty = y
+        elif startx == x and starty > y:
+            starty = y
+    print("Start x/y: ", startx, starty)
+    xn,xx,yn,yx = pset(s)
+    used={}
+    curdir = SOUTH
+    predir = (curdir+2) % 4
+    done = False
+    x = startx
+    y = starty
+    
+    while not done:
+        prevp = (x + deltax[predir], y + deltay[predir])
+        nextp = (x + deltax[curdir], y + deltay[curdir])
+        if not nextp in s:
+            print("A Edge counted: ", x,y)
+            l += 1
+            (x,y) = prevp
+            curdir = (curdir + 1) % 4
+            predir = (curdir + 2) % 4
+        elif (x,y) in s:
+            if not prevp in s:
+                print("B Edge counted: ", x,y)
+                l += 1
+            (x,y) = nextp
+        else:
+            (x,y) = prevp
+            print("C Edge counted: ", x,y)
+            l += 1
+            curdir = (curdir + 1) % 4
+            predir = (curdir + 2) % 4
+        if (x,y) == (startx, starty): done = True
+    # for x,y in s:
+        # if edge(EAST, x, y): l+= 1
+        # if x > 0 and x < xmax:
+            # if grid[x-1][y] == grid[x+1][y]:
+                # l += 0
+            # else:
+                # l += 1
+        # if y > 0 and y < ymax:
+            # if grid[x][y-1] == grid[x][y+1]:
+                # l += 0
+            # else:
+                # l += 1
+    print("Linear perim: ", l)
+    return l
+    
     started = False
     xlist = set()
     ylist = set()
@@ -144,16 +227,16 @@ def linperim(s):
     for y in range(miny, maxy+1):
         for x in range(minx, maxx+1):
             if (x,y) in s:
-                print('X', end="")
+                print(chr(grid[x][y]), end="")
                 if not started:
                      if not (x-1,y) in s: 
-                        xlist.add((x,y))
+                        ylist.add((x,y))
                         l += 1
                 started = True
             else:
                 if started: 
                      if (x-1,y) in s: 
-                        xlist.add((x,y))
+                        ylist.add((x,y))
                         l += 1
                 print(' ', end="")
                 started = False

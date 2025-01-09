@@ -11,6 +11,7 @@ WID=3
 BIDL=10
 BIDR=11
 debug = False
+nmoves = 0
 
 def chid(c):
     if c == EMPTY: return EID
@@ -44,11 +45,38 @@ Rpos = [0,0]
 import numpy as np
 import copy
 
-grid = np.zeros([150,150], dtype = int)
-
+MAXY=50
+MAXX=100
+grid = np.zeros([MAXX,MAXY], dtype = int)
+ogrid = np.zeros([MAXX,MAXY], dtype = int)
 ymax = 0
 xmax = 0
 
+def copygrid(a, b): # copy b into a
+    for i in range(MAXX):
+        for j in range(MAXY):
+            a[i][j] = b[i][j]
+
+def diffgrid(a, b):
+    ulx = uly = 1000
+    lrx = lry = 0
+    for i in range(MAXX):
+        for j in range(MAXY):
+            if a[i][j] !=  b[i][j] :
+                ulx = min(i, ulx)
+                uly = min(j, uly)
+                lrx = max(i, lrx)
+                lry = max(j, lry)
+    print("Move: ", nmoves)
+    for j in range(uly-1, lry+2):
+        for i in range(ulx-1, lrx+2):
+            print(idch(a[i][j]), end="")
+        print("  ", end="")
+        for i in range(ulx-1, lrx+2):
+            print(idch(b[i][j]), end="")
+        print()
+    print()
+                
 def valid(x,y):
     if x < 0 or x >= xmax: return False
     if y < 0 or y >= ymax: return False
@@ -197,7 +225,7 @@ def moveboxes(r, d):
         return True
 
 def moveRobot(a):
-    global Rpos, grid
+    global Rpos, grid, ogrid
     delta = deltas[a]
     npos = posadd(Rpos, delta)
     if debug: print(a," Robot moves from: ", Rpos, " To: ", npos, "  Delta: ", delta, " Grid: ", grid[npos[0]][npos[1]], BIDL)
@@ -210,16 +238,19 @@ def moveRobot(a):
             Rpos[0] = npos[0]
             Rpos[1] = npos[1]
     
-
 def processMoves(line):
-    global debug
+    global debug, nmoves
     m = 0
+    copygrid(ogrid,grid)
     for a in line.strip():
         moveRobot(a)
         m += 1
+        nmoves += 1
         if m < 28 and m > 32: debug = False
         else: debug = False
         if debug: pgrid(m)
+        diffgrid(ogrid, grid)
+        copygrid(ogrid,grid)
 
 def pgrid(m):
     global grid, ymax, xmax
@@ -231,7 +262,7 @@ def pgrid(m):
         print()
         
 Pgrid = True
-for l in open('data.txt'):
+for l in open('test.txt'):
     if len(l) < 3: 
         Pgrid = False
         if debug: pgrid(0)
@@ -263,9 +294,10 @@ def setrpos(x, y):
         Rpos = [x,y]
         grid[Rpos[0], Rpos[1]] = RID
         print("Robot position moved to ", Rpos)
-
-setrpos(61, 32)
-pgrid(101)
-moveRobot('<')
-moveRobot('^')
-pgrid(102)
+print("Total moves: ", nmoves)
+# setrpos(61, 32)
+# pgrid(101)
+# moveRobot('<')
+# pgrid(102)
+# moveRobot('^')
+# pgrid(103)
