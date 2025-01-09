@@ -54,6 +54,17 @@ def valid(v, x, y):
 import heapq
 from collections import deque
 
+   
+def corner(s):
+    xx = yx = 0 
+    xn = yn = 1000
+    for x,y in s:
+        xx = max(x, xx)
+        yx = max(y, yx)
+        xn = min(x, xn)
+        yn = min(y, yn)
+    return xx,yx,xn,yn
+
 def perset(s, v, x, y):
     global selected
     s.clear()
@@ -71,7 +82,7 @@ def perset(s, v, x, y):
         q.append((v, x, y+1))
         q.append((v, x, y-1))
         #q.append((v, x, y-1))
-
+    return corner(s)
 
     
 
@@ -172,8 +183,13 @@ def linperim(s):
     while not done:
         prevp = (x + deltax[predir], y + deltay[predir])
         nextp = (x + deltax[curdir], y + deltay[curdir])
-        if not nextp in s:
-            print("A Edge counted: ", x,y)
+        if (x,y) in s:
+            if not prevp in s:
+                print("B Edge counted: ", x,y, " next: ", nextp)
+                l += 1
+            used.add((x,y))
+            (x,y) = nextp
+        elif not nextp in s:
             found = False
             while not found:
                 curdir = (curdir + 1) % 4
@@ -182,12 +198,7 @@ def linperim(s):
                 if nextp in s  and  nextp not in used: found = True
             used.add((x,y))
             l += 1
-            (x,y) = nextp
-        elif (x,y) in s:
-            if not prevp in s:
-                print("B Edge counted: ", x,y)
-                l += 1
-            used.add((x,y))
+            print("A Edge counted: ", x,y, " next: ", nextp)
             (x,y) = nextp
         else:
             (x,y) = prevp
@@ -672,7 +683,7 @@ while not done:
     s.clear()
     if x >= 0 and y >= 0:
         # get all points (s) that make up selected garden
-        perset(s, grid[x][y], x, y)
+        ulx, uly, lrx, lry = perset(s, grid[x][y], x, y)
 
         # mark each point in garden as having been selected
         for a in s:
@@ -682,9 +693,11 @@ while not done:
         #print(sval, len(s), sum(sum(selected)), flush = True) 
         per1 = perim(s)
         part1 += per1 * len(s)
-        sds = linperim(s)
-        part2 += sds * len(s)
-        getboundaries(s)
+        #sds = linperim(s)
+        perim, linperim, contained = ptrack(grid, ulx, uly)
+
+        part2 += linperim * len(s)
+        #getboundaries(s)
         print(sval, chr(grid[sval]), " Area: ", len(s), "  Sides: ", sds, " = ", len(s) * sds,"    Perim: ", per1, flush=True)
         print(ij,"-->", testSoln[ij])
         ij += 1
