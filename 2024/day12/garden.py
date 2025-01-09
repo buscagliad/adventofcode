@@ -162,7 +162,7 @@ def linperim(s):
             starty = y
     print("Start x/y: ", startx, starty)
     xn,xx,yn,yx = pset(s)
-    used={}
+    used=set()
     curdir = SOUTH
     predir = (curdir+2) % 4
     done = False
@@ -174,22 +174,31 @@ def linperim(s):
         nextp = (x + deltax[curdir], y + deltay[curdir])
         if not nextp in s:
             print("A Edge counted: ", x,y)
+            found = False
+            while not found:
+                curdir = (curdir + 1) % 4
+                predir = (curdir + 2) % 4
+                nextp = (x + deltax[curdir], y + deltay[curdir])
+                if nextp in s  and  nextp not in used: found = True
+            used.add((x,y))
             l += 1
-            (x,y) = prevp
-            curdir = (curdir + 1) % 4
-            predir = (curdir + 2) % 4
+            (x,y) = nextp
         elif (x,y) in s:
             if not prevp in s:
                 print("B Edge counted: ", x,y)
                 l += 1
+            used.add((x,y))
             (x,y) = nextp
         else:
             (x,y) = prevp
+            used.add((x,y))
             print("C Edge counted: ", x,y)
             l += 1
             curdir = (curdir + 1) % 4
             predir = (curdir + 2) % 4
-        if (x,y) == (startx, starty): done = True
+        if (x,y) == (startx, starty): 
+            print("Done at ", x, y)
+            done = True
     # for x,y in s:
         # if edge(EAST, x, y): l+= 1
         # if x > 0 and x < xmax:
