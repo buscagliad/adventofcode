@@ -158,7 +158,6 @@ from collections import deque
 
 grid = np.zeros([150,150], dtype = int)
 selected = np.zeros([150,150], dtype = int)
-used = np.zeros([150,150], dtype = int)
 
 ymax = 0
 xmax = 0
@@ -182,8 +181,6 @@ WEST=3
 DIR=["NORTH","EAST","SOUTH","WEST"]
 DELTAS = [(0,-1),(1,0),(0,1),(-1,0)]
 
-deltax = [0,1,0,-1]
-deltay = [-1,0,1,0]
 
 
 def valid(v, x, y):
@@ -234,21 +231,7 @@ def getcoord(s):
                 return x, y
     return -1, -1
 
-#
-# s is a set of contiguous x,y parameters that form 
-# a contiguous garden.  if x,y in s, then at least 
-# one of x-1,y, x+1,y x,y-1 and x,y+1 are in s
-#
-def perim(s):
-    p = 0
-    for (x, y) in s:
-        if (x+1, y) not in s: p += 1
-        if (x-1, y) not in s: p += 1
-        if (x, y-1) not in s: p += 1
-        if (x, y+1) not in s: p += 1
-    return p
 
-   
     
 def pset(s):
     xx = yx = 0 
@@ -284,6 +267,12 @@ def getedges(x,y,s):
             rv.append(di)
     return rv
             
+def countfences(fences):
+    num = 0
+    for xy, fs in fences.items():
+        if DEBUG: print(xy, " fence directions: ", fs)
+        num += len(fs)
+    return num
 
 def getfences(s):
     rv = {}
@@ -350,14 +339,12 @@ while not done:
             sval = a
             selected[a] = 1
         if DEBUG: pset(s)
-        per1 = perim(s)
-        part1 += per1 * len(s)
         fences = getfences(s)
+        part1 += countfences(fences) * len(s)
         linperim = trimfences(fences)
         part2 += linperim * len(s)
     else:
         done = True
-
 
 print("Part 1: total price of fencing is: ", part1)
 print("Part 2: total price of fencing is: ", part2)
