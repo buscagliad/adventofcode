@@ -10,8 +10,19 @@ WID=3
 
 BIDL=10
 BIDR=11
-debug = False
+debug = True
 nmoves = 0
+
+
+def countboxes(g, xm, ym):
+    boxcount = errcount = 0
+    for y in range(ym):
+        for x in range(xm):
+            if g[x][y] == BIDL:
+                boxcount += 1
+                if g[x+1][y] != BIDR:
+                    errcount += 1
+    return boxcount, errcount
 
 def chid(c):
     if c == EMPTY: return EID
@@ -57,7 +68,7 @@ def copygrid(a, b): # copy b into a
         for j in range(MAXY):
             a[i][j] = b[i][j]
 
-def diffgrid(a, b):
+def diffgrid(a, b, mv):
     ulx = uly = 1000
     lrx = lry = 0
     for i in range(MAXX):
@@ -67,7 +78,7 @@ def diffgrid(a, b):
                 uly = min(j, uly)
                 lrx = max(i, lrx)
                 lry = max(j, lry)
-    print("Move: ", nmoves)
+    print("Move: ", nmoves, mv)
     for j in range(uly-1, lry+2):
         for i in range(ulx-1, lrx+2):
             print(idch(a[i][j]), end="")
@@ -119,30 +130,35 @@ def possub(p, d):
 #  0    clear and can move up
 #  >=1  1 or more boxes encountered
 # NOTE: xl..xr from y-1 are dense boxes containing only [] no walls or empties
+#       |xr - xl| < 2
 def isclear(xl,xr,y):
     nboxes = 0
     boxes = False   # set to True if a box is encountered
+    Left = (xl-1,xl,y)
+    addLeft = False
+    Mid = (xl,xr,y)
+    addMid = False
+    Right = (xr, xr+1, y)
+    addRight = False
+    if abs(xr - xl) > 1: 
+        print("ERROR - cannot exceed 1 delta: ", xl, xr, y)
+        return [(-1,-1,-1)]
     for x in range(xl, xr+1):
-        if grid[x][y] == WID: return [(-1,-1,-1)]
+        ## return 'blocked' if a wall is encountered
+        if grid[x][y] == WID: return [(-1,-1,-1)]  
+        ## if any of the grid points above are not empty, they must be boxes
         if grid[x][y] != EID: boxes = True
     if boxes:   # we encountered boxes:
         if debug: print("isclear: found boxes")
+        blist = []
         if grid[xl][y] == BIDR:  # then the left part needs to be included
-            xl -= 1
+            blist.append((xl-1,xl,y))
             if debug: print("isclear: xl / y: ", xl, y, "  grid: ", grid[xl][y])
         if grid[xr][y] == BIDL:  # then the right part needs to be included
-            xr += 1
+            blist.append((xl,xl+1,y))
             if debug: print("isclear: xr / y: ", xr, y, "  grid: ", grid[xr][y])
-        while grid[xl][y] == EID: xl += 1
-        while grid[xr][y] == EID: xr -= 1
-        bxl = -1
-        bxr = -1
-        blist = []
-        for x in range(xl, xr+1):
-            if bxl < 0 and grid[x][y] == BIDL: bxl = x
-            if grid[x][y] == EID or x == xr:
-                blist.append((bxl,x,y))
-                bxl = -1
+        if grid[xl][y] == BIDL:
+            blist.append((xl,xr,y))
         return blist
     return [(0,0,0)]
 
@@ -159,7 +175,7 @@ def vertmove(xl, xr, yf, yt):
 # moving up or down - need to look at 'connected'
 # boxes
 def moveboxes(r, d):
-    global grid
+    global grid, debug
     cboxes = 0
     p = posadd(r, d)
     if debug: print("moveboxes: ", r, d)
@@ -190,7 +206,7 @@ def moveboxes(r, d):
         nclr = []
         #print("VERTICAL")
         ulist.append((xl, xr, y))
-        while not done:
+        while clr:
             if debug: print("top of while loopwith: xl-xr = ", xl, xr, " y:", y)
             clrcount = 0
             for (xl, xr, y) in clr:
@@ -203,29 +219,24 @@ def moveboxes(r, d):
                 for nc in nclr:
                     if nc == (-1, -1, -1):
                         return False
-                    if nc == (0, 0, 0):
-                        clrcount += 1
-                    else:
-                        ulist.append(nc)
-                if clrcount == len(nclr):
-                    done = True
-                    break
+                    if not nc == (0, 0, 0):
+                        if not nc in ulist:
+                            ulist.append(nc)
             clr = copy.deepcopy(nclr)
-            #y += d[1]
                     
         #
         # if we get here, the list ulist is a full set of all
         # move (up or down) operations, the list was created 
         # starting at the robot, we will traverse the list
         # in reverse order
-        #        
+        #
         for (xl, xr, y) in reversed(ulist):
             if debug: print("calling vertmove with: xl xr: ", xl, xr, " y0 y1", y, y+d[1])
             vertmove(xl, xr, y, y+d[1])
         return True
 
 def moveRobot(a):
-    global Rpos, grid, ogrid
+    global Rpos, grid, ogrid, debug
     delta = deltas[a]
     npos = posadd(Rpos, delta)
     if debug: print(a," Robot moves from: ", Rpos, " To: ", npos, "  Delta: ", delta, " Grid: ", grid[npos[0]][npos[1]], BIDL)
@@ -238,39 +249,40 @@ def moveRobot(a):
             Rpos[0] = npos[0]
             Rpos[1] = npos[1]
     
-def processMoves(line):
-    global debug, nmoves
+def processMoves(line, cb, ce):
+    global debug, nmoves, grid, ogrid
     m = 0
     copygrid(ogrid,grid)
     for a in line.strip():
         moveRobot(a)
         m += 1
         nmoves += 1
-        if m < 28 and m > 32: debug = False
-        else: debug = False
-        if debug: pgrid(m)
-        diffgrid(ogrid, grid)
+        #if m < 28 and m > 32: debug = False
+        #else: debug = False
+        if False:
+            ncb, nce = countboxes(grid, xmax, ymax)
+            if nce != ce or ncb != cb:
+                print("Grid: box count: ", ncb, "   errors: ", nce, " at move: ", nmoves)
+                exit(1)
+        if 19737 <= nmoves <= 19738:
+            debug = True
+        else:
+            debug = False
+        if debug: 
+            pgrid(m, a)
+            diffgrid(ogrid, grid, a)
         copygrid(ogrid,grid)
 
-def pgrid(m):
+def pgrid(m, a):
     global grid, ymax, xmax
-    print("Move ", m)
+    print("Move ", m, " : ", a)
     for y in range(ymax):
+        print("{:3d} ".format(y), end = "")
         for x in range(xmax):
             if (x,y) == Rpos: print('@', end="")
             else: print(idch(grid[x][y]), end="")
         print()
         
-Pgrid = True
-for l in open('test.txt'):
-    if len(l) < 3: 
-        Pgrid = False
-        if debug: pgrid(0)
-    if Pgrid:
-        processGrid(l)
-    else:
-        # print("Rpos: ", Rpos)
-        processMoves(l)
 
 def gps():
     global grid, xmax, ymax
@@ -280,10 +292,26 @@ def gps():
             if grid[x][y] == BIDL:
                 gsum += 100 * y + x
     return gsum
+    
+Pgrid = True
+for l in open('test.txt'):
+    if len(l) < 3: 
+        if Pgrid: 
+            cb, ce = countboxes(grid, xmax, ymax)
+            print("Grid: box count: ", cb, "   errors: ", ce)
+
+        Pgrid = False
+        if debug: pgrid(0,' ')
+    if Pgrid:
+        processGrid(l)
+    else:
+        # print("Rpos: ", Rpos)
+        processMoves(l, cb, ce)
 print(xmax,ymax)
 
 print("Part2: gps coord sum: ", gps())
 # 1482035 is too high
+countboxes(grid, xmax, ymax)
 
 def setrpos(x, y):
     global grid, Rpos
