@@ -127,14 +127,16 @@ def possub(p, d):
 # look to see if there are any blockers above them (walls)
 # isclear returns three values:
 # -1    a wall exists
-#  0    clear and can move up
+#  0    clear and can move up or down
 #  >=1  1 or more boxes encountered
-# NOTE: xl..xr from y-1 are dense boxes containing only [] no walls or empties
-#       |xr - xl| < 2
+# NOTE: xl..xr from y-1 are define the left/right edge of a box
+#       when referring to a robot:  xl == xr, thus
+#       xl - xr < 2
 def isclear(xl,xr,y):
     nboxes = 0
     boxes = False   # set to True if a box is encountered
-
+    if y <= 0 or y >= ymax - 1:
+        return [(-1,-1,-1)]
     if abs(xr - xl) > 1: 
         print("ERROR - cannot exceed 1 delta: ", xl, xr, y)
         return [(-1,-1,-1)]
@@ -180,7 +182,7 @@ def vertmove(xl, xr, yf, yt):
 # moving left or right is 'easy'
 # moving up or down - need to look at 'connected'
 # boxes
-def moveboxes(r, d):
+def moveboxes(r, d, a):
     global grid, debug
     cboxes = 0
     p = posadd(r, d)
@@ -194,9 +196,11 @@ def moveboxes(r, d):
         # p is now pointint to a WALL or and empty space EID
         if debug: print("cboxes: ", cboxes)
         if grid[p[0]][p[1]] == EID:
+            if debug: pgrid(nmoves, a)
             for k in range(cboxes+1, 0, -1):
                 grid[r[0]+k*d[0]][r[1]] = grid[r[0]+(k-1)*d[0]][r[1]]
             grid[r[0]][r[1]] = EID
+            if debug: pgrid(nmoves, a)
             return True
         else: # WALL
             return False
@@ -213,12 +217,13 @@ def moveboxes(r, d):
         ulist.append((xl, xr, y))
         done = False
         while not done:
-            if True or debug: print("top of while loopwith: xl-xr = ", xl, xr, " y:", y)
+            if debug: print("top of while loopwith: xl-xr = ", xl, xr, " y:", y)
             clrcount = 0
             for (xl, xr, y) in clr:
                 y += d[1]
                 if y < 1 or y >= ymax-1: 
                     #done = True
+                    return False
                     break
                 if debug: print("Calling isclear with: xl-xr = ", xl, xr, " y:", y)
                 nclr = isclear(xl, xr, y)
@@ -243,9 +248,13 @@ def moveboxes(r, d):
         # starting at the robot, we will traverse the list
         # in reverse order
         #
+        if debug and  len(ulist) > 0:
+            pgrid(nmoves, a)
         for (xl, xr, y) in reversed(ulist):
             if debug: print("calling vertmove with: xl xr: ", xl, xr, " y0 y1", y, y+d[1])
             vertmove(xl, xr, y, y+d[1])
+        if debug and len(ulist) > 0:
+            pgrid(nmoves, a)
         return True
 
 def moveRobot(a):
@@ -257,8 +266,9 @@ def moveRobot(a):
         grid[Rpos[0]][Rpos[1]] = EID
         Rpos = npos
         grid[Rpos[0]][Rpos[1]] = RID
+        if debug: pgrid(nmoves, a)
     elif grid[npos[0]][npos[1]] >= BIDL:
-        if moveboxes(Rpos, delta):
+        if moveboxes(Rpos, delta, a):
             Rpos[0] = npos[0]
             Rpos[1] = npos[1]
     
@@ -270,18 +280,18 @@ def processMoves(line, cb, ce):
         moveRobot(a)
         m += 1
         nmoves += 1
-        print(nmoves,flush=True)
+        #print(nmoves,flush=True)
         #if m < 28 and m > 32: debug = False
         #else: debug = False
-        if False:
+        if True:
             ncb, nce = countboxes(grid, xmax, ymax)
             if nce != ce or ncb != cb:
                 print("Grid: box count: ", ncb, "   errors: ", nce, " at move: ", nmoves)
                 exit(1)
-        # if 19737 <= nmoves <= 19738:
-            # debug = True
-        # else:
-            # debug = False
+        if 943 <= nmoves <= 944:
+            debug = True
+        else:
+            debug = False
         if debug: 
             pgrid(m, a)
             diffgrid(ogrid, grid, a)
@@ -308,11 +318,12 @@ def gps():
     return gsum
     
 Pgrid = True
-for l in open('test.txt'):
+for l in open('data.txt'):
     if len(l) < 3: 
         if Pgrid: 
             cb, ce = countboxes(grid, xmax, ymax)
             if debug: print("Grid: box count: ", cb, "   errors: ", ce)
+            print("Initial gps: ", gps())
 
         Pgrid = False
         if debug: pgrid(0,' ')
@@ -325,8 +336,7 @@ for l in open('test.txt'):
 print("Part2: gps coord sum: ", gps())
 # 1482035 is too high
 # 1443542 is too low
-countboxes(grid, xmax, ymax)
-
+pgrid(0,'X')
 def setrpos(x, y):
     global grid, Rpos
     if grid[x][y] != EID:
