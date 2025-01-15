@@ -10,7 +10,7 @@ WID=3
 
 BIDL=10
 BIDR=11
-debug = True
+debug = False
 nmoves = 0
 
 
@@ -134,15 +134,20 @@ def possub(p, d):
 def isclear(xl,xr,y):
     nboxes = 0
     boxes = False   # set to True if a box is encountered
-    Left = (xl-1,xl,y)
-    addLeft = False
-    Mid = (xl,xr,y)
-    addMid = False
-    Right = (xr, xr+1, y)
-    addRight = False
+
     if abs(xr - xl) > 1: 
         print("ERROR - cannot exceed 1 delta: ", xl, xr, y)
         return [(-1,-1,-1)]
+    if xr == xl:
+        if grid[xl][y] == BIDL:
+            return [(xl,xl+1,y)]
+        elif grid[xl][y] == BIDR:
+            return [(xl-1,xl,y)]
+        elif grid[xl][y] == WID: 
+            return [(-1,-1,-1)] 
+        else:
+            return [(0,0,0)]
+
     for x in range(xl, xr+1):
         ## return 'blocked' if a wall is encountered
         if grid[x][y] == WID: return [(-1,-1,-1)]  
@@ -153,12 +158,13 @@ def isclear(xl,xr,y):
         blist = []
         if grid[xl][y] == BIDR:  # then the left part needs to be included
             blist.append((xl-1,xl,y))
-            if debug: print("isclear: xl / y: ", xl, y, "  grid: ", grid[xl][y])
+            if debug: print("isclear: xl-1,xl / y: ", xl-1, xl, y, "  grid: ", grid[xl-1][y])
         if grid[xr][y] == BIDL:  # then the right part needs to be included
-            blist.append((xl,xl+1,y))
-            if debug: print("isclear: xr / y: ", xr, y, "  grid: ", grid[xr][y])
+            blist.append((xr,xr+1,y))
+            if debug: print("isclear: xl,xl+1 / y: ", xr, xr+1, y, "  grid: ", grid[xr][y])
         if grid[xl][y] == BIDL:
-            blist.append((xl,xr,y))
+            blist.append((xl,xl+1,y))
+            if debug: print("isclear: xl,xl+1: ", xl, xl+1, y, "  grid: ", grid[xl][y])
         return blist
     return [(0,0,0)]
 
@@ -198,7 +204,6 @@ def moveboxes(r, d):
     # moving up or down
     #
     else:
-        done = False
         ulist = []
         xl = xr = r[0]
         y = r[1]
@@ -206,24 +211,32 @@ def moveboxes(r, d):
         nclr = []
         #print("VERTICAL")
         ulist.append((xl, xr, y))
-        while clr:
-            if debug: print("top of while loopwith: xl-xr = ", xl, xr, " y:", y)
+        done = False
+        while not done:
+            if True or debug: print("top of while loopwith: xl-xr = ", xl, xr, " y:", y)
             clrcount = 0
             for (xl, xr, y) in clr:
                 y += d[1]
+                if y < 1 or y >= ymax-1: 
+                    #done = True
+                    break
                 if debug: print("Calling isclear with: xl-xr = ", xl, xr, " y:", y)
                 nclr = isclear(xl, xr, y)
                 if debug: print("nclr: ", nclr)
                 #
                 # if any 
+                ecnt = 0
                 for nc in nclr:
                     if nc == (-1, -1, -1):
                         return False
-                    if not nc == (0, 0, 0):
+                    if nc == (0,0,0):
+                        ecnt += 1
+                    else:
                         if not nc in ulist:
                             ulist.append(nc)
+                if ecnt == len(nclr): done = True
             clr = copy.deepcopy(nclr)
-                    
+            if len(nclr) == 0: done = True
         #
         # if we get here, the list ulist is a full set of all
         # move (up or down) operations, the list was created 
@@ -257,6 +270,7 @@ def processMoves(line, cb, ce):
         moveRobot(a)
         m += 1
         nmoves += 1
+        print(nmoves,flush=True)
         #if m < 28 and m > 32: debug = False
         #else: debug = False
         if False:
@@ -264,10 +278,10 @@ def processMoves(line, cb, ce):
             if nce != ce or ncb != cb:
                 print("Grid: box count: ", ncb, "   errors: ", nce, " at move: ", nmoves)
                 exit(1)
-        if 19737 <= nmoves <= 19738:
-            debug = True
-        else:
-            debug = False
+        # if 19737 <= nmoves <= 19738:
+            # debug = True
+        # else:
+            # debug = False
         if debug: 
             pgrid(m, a)
             diffgrid(ogrid, grid, a)
@@ -298,7 +312,7 @@ for l in open('test.txt'):
     if len(l) < 3: 
         if Pgrid: 
             cb, ce = countboxes(grid, xmax, ymax)
-            print("Grid: box count: ", cb, "   errors: ", ce)
+            if debug: print("Grid: box count: ", cb, "   errors: ", ce)
 
         Pgrid = False
         if debug: pgrid(0,' ')
@@ -307,10 +321,10 @@ for l in open('test.txt'):
     else:
         # print("Rpos: ", Rpos)
         processMoves(l, cb, ce)
-print(xmax,ymax)
 
 print("Part2: gps coord sum: ", gps())
 # 1482035 is too high
+# 1443542 is too low
 countboxes(grid, xmax, ymax)
 
 def setrpos(x, y):
@@ -322,7 +336,6 @@ def setrpos(x, y):
         Rpos = [x,y]
         grid[Rpos[0], Rpos[1]] = RID
         print("Robot position moved to ", Rpos)
-print("Total moves: ", nmoves)
 # setrpos(61, 32)
 # pgrid(101)
 # moveRobot('<')
