@@ -148,7 +148,7 @@ def isclear(xl,xr,y):
         elif grid[xl][y] == WID: 
             return [(-1,-1,-1)] 
         else:
-            return [(0,0,0)]
+            return []
 
     for x in range(xl, xr+1):
         ## return 'blocked' if a wall is encountered
@@ -168,7 +168,7 @@ def isclear(xl,xr,y):
             blist.append((xl,xl+1,y))
             if debug: print("isclear: xl,xl+1: ", xl, xl+1, y, "  grid: ", grid[xl][y])
         return blist
-    return [(0,0,0)]
+    return []
 
 #
 # vertmove will mv all xl to xr from yf to yt
@@ -177,6 +177,13 @@ def vertmove(xl, xr, yf, yt):
     for x in range(xl, xr+1):
         grid[x,yt] = grid[x,yf]
         grid[x,yf] = EID
+
+def revsort(ul, direction):
+    rl = sorted(ul, key=lambda x: x[2])
+    if direction > 0:
+        return reversed(rl)
+    return rl
+    
 
 #
 # moving left or right is 'easy'
@@ -216,44 +223,43 @@ def moveboxes(r, d, a):
         #print("VERTICAL")
         ulist.append((xl, xr, y))
         done = False
-        while not done:
+        while clr:
+            (xl, xr, y) = clr.pop()
             if debug: print("top of while loopwith: xl-xr = ", xl, xr, " y:", y)
             clrcount = 0
-            for (xl, xr, y) in clr:
-                y += d[1]
-                if y < 1 or y >= ymax-1: 
-                    #done = True
+            y += d[1]
+            if y < 1 or y >= ymax-1: 
+                #done = True
+                return False
+                break
+            if debug: print("Calling isclear with: xl-xr = ", xl, xr, " y:", y)
+            nclr = isclear(xl, xr, y)
+            if debug: print("nclr: ", nclr)
+            #
+            # if any 
+            ecnt = 0
+            for nc in nclr:
+                if nc == (-1, -1, -1):
                     return False
-                    break
-                if debug: print("Calling isclear with: xl-xr = ", xl, xr, " y:", y)
-                nclr = isclear(xl, xr, y)
-                if debug: print("nclr: ", nclr)
-                #
-                # if any 
-                ecnt = 0
-                for nc in nclr:
-                    if nc == (-1, -1, -1):
-                        return False
-                    if nc == (0,0,0):
-                        ecnt += 1
-                    else:
-                        if not nc in ulist:
-                            ulist.append(nc)
-                if ecnt == len(nclr): done = True
-            clr = copy.deepcopy(nclr)
-            if len(nclr) == 0: done = True
+                if nc == (0,0,0):
+                    ecnt += 1
+                else:
+                    if not nc in ulist:
+                        clr.append(nc)
+                        ulist.append(nc)
         #
         # if we get here, the list ulist is a full set of all
         # move (up or down) operations, the list was created 
         # starting at the robot, we will traverse the list
         # in reverse order
         #
-        if debug and  len(ulist) > 0:
+        nulist = revsort(ulist, d[1])
+        if debug and  len(nulist) > 0:
             pgrid(nmoves, a)
-        for (xl, xr, y) in reversed(ulist):
+        for (xl, xr, y) in nulist:
             if debug: print("calling vertmove with: xl xr: ", xl, xr, " y0 y1", y, y+d[1])
             vertmove(xl, xr, y, y+d[1])
-        if debug and len(ulist) > 0:
+        if debug and len(nulist) > 0:
             pgrid(nmoves, a)
         return True
 
@@ -288,12 +294,12 @@ def processMoves(line, cb, ce):
             if nce != ce or ncb != cb:
                 print("Grid: box count: ", ncb, "   errors: ", nce, " at move: ", nmoves)
                 exit(1)
-        if 943 <= nmoves <= 944:
+        if 17978 <= nmoves <= 17979:
             debug = True
         else:
             debug = False
         if debug: 
-            pgrid(m, a)
+            pgrid(nmoves, a)
             diffgrid(ogrid, grid, a)
         copygrid(ogrid,grid)
 
