@@ -166,36 +166,157 @@ Group 2 contains 4434 units
 In the example above, the winning army ends up with 782 + 4434 = 5216 units.
 
 You scan the reindeer's condition (your puzzle input); the white-bearded man looks nervous. As it stands now, how many units would the winning army have?
+
+Your puzzle answer was 26914.
+--- Part Two ---
+
+Things aren't looking good for the reindeer. The man asks whether more milk and cookies would help you think.
+
+If only you could give the reindeer's immune system a boost, you might be able to change the outcome of the combat.
+
+A boost is an integer increase in immune system units' attack damage. For example, if you were to boost the above example's immune system's units by 1570, the armies would instead look like this:
+
+Immune System:
+17 units each with 5390 hit points (weak to radiation, bludgeoning) with
+ an attack that does 6077 fire damage at initiative 2
+989 units each with 1274 hit points (immune to fire; weak to bludgeoning,
+ slashing) with an attack that does 1595 slashing damage at initiative 3
+
+Infection:
+801 units each with 4706 hit points (weak to radiation) with an attack
+ that does 116 bludgeoning damage at initiative 1
+4485 units each with 2961 hit points (immune to radiation; weak to fire,
+ cold) with an attack that does 12 slashing damage at initiative 4
+
+With this boost, the combat proceeds differently:
+
+Immune System:
+Group 2 contains 989 units
+Group 1 contains 17 units
+Infection:
+Group 1 contains 801 units
+Group 2 contains 4485 units
+
+Infection group 1 would deal defending group 2 185832 damage
+Infection group 1 would deal defending group 1 185832 damage
+Infection group 2 would deal defending group 1 53820 damage
+Immune System group 2 would deal defending group 1 1577455 damage
+Immune System group 2 would deal defending group 2 1577455 damage
+Immune System group 1 would deal defending group 2 206618 damage
+
+Infection group 2 attacks defending group 1, killing 9 units
+Immune System group 2 attacks defending group 1, killing 335 units
+Immune System group 1 attacks defending group 2, killing 32 units
+Infection group 1 attacks defending group 2, killing 84 units
+
+Immune System:
+Group 2 contains 905 units
+Group 1 contains 8 units
+Infection:
+Group 1 contains 466 units
+Group 2 contains 4453 units
+
+Infection group 1 would deal defending group 2 108112 damage
+Infection group 1 would deal defending group 1 108112 damage
+Infection group 2 would deal defending group 1 53436 damage
+Immune System group 2 would deal defending group 1 1443475 damage
+Immune System group 2 would deal defending group 2 1443475 damage
+Immune System group 1 would deal defending group 2 97232 damage
+
+Infection group 2 attacks defending group 1, killing 8 units
+Immune System group 2 attacks defending group 1, killing 306 units
+Infection group 1 attacks defending group 2, killing 29 units
+
+Immune System:
+Group 2 contains 876 units
+Infection:
+Group 2 contains 4453 units
+Group 1 contains 160 units
+
+Infection group 2 would deal defending group 2 106872 damage
+Immune System group 2 would deal defending group 2 1397220 damage
+Immune System group 2 would deal defending group 1 1397220 damage
+
+Infection group 2 attacks defending group 2, killing 83 units
+Immune System group 2 attacks defending group 2, killing 427 units
+
+After a few fights...
+
+Immune System:
+Group 2 contains 64 units
+Infection:
+Group 2 contains 214 units
+Group 1 contains 19 units
+
+Infection group 2 would deal defending group 2 5136 damage
+Immune System group 2 would deal defending group 2 102080 damage
+Immune System group 2 would deal defending group 1 102080 damage
+
+Infection group 2 attacks defending group 2, killing 4 units
+Immune System group 2 attacks defending group 2, killing 32 units
+
+Immune System:
+Group 2 contains 60 units
+Infection:
+Group 1 contains 19 units
+Group 2 contains 182 units
+
+Infection group 1 would deal defending group 2 4408 damage
+Immune System group 2 would deal defending group 1 95700 damage
+Immune System group 2 would deal defending group 2 95700 damage
+
+Immune System group 2 attacks defending group 1, killing 19 units
+
+Immune System:
+Group 2 contains 60 units
+Infection:
+Group 2 contains 182 units
+
+Infection group 2 would deal defending group 2 4368 damage
+Immune System group 2 would deal defending group 2 95700 damage
+
+Infection group 2 attacks defending group 2, killing 3 units
+Immune System group 2 attacks defending group 2, killing 30 units
+
+After a few more fights...
+
+Immune System:
+Group 2 contains 51 units
+Infection:
+Group 2 contains 40 units
+
+Infection group 2 would deal defending group 2 960 damage
+Immune System group 2 would deal defending group 2 81345 damage
+
+Infection group 2 attacks defending group 2, killing 0 units
+Immune System group 2 attacks defending group 2, killing 27 units
+
+Immune System:
+Group 2 contains 51 units
+Infection:
+Group 2 contains 13 units
+
+Infection group 2 would deal defending group 2 312 damage
+Immune System group 2 would deal defending group 2 81345 damage
+
+Infection group 2 attacks defending group 2, killing 0 units
+Immune System group 2 attacks defending group 2, killing 13 units
+
+Immune System:
+Group 2 contains 51 units
+Infection:
+No groups remain.
+
+This boost would allow the immune system's armies to win! It would be left with 51 units.
+
+You don't even know how you could boost the reindeer's immune system or what effect it might have, so you need to be cautious and find the smallest boost that would allow the immune system to win.
+
+How many units does the immune system have left after getting the smallest boost it needs to win?
+
+Your puzzle answer was 862.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
 '''
-
-# Units within a group all have the same hit points (amount of damage a unit can 
-# take before it is destroyed), attack damage (the amount of damage each unit 
-# deals), an attack type, an initiative (higher initiative units attack first and 
-# win ties), and sometimes weaknesses or immunities. Here is an example group:
-
-# Immune System:
-# 8233 units each with 2012 hit points (immune to radiation) with an attack that does 2 fire damage at initiative 5
-# 2739 units each with 5406 hit points (immune to fire) with an attack that does 16 fire damage at initiative 3
-# 229 units each with 6782 hit points (weak to slashing) with an attack that does 260 cold damage at initiative 7
-# 658 units each with 12313 hit points with an attack that does 132 bludgeoning damage at initiative 4
-# 3231 units each with 1872 hit points (weak to slashing, cold) with an attack that does 5 bludgeoning damage at initiative 1
-# 115 units each with 10354 hit points (immune to fire, radiation, bludgeoning) with an attack that does 788 cold damage at initiative 2
-# 1036 units each with 9810 hit points (weak to radiation) with an attack that does 94 bludgeoning damage at initiative 8
-# 3389 units each with 6734 hit points with an attack that does 19 cold damage at initiative 18
-# 2538 units each with 5597 hit points (weak to slashing, radiation) with an attack that does 15 slashing damage at initiative 16
-# 6671 units each with 6629 hit points (immune to bludgeoning) with an attack that does 8 slashing damage at initiative 14
-
-# Infection:
-# 671 units each with 17509 hit points with an attack that does 52 cold damage at initiative 12
-# 7194 units each with 41062 hit points (immune to cold; weak to radiation) with an attack that does 11 bludgeoning damage at initiative 20
-# 1147 units each with 37194 hit points (weak to radiation, fire) with an attack that does 56 slashing damage at initiative 11
-# 569 units each with 27107 hit points (weak to slashing, bludgeoning) with an attack that does 93 slashing damage at initiative 17
-# 140 units each with 19231 hit points (immune to slashing; weak to bludgeoning) with an attack that does 247 slashing damage at initiative 19
-# 2894 units each with 30877 hit points (immune to radiation, bludgeoning) with an attack that does 15 radiation damage at initiative 10
-# 1246 units each with 8494 hit points (weak to fire) with an attack that does 12 bludgeoning damage at initiative 9
-# 4165 units each with 21641 hit points (weak to radiation; immune to fire) with an attack that does 10 radiation damage at initiative 6
-# 7374 units each with 24948 hit points (weak to cold) with an attack that does 5 fire damage at initiative 13
-# 4821 units each with 26018 hit points with an attack that does 10 fire damage at initiative 15
 
 NONE = 0x00
 FIRE = 0x01
@@ -204,11 +325,19 @@ SLASHING = 0x04
 COLD = 0x08
 BLUDGE = 0x10
 
-GTYPE = ""
 
 SELECT = 1
 ATTACK = 2
-mode = SELECT
+
+#
+# global variables:
+#
+GTYPE = ""
+
+Mode = SELECT
+ImmuneSystem = []
+Infection = []
+N = []
 
 def getPower(dtype):
     if dtype == "fire": return FIRE
@@ -259,7 +388,7 @@ def parse(l):
         
 
 class group:
-    def __init__(self, line):
+    def __init__(self, line, boost = 0):
         self.units = 0
         self.hitpoints = 0
         
@@ -284,18 +413,20 @@ class group:
         ##
         ## damage
         ##
-        self.damage = int(w[12])
+        self.damage = int(w[12]) + boost
         self.damage_type = getPower(w[13])
         self.id = GTYPE
-        self.power=self.damage*self.damage
+        self.power=self.damage*self.units
         self.attacks = None
         self.attackPower = 0
+        self.selected = False
     def __lt__(self, other):
-        if mode == SELECT:
+        global Mode
+        if Mode == SELECT:
             if ((self.power) > (other.power)): return True
             if (self.power == other.power and
                 self.initiative > other.initiative): return True
-        if mode == ATTACK:
+        if Mode == ATTACK:
             if self.initiative > other.initiative: return True
         return False
     def attackdamage(self, other):
@@ -304,19 +435,18 @@ class group:
         if self.damage_type & other.weak: mult = 2
         if self.damage_type & other.immunity: mult = 0
         return odmg * mult
-    def setattack(self, toAttack, toPower):
-        self.attacks = toAttack
-        self.attackPower = toPower
-    def attack(self):
-        damage = self.attackdamage(self.attacks)
-        nu0 = self.attacks.units
-        self.attacks.attacked(damage)
-        nu1 = self.attacks.units
-        print(self.id, " attacks ", self.attacks.id, " killing ", nu0 - nu1, " units.")
-    def attacked(self, damage):
-        k = damage // self.hitpoints
-        self.units -= k
-        if self.units < 0: self.units = 0
+  
+    def doattack(self, other):
+        damage = self.attackdamage(other)
+        k = (damage) // other.hitpoints
+        other.units -= k
+        if other.units < 0: other.units = 0
+        other.power = other.units * other.damage
+        #print(self.id, " attacks ", other.id, " killing ", k, " units, leaving: ", other.units)
+    def unitcost(self, other):
+        damage = self.attackdamage(other)
+        k = damage // other.hitpoints
+        return k
     def out(self):
         print(self.id, " ", self.units, " units ", self.hitpoints, " hit points ",  self.damage, dt(self.damage_type), "  power: ", self.power, "  initiative: ",self.initiative)
         print("    weak: ", dt(self.weak), "   immune: ", dt(self.immunity))
@@ -326,71 +456,121 @@ class group:
             print("  attack: ", self.attackdamage(self.attacks), "  hp: ", self.attacks.hitpoints, "   would kill ", kills, "units")
 
 
-ImmuneSystem = []
-Infection = []
+def init(fn, boost):
+    global ImmuneSystem, Infection, N, GTYPE
+    ImmuneSystem.clear()
+    Infection.clear()
+    for l in open(fn):
+        if (len(l) < 2): continue
+        if "Immune System" in l:
+            IS = True
+            n = 0
+            continue
+        if "Infection" in l:
+            IS = False
+            n = 0
+            continue
+        n += 1
+        if IS:
+            GTYPE = "ImmSys" + str(n)
+            ImmuneSystem.append(group(l, boost))
+        else:
+            GTYPE = "Infect" + str(n)
+            Infection.append(group(l))
+    N.clear()
+    for a in ImmuneSystem: N.append(a)
+    for b in Infection: N.append(b)
 
-for l in open('test.txt'):
-    if (len(l) < 2): continue
-    if "Immune System" in l:
-        IS = True
-        n = 0
-        continue
-    if "Infection" in l:
-        IS = False
-        n = 0
-        continue
-    n += 1
-    if IS:
-        GTYPE = "ImmSys" + str(n)
-        ImmuneSystem.append(group(l))
-    else:
-        GTYPE = "Infect" + str(n)
-        Infection.append(group(l))
 
-'''
-print("Immune")
-for a in ImmuneSystem:
-    a.out()
-print("Infection")
-for a in Infection:
-    a.out()
-'''
 #
 # Order will contain each group in the order of the attack (after
 # sorting
 #
-N = []
-N.clear()
-for a in ImmuneSystem: N.append(a)
-for b in Infection: N.append(b)
 
-nimm = 2
-ninf = 2
-while nimm > 0 and ninf > 0:
-    print("******************************")
-    mode = SELECT
-    N.sort()
+def test():
     for a in N:
         if a.units <= 0: continue
         for b in N:
-            if a is b or a.id[0:2] == b.id[0:2]: continue
+            
             if b.units <= 0 : continue
-            if a.attackdamage(b) > a.attackPower:
-                a.attacks = b
-                a.attackPower = a.attackdamage(b)
+            if b.selected : continue
+            if a is b or a.id[0:2] == b.id[0:2]: continue
+            #if a.unitcost(b) == 0: continue
+            print("0: ", a.id, " would deal ", b.id, a.attackdamage(b), " damage, killing ", a.unitcost(b))
+    exit(1)
 
-    mode = ATTACK
-    N.sort()
-    for n in N:
-        if n.units <= 0: continue
-        n.attack()
-    nimm = 0
-    ninf = 0
-    for n in N:
-        if n.id[0:3] == "Imm" and n.units > 0: 
-            nimm += n.units
-        elif n.id[0:3] == "Inf" and n.units > 0: ninf += n.units
-        if n.units > 0:
-            print(n.id, " has ", n.units, " units")
-        
-print("Part 1: winning army has ", max(nimm,ninf), " units")
+def runit(fn, delta = 0):
+    global ImmuneSystem, Infection, N, Mode
+    init(fn, delta)
+    nimm = 2
+    ninf = 2
+    while nimm > 0 and ninf > 0:
+        #print("******************************")
+        Mode = SELECT
+        N.sort()
+        #
+        # clear out all armies so they are not selected
+        for a in N:
+            a.selected = False
+            a.attacks = None
+            #if a.units <= 0: a.selected = True
+
+        for a in N:
+            if a.units <= 0: continue
+            for b in N:
+                if b.units <= 0 : continue
+                if b.selected : continue
+                if a is b or a.id[0:2] == b.id[0:2]: continue
+                if a.attacks is None:
+                    if a.attackdamage(b) > 0:
+                        a.attacks = b
+                        a.attackPower = a.attackdamage(b)
+                        #print("0: ", a.id, " would deal ", b.id, 
+                        # a.attackdamage(b), " damage, killing ", a.unitcost(b))
+                    continue
+                if a.attackdamage(b) > a.attackPower:
+                    a.attacks = b
+                    a.attackPower = a.attackdamage(b)
+            if a.attacks:
+                a.attacks.selected = True
+
+        Mode = ATTACK
+        N.sort()
+        for n in N:
+            if n.units <= 0: continue
+            if n.attacks:
+                #print(n.id, " attacks ", n.attacks.id, " with ", n.attacks.units, "units leaving: ", end = "")
+                n.doattack(n.attacks)
+                #print(n.attacks.units)
+        nimm = 0
+        ninf = 0
+        for n in N:
+            if n.id[0:3] == "Imm" and n.units > 0: 
+                nimm += n.units
+            elif n.id[0:3] == "Inf" and n.units > 0:
+                ninf += n.units
+            # if n.units > 0:
+                # print(n.id, " has ", n.units, " units")
+    if nimm > ninf:
+        return "Immune", nimm
+    return "Infect", ninf
+
+army, un = runit("data.txt")
+    
+print("Part 1: winning army is ", army, " with ", un, " units", flush = True)
+# 26037 is not correct
+# 26838 is too low
+
+#
+# Part 2:
+#
+p1army = army
+
+## by the way, trial and error on the boost number
+## anything lest than 47 causing a huge loop - not sure if it converged
+## but 48 worked
+
+d = 48
+army, un = runit("data.txt", d)
+print("Part 2: winning army: ", army, "  remain: ", un, flush = True)
+
