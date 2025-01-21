@@ -78,4 +78,79 @@ Finally, in this one, it's 8:
 The portly man nervously strokes his white beard. It's time to get that hot chocolate.
 
 How many constellations are formed by the fixed points in spacetime?
+
+Your puzzle answer was 407.
+--- Part Two ---
+
+A small glowing portal opens above the mug you prepared and just enough hot chocolate streams in to fill it. You suspect the reindeer has never encountered hot chocolate before, but seems to enjoy it anyway. You hope it works.
+
+It's time to start worrying about that integer underflow in time itself you set up a few days ago. You check the status of the device: "Insufficient chronal energy for activation. Energy required: 50 stars."
+
+The reindeer bumps the device with its nose.
+
+"Energy required: 49 stars."
+
+If you like, you can
+
+.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
 '''
+
+class fourd:
+    def __init__(self, l):
+        w = l.strip().split(',')
+        self.pos = [int(w[0]), int(w[1]), int(w[2]), int(w[3])]
+        self.const = False
+    def out(self):
+        print(self.pos, flush=True)
+    def dist(self, other):
+        d = 0
+        for i, a in enumerate(self.pos):
+            d += abs(a-other.pos[i])
+        return d
+    def used(self):
+        self.const = True
+
+pts = []
+for l in open('data.txt'):
+    g = fourd(l)
+    pts.append(g)
+
+def getconst(c, ps):
+    callagain = True
+    while callagain:
+        callagain = False
+        for g in ps:
+            if g.const: continue
+            for lc in c:
+                if lc.dist(g) <= 3:
+                    c.append(g)
+                    g.const = True
+                    callagain = True
+                    #print("adding: ", g.pos)
+                    break
+
+def countconst(pts):
+    n = 0
+    for p in pts:
+        if not p.const: n += 1
+    return n
+
+done = False
+ncon = 0
+while not done:
+    for p in pts:
+        if p.const: continue
+        p.const = True
+        g = [p]
+        #print("starting constellation: ", ncon+1, p.pos)
+        break
+    getconst(g, pts)
+    ncon += 1
+    #print(" Number of constellations: ", ncon)
+    if countconst(pts) == 0:
+        done = True
+    
+print("Part 1: number of constellations: ", ncon)
