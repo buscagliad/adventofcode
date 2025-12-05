@@ -5,12 +5,12 @@
 
 LEADERBOARD_ID=1528019
 
-AOC_YEAR=2024
+AOC_YEAR=2025
 
-SESSION_ID="53616c7465645f5fc89b4101d85034727927832a506bdde51eae8756dc2b4fa4102e1a7ea28b8f932e1da2fa8d9059a76e9d8fdc9c33327db1e4b81350177fa2"
+SESSION_ID="53616c7465645f5fec6901894b77427f221fe75d2027e64a36d0e5c49b9fd4a75034ae51b33b46244d79412d4045a512afcc183b08d59446d99d6eedb886002f"
 #SESSION_ID="53616c7465645f5fe1075caee106935556c92288b8170825def5692526b090ecd838cb49390485bef8cbcfe144c0e62251ba140db3e4d0e34a32d7b0d729a79d"
 ##
-## To update SESSION_ID - got private leaderboard, right click and select inspect
+## To update SESSION_ID - goto private leaderboard, right click and select inspect
 ## Select "Storage"
 ## I the table, see 'session', the ID there is the SESSION ID
 ##
