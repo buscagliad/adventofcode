@@ -3,8 +3,8 @@ ranges = []
 ings = []
 
 def overlap(r1, r2):
-    if r1[1] < r2[0]: return False
-    if r2[1] < r1[0]: return False
+    if r1[1] < r2[0]-1: return False
+    if r2[1] < r1[0]-1: return False
     return True
     
 def newranges(oldr):
@@ -59,6 +59,8 @@ m, nr = newranges(ranges)
 while m > 0:
     m, nr = newranges(nr)
     #print(m)
+
+print(nr)
 
 count = 0
 for r in nr:
