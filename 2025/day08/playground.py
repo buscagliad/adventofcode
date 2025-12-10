@@ -3,51 +3,36 @@ import numpy as np
 
 nodes = np.zeros((1000, 4), dtype=int)
 dists = np.zeros((1000, 1000), dtype=int)
-compare = np.zeros((1000, 1000), dtype=bool)
-# nodes = [[0]*4]*1000
-# dists = [[0]*1000]*1000
+settrack = set()
 nodecount = 0
 
-def countcon():
-    global nodes, nodecount
-    for i in range(nodecount):
-        if nodes[i][3] == 0: return False
-    return True
-
-def xvals():
-    global nodes, nodecount
-    for i in range(nodecount):
-        print(nodes[i,3])
-            
-def pvals():
-    global nodes, nodecount
-    for i in range(nodecount):
-        print(i, nodes[i])
+circuits = []
+counter = 0
 
 
 #
 # nodes = 0,1,2 are the xyz coordinates, 3 is the group (circuit) it is associated with.
 #
 def init(fname):
-    global nodes, nodecount
+    global nodes, nodecount, settrack
     nodecount = 0
     for l in open(fname, 'r'):
         if len(l) < 3: break
+        settrack.add(nodecount)
         m = l.strip().split(',')
         for i, a in enumerate(m):
             #print(nodecount, i, a)
             nodes[nodecount,i] = int(a)
         #print(nodes[nodecount])
         nodecount += 1
-    #pvals()
 
 
-def pcircs(nc, prnt = False):
-    global nodes, nodecount  
-    vv = [0] * circid
-    for i in range(nodecount):
-        vv[nodes[i,3]] += 1
-    if prnt: print(vv)
+def pcircs():
+    global circuits 
+    vv = []
+    for i, c in enumerate(circuits):
+        vv.append(len(c))
+    vv.sort(reverse=True)
     return vv
 
 def dist(a, b):
@@ -59,14 +44,61 @@ def compdists():
         for j in range(nodecount):
             dists[i,j] = dist(nodes[i], nodes[j])
 
-def getjunction():
+
+def addpair(n1, n2, debug=False):
+    global circuits, counter, settrack
+    added = 0
+    counter += 1
+    csave1 = -1
+    csave2 = -1
+    if debug: print(counter, "addpair: ", n1, n2)
+    settrack.discard(n1)
+    settrack.discard(n2)
+    for cn, c in enumerate(circuits):
+        if n1 in c:
+            csave1 = cn
+            if debug: print(counter, added, "Added: ", n2, " to ", c)
+        if n2 in c:
+            csave2 = cn
+            if debug: print(counter, added, "Added: ", n1, " to ", c)
+    #
+    # csave1 and csave2 are None - create new set
+    # csave1 is none, but csave2 is not - add n2 to csave2
+    # csave1 is NOT none, but csave2 is: add n1 to csave1
+    # both csave1 and csave2 are NOT none - merge csave1 and csave2
+    # 
+    if csave1 >= 0 and csave2 >=0 :
+        if csave1 != csave2:
+            # we need to merge and remove a a set from circuits
+            if debug: print(counter, "Before union: ", circuits[csave1])
+            if debug: print(counter, "Union: ", circuits[csave2])
+            circuits[csave1] = circuits[csave1].union(circuits[csave2])
+            if debug: print(counter, "After union: ", circuits[csave1])
+            if debug: print(counter, "Removing: ", circuits[csave2])
+            circuits.pop(csave2)
+            if debug: print(counter, "Merged to set: ", n1, n2, csave1)
+    elif csave1 >= 0:
+        circuits[csave1].add(n1)
+        circuits[csave1].add(n2)
+        if debug: print(counter, "Added to set: ", n1, n2, csave1)
+    elif csave2 >= 0:
+        circuits[csave2].add(n1)
+        circuits[csave2].add(n2)
+        if debug: print(counter, "Added to set: ", n1, n2, csave2)
+    else:
+        c = set()
+        c.add(n1)
+        c.add(n2)
+        if debug: print(counter, "Created set with nodes ", n1, n2, c)
+        circuits.append(c)
+    
+def findclosests():
     global nodes, nodecount, dists
     mindist = 1000000000000000000
     n1 = -1
     n2 = -1
     for i in range(nodecount):
-        if nodes[i][3] > 0: continue
-        for j in range(nodecount):
+        for j in range(i):
             if j == i: continue
             d = dists[i,j]
             if d > 0 and d < mindist:
@@ -76,53 +108,24 @@ def getjunction():
     if n1 >= 0 and n2 >= 0:
         dists[n1,n2] = 0
         dists[n2,n1] = 0
-    return n1, n2
+        addpair(n1, n2)
+        for c in circuits:
+            if len(c) == nodecount:
+                print("Part 2: ", nodes[n1][0] * nodes[n2][0])
+                exit(1)
+        return True
+    return False
 
-init('test.txt')
+init('data.txt')
+LOOP = 1000
 n1 = 0
 n2 = 0
 compdists()
-circid = 1
-allconnected = False
-#while not allconnected:
-for q in range(10):
-    n1, n2 = getjunction()
-    if (n1 < 0): break
-    ## merge nodes use node n1 and the merger
-    if nodes[n1,3] > 0 and nodes[n2,3] > 0:
-        if nodes[n1,3] == nodes[n2,3]:
-            print("Ignoring node ", nodes[n2], " to node ", nodes[n1])
-            continue
-
-        print("Merging node ", nodes[n2,3], n2, " to node ", nodes[n1,3], n1)
-        fromnode = nodes[n2,3]
-        tonode = nodes[n1,3]
-        for i in range(nodecount):
-            if nodes[i,3] == fromnode:
-                nodes[i,3] = tonode
-                #print("XXXX", i, n2, nodes[i,3], nodes[n1,3])
-    elif nodes[n1,3] > 0:
-        nodes[n2,3] = nodes[n1,3]
-        print("Junction node: ", n2, nodes[n2], " added to junction ", n1, nodes[n1])
-        
-    elif nodes[n2,3] > 0:
-        nodes[n1,3] = nodes[n2,3]
-        print("Junction node: ", n1, nodes[n1], " added to junction ", n2, nodes[n2])
-    #
-    # new circuit
-    #
-    else:
-        nodes[n1,3] = circid
-        nodes[n2,3] = circid
-        print("Junction created: ", circid, " NODES are: ", n1, nodes[n1], " and ", n2, nodes[n2])
-        circid += 1
-    pcircs(circid, True)
-    allconnected = countcon()
-
-    
-vv = pcircs(circid)
-vv[0] = 0
-vv.sort(reverse=True)
-print(vv)
-print("Part 1: ", vv[1]*vv[2]*vv[0])
-
+q = 0
+done = False
+while True:
+    q += 1
+    findclosests()
+    if (q == LOOP):
+        vv = pcircs()
+        print("Part 1: ", vv[1]*vv[2]*vv[0])
