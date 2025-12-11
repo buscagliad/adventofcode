@@ -1,12 +1,35 @@
 
 xys = []
+ULx = -1
+ULy = -1
+
+LRx = -1
+LRy = -1
+
 
 def init(fname):
     global xys
+    global ULx, ULy
+    global LRx, LRy
+    first = True
     for l in open(fname, 'r'):
         if len(l) < 3: break
         m = l.strip().split(',')
-        xys.append([int(m[0]),int(m[1])])
+        x = int(m[0])
+        y = int(m[1])
+        xys.append([x,y])
+        if first:
+            ULx = x
+            ULy = y
+            LRx = x
+            LRy = y
+
+            first = False
+        else:
+            ULx = min(x, ULx)
+            ULy = min(y, ULy)
+            LRx = max(x, LRx)
+            LRy = max(y, LRy)
 
 def maxrec(xy):
     m = 0
@@ -19,3 +42,5 @@ def maxrec(xy):
 init("data.txt")
 
 print("Part 1: ", maxrec(xys))
+
+print(ULx, ULy, LRx, LRy)
