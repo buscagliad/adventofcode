@@ -144,6 +144,7 @@ def main():
     for p in pList:
         n += 1
         p.simpleout(n)
+    
 
 if __name__ == "__main__":
     main()

@@ -1,38 +1,6 @@
 import time
 
-'''
-Roster = {}
-Roster[5284598] = ["Eric Courville", "eric.courville@voyagertechnologies.us"]
-Roster[3187848] = ["Phil Calora", "philip.calora@vts-i.com"]
-Roster[1540194] = ["Matt Binning", "matthew.binning@vts-i.com"]
-Roster[1797397] = ["Roxy Jamieson", "roxy.jamieson@vts-i.com"]
-Roster[3187770] = ["Dana Kimball", "dana.kimball@vts-i.com"]
-Roster[2260695] = ["Josh Gold", "josh.gold@vts-i.com"]
-Roster[3207955] = ["Joaquim Pedroza", "joaquim.pedroza@vts-i.com"]
-Roster[1856280] = ["John Basrai", "john.basrai@vts-i.com"]
-Roster[3193300] = ["Rob Pierson", "rob.pierson@vts-i.com"]
-Roster[1528019] = ["David Buscaglia", "david.buscaglia@vts-i.com"]
-Roster[2260751] = ["Ash Evans", "ash.evans@vts-i.com"]
-Roster[1739534] = ["Jill Thornton", "jill.thornton@vts-i.com"]
-Roster[3209547] = ["Davin Jimenez", "davin.jimenez@vts-i.com"]
-Roster[2326479] = ["Alexis Johnson", "alexis.johnson@vts-i.com"]
-Roster[3188951] = ["Ashley Venn", "ashley.venn@vts-i.com"]
-Roster[2256426] = ["Patrick O'Brien", "patrick.obrien@vts-i.com"]
-Roster[2511823] = ["Nathan Ferrara", "eric.ferrara@vts-i.com"]
-Roster[3184451] = ["Robb Davis", "robb.davis@vts-i.com"]
-Roster[551197]  = ["John Moon", "john.moon@vts-i.com"]
-Roster[1521453] = ["Eric Ferrara", "eric.ferrara@vts-i.com"]
-Roster[1738884] = ["Stephanie Stites", "stephanie.stites@vts-i.com"]
-Roster[2327715] = ["Nicholas Henderson", "nicholas.henderson@vts-i.com"]
-Roster[2309566] = ["Kevin Matei", "kevin.matei@vts-i.com"]
-Roster[1710591] = ["Neil Jacklin", "neil.jacklin@vts-i.com"]
-Roster[3198185] = ["Dominick Beaman", "dominick.beaman@vts-i.com"]
-Roster[1096925] = ["Macie Matthews", "macie.matthews@vts-i.com"]
-Roster[2246495] = ["Sean McCarthy", "sean.mccarthy@vts-i.com"]
-Roster[3944808] = ["Mattie Sanz", "mattie.sanz@vts-i.com"]
-Roster[3690597] = ["Matthew Luckenbihl", "matthew.luckenbihl@vts-i.com"]
-Roster[3853633] = ["Sean Severson", "sean.severson@vts-i.com"]
-'''
+
 
 class Player:
     def __init__(self, idx, numstars, laststar):
@@ -105,10 +73,11 @@ class Roster:
         self.Roster = {}
         for l in open(fname):
             w = l.strip().split(',')
-            self.Roster[int(w[0])] = [w[1],w[2]]
+            self.Roster[int(w[0])] = [w[1],w[2],False]
 
     def getPlayerName(self, idx):
         if idx in self.Roster.keys():
+            self.Roster[idx][2] = True
             return self.Roster[idx][0]
         else:
             print("ERROR - XXX no such player index: ", idx)
@@ -120,7 +89,12 @@ class Roster:
         else:
             print("ERROR - YYY no such player index: ", idx)
             return "ERROR"
-            
+
+    def nonexist(self):
+        for idx in self.Roster.keys():
+            if not self.Roster[idx][2]:
+                print(idx, self.Roster[idx])
+        
     def out(self):
         print(self.Roster.keys())
         for k, v in self.Roster.items():
